@@ -10,7 +10,7 @@ const ErrorPage = () => {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-cyan-500 w-full h-screen flex flex-col items-center justify-center text-center">
-      <FixedSizedImage src={ImgNotFound} height={600} width={700} className="animate-none to-inherit hover:animate-ping" />
+      <FixedSizedImage src={ImgNotFound} height={600} width={700} className="animate-none to-inherit hover:animate-pulse" />
       <div className="text-white text-3xl font-bold my-4">
         {t('not_found_page')}
       </div>

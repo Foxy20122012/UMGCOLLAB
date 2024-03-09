@@ -6,69 +6,41 @@ import { EyeIcon, EyeSlashIcon, KeyIcon, UserIcon } from '@heroicons/react/20/so
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { FaUserGroup } from "react-icons/fa6";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import AuthService from '../../../services/umgService'; // Asegúrate de que la ruta de importación sea correcta
 
 const RegisterForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [showAdminLoginForm, setShowAdminLoginForm] = useState(true); // Mostrar el formulario de administrador por defecto
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
-    mode: 'onChange'
-  });
+  const [showAdminLoginForm, setShowAdminLoginForm] = useState(true);
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
+  const authService = new AuthService();
 
   const onSubmitAdmin = async (data) => {
     try {
-      const response = await fetch('https://bufeteapi.azurewebsites.net/api/login/admin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          correo: data.email,
-          contraseña: data.password
-        })
-      });
-
-      if (response.ok) {
-        const { token } = await response.json();
-        localStorage.setItem('token', token);
-        toast.success('¡Bienvenido, administrador!');
-        window.location.href = '/admin/profile'; 
-      } else {
-        console.error('Error de inicio de sesión:', response.statusText);
-        toast.error('Credenciales incorrectas');
-      }
+      const response = await authService.authService.loginAdmin(data.email, data.password);
+      localStorage.setItem('token', response.token);
+      toast.success('¡Bienvenido, administrador!');
+      window.location.href = '/admin/profile';
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Error de red');
+      toast.error('Credenciales incorrectas');
     }
   };
 
   const onSubmitUsers = async (data) => {
     try {
-      const response = await fetch('https://bufeteapi.azurewebsites.net/api/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          correo: data.email,
-          contraseña: data.password
-        })
+      const response = await authService.authService.loginUser(data.email, data.password);
+      localStorage.setItem('token', response.token);
+      toast.success('¡Bienvenido, usuario!', {
+        style: { backgroundColor: 'green', color: 'white' },
       });
-
-      if (response.ok) {
-        const { token } = await response.json();
-        localStorage.setItem('token', token);
-        toast.success('¡Bienvenido, usuario!');
-        window.location.href = '/user/profile'; 
-      } else {
-        console.error('Error de inicio de sesión:', response.statusText);
-        toast.error('Credenciales incorrectas');
-      }
+      
+      window.location.href = '/user/profile';
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Error de red');
+      toast.error('Credenciales incorrectas');
     }
   };
 
@@ -82,6 +54,8 @@ const RegisterForm = () => {
 
   return (
     <>
+
+
       <div className={'flex flex-wrap w-screen h-screen overflow-x-hidden bg-gray-200'}>
         <div className={'flex flex-shrink w-full h-full  md:w-1/2 lg:w-1/3 bg-white'}>
           <div className={'rounded-lg w-full border-[#E9ECEF] border'}>
