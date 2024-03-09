@@ -1,0 +1,15 @@
+.via-states-datatable { 
+    @apply text-xs font-semibold mr-2 px-2.5 py-0.5 rounded; 
+    } 
+    .via-icon-active { 
+    @apply text-green-800 dark:text-green-300; 
+    } 
+    .via-icon-inactive { 
+    @apply text-red-800 dark:text-red-300; 
+    } 
+    .via-detalle-datatable { 
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800; 
+    } 
+    .via-badge-datatable { 
+    @apply text-white bg-red-500 border-white dark:border-gray-900; 
+    } 

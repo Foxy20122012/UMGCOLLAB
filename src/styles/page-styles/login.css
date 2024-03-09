@@ -1,0 +1,23 @@
+.via-login-page { 
+    @apply flex flex-wrap w-screen h-screen bg-gray-200; 
+    } 
+    
+    .via-login-layout { 
+    @apply flex flex-shrink w-full h-full md:w-1/2 lg:w-1/3 bg-white; 
+    } 
+    
+    .via-login-header { 
+    @apply flex w-full p-4 justify-center overflow-hidden; 
+    } 
+    
+    .via-login-logo { 
+    @apply w-64 h-64 bg-center bg-auto bg-no-repeat object-fill; 
+    } 
+    
+    .via-login-background { 
+    @apply hidden flex-shrink h-full md:w-1/2 lg:w-2/3 md:flex bg-center bg-contain; 
+    } 
+    
+    .via-login-form { 
+    @apply flex w-full flex-col space-y-4; 
+    }

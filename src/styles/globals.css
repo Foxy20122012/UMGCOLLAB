@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=fallback');
+/* <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+	border-radius: 6px;
+	background-color: #F5F5F5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	border-radius: 6px;
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+	background-color: rgba(221, 233, 233, 0.3);
+}
+
+/* Additional Styles */
+/* @import 'additional-styles/toastify.css'; */
+@import 'component-styles/loading.css';
+@import 'component-styles/sidebar.css';
+/* @import 'component-styles/navbar.css'; */
+@import 'component-styles/datatable.css';
+@import 'page-styles/common.css';
+@import 'page-styles/login.css';
+@import 'page-styles/eventos_colores.css';
