@@ -27,30 +27,10 @@
 
 /* Additional Styles */
 @import 'additional-styles/toastify.css';
-@import 'component-styles/loading.css';
+/* @import 'component-styles/loading.css';
 @import 'component-styles/sidebar.css';
 /* @import 'component-styles/navbar.css'; */
-@import 'component-styles/datatable.css';
-@import 'page-styles/common.css';
-@import 'page-styles/login.css';
-@import 'page-styles/eventos_colores.css';
-/* Additional Styles */
-@import 'additional-styles/toastify.css';
-@import 'component-styles/loading.css';
-@import 'component-styles/sidebar.css';
-@import 'component-styles/navbar.css';
-@import 'component-styles/datatable.css';
-
-@import 'page-styles/common.css';
-@import 'page-styles/login.css';
-@import 'page-styles/gestionexpedientes.css';
-@import 'additional-styles/dropzone.css';
-@import 'page-styles/reuniones/reuniones/header.css';
-@import 'page-styles/reuniones/reuniones/card.css';
-@import 'page-styles/reuniones/reuniones/forms.css';
-@import 'page-styles/reuniones/reuniones/filtros.css';
-@import 'page-styles/reuniones/reuniones/label.css';
-@import 'page-styles/actividades/tabla.css';
-
-/* Gantt Styles */
-@import 'gantt-styles/index.css';
+ @import 'component-styles/datatable.css';
+ @import 'page-styles/common.css';
+/*@import 'page-styles/login.css';*/
+@import 'page-styles/eventos_colores.css';  

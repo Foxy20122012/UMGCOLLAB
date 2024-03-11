@@ -10,8 +10,8 @@ const Footer = () => {
         
             <a href="https://www.via-asesores.com" className="flex items-center md:flex md:justify-start md:mx-auto ml-auto ">
         <img
-          src="https://www.via-asesores.com/logos/logo_vertical/viaasesores_vertical_logo.svg"
-          className="h-12 mb-4"
+          src="https://umg.edu.gt/img/Umg.png"
+          className="h-28 w-28 mb-4"
           alt="VIA Asesores"
         />
       </a>

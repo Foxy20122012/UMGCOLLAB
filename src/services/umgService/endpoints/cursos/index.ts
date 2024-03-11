@@ -1,5 +1,9 @@
+import {
+  Cursos
+} from '@/models/interface/Cursos'
+
 class CursosService {
-    getCursos = async (): Promise<any> => {
+    getCursos = async (): Promise<Cursos> => {
       try {
         const response = await fetch('https://umgcollab.azurewebsites.net/api/cursos', {
           method: 'GET',

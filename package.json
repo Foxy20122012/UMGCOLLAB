@@ -11,6 +11,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.1",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "componentslibrary": "github:Foxy20122012/ComponentsLibrary",
     "config": "^3.3.9",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.7",
@@ -24,7 +25,8 @@
     "react-icons": "^5.0.1",
     "react-leaflet": "^4.2.1",
     "react-toastify": "^10.0.4",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.1",
+    "v-functions": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/v-functions.git"
   },
   "devDependencies": {
     "@types/node": "^20",
