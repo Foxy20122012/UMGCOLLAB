@@ -1,0 +1,23 @@
+Base de datos de prueba para probar el endpoint de los spr
+
+ALTER TABLE Usuarios
+ADD COLUMN activo TINYINT(1) NOT NULL DEFAULT 1;
+
+//Traer todo los Usuarios
+DELIMITER //
+CREATE PROCEDURE SPR_GetAllUsers()
+BEGIN
+    SELECT id, nombre, correo, rol, activo
+    FROM Usuarios
+    WHERE rol = 'usuario';
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE SPR_GetAllSteps()
+BEGIN
+    SELECT id, proceso_id, numero_paso, nombre_paso, descripcion, nombre_proceso
+    FROM Pasos;
+END //
+DELIMITER ;

@@ -1,18 +1,19 @@
-.via-navbar { 
-    @apply bg-white border-slate-200; 
-    } 
-    
-    .via-menu-btn-navbar { 
-    @apply text-slate-500 hover:text-slate-600; 
-    } 
-    
-    .via-usermenu-btn-navbar { 
-    @apply bg-oper-600 text-white !important; 
-    } 
-    
-    .via-useroptions-navbar { 
-    @apply text-black hover:bg-oper-600 hover:text-white !important; 
-    } 
-    .via-useroptions-selected-navbar { 
-    @apply bg-oper-600 text-white; 
-    }
+.via-navbar {
+  @apply bg-white border-slate-200 text-theme-app-500 font-semibold !important;
+}
+
+.via-menu-btn-navbar {
+  @apply text-slate-600 hover:text-slate-900 !important;
+}
+
+.via-usermenu-btn-navbar {
+  @apply bg-slate-700 text-white transition-colors duration-[350ms] ease-in-out !important;
+}
+
+.via-useroptions-navbar {
+  @apply text-gray-900 bg-transparent transition-colors duration-[350ms] ease-in-out !important;
+}
+
+.via-useroptions-selected-navbar {
+  @apply bg-slate-700 dark:bg-slate-800 text-white transition-colors duration-[350ms] ease-in-out !important;
+}

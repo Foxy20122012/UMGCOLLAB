@@ -6,7 +6,7 @@ import { EyeIcon, EyeSlashIcon, KeyIcon, UserIcon } from '@heroicons/react/20/so
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+
 import { FaUserGroup } from "react-icons/fa6";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import AuthService from '../../../services/umgService'; // Asegúrate de que la ruta de importación sea correcta
@@ -79,14 +79,14 @@ const RegisterForm = () => {
                       onClick={handleAdminLoginFormClick}
                     >
                       <MdOutlineAdminPanelSettings className='h-10 w-10 pr-4' />
-                      Entidad. 
+                      Catedraticos. 
                     </button>
                     <button
                       className={`inline-flex items-center justify-center px-14 text-sm font-medium text-white ${showAdminLoginForm ? 'bg-gray-300' : 'bg-blue-500'} border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                       onClick={handleUsersLoginFormClick}
                     >
                       <FaUserGroup className='h-8 w-8 pr-4' />
-                      Usuarios.
+                      Estudiantes.
                     </button>
                   </div>
                   {(showAdminLoginForm && (
@@ -105,7 +105,7 @@ const RegisterForm = () => {
                             className="w-full p-2 border-y border-l focus:border-gray-400 outline-none rounded-l-lg focus:border-r-none"
                             placeholder="example@email.com"
                           />
-                          <div className='bg-theme-app-500 hover:bg-theme-app-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'>
+                          <div className='bg-cyan-500 hover:bg-cyan-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'>
                             <UserIcon className='h-5 w-5' />
                           </div>
                         </div>
@@ -125,10 +125,10 @@ const RegisterForm = () => {
                             className="w-full p-2 border-y border-l focus:border-gray-400 outline-none rounded-l-lg focus:border-r-none"
                           />
                           <div
-                            className='bg-theme-app-500 hover:bg-theme-app-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'
+                            className='bg-cyan-500 hover:bg-cyan-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'
                             onClick={() => { setPasswordShown(!passwordShown) }}
                           >
-                            {!passwordShown ? <EyeSlashIcon className='h-5 w-5' /> : <EyeIcon className='h-5 w-5' />}
+                            {!passwordShown ? <EyeSlashIcon className='h-5 w-5' /> : <EyeIcon className='h-5 w-5 bg' />}
                           </div>
                         </div>
                         {errors.password && <p className="text-red-500 text-xs mt-1">El campo Clave es requerido.</p>}
@@ -160,7 +160,7 @@ const RegisterForm = () => {
                             className="w-full p-2 border-y border-l focus:border-gray-400 outline-none rounded-l-lg focus:border-r-none"
                             placeholder="example@email.com"
                           />
-                          <div className='bg-theme-app-500 hover:bg-theme-app-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'>
+                          <div className='bg-cyan-500 hover:bg-cyan-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'>
                             <UserIcon className='h-5 w-5' />
                           </div>
                         </div>
@@ -180,7 +180,7 @@ const RegisterForm = () => {
                             className="w-full p-2 border-y border-l focus:border-gray-400 outline-none rounded-l-lg focus:border-r-none"
                           />
                           <div
-                            className='bg-theme-app-500 hover:bg-theme-app-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'
+                            className='bg-cyan-500 hover:bg-cyan-600 text-white flex justify-center items-center p-2 rounded-r-lg cursor-pointer'
                             onClick={() => { setPasswordShown(!passwordShown) }}
                           >
                             {!passwordShown ? <EyeSlashIcon className='h-5 w-5' /> : <EyeIcon className='h-5 w-5' />}

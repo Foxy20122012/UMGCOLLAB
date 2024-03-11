@@ -1,0 +1,7 @@
+.celda{
+  @apply items-center h-full  overflow-hidden font-normal text-theme-text-principal border;
+}
+
+.input {
+  @apply border-none w-full h-full text-theme-text-principal text-sm px-2 outline-none m-auto ;
+}

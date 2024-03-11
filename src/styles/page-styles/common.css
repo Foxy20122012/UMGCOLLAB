@@ -1,0 +1,99 @@
+.via-card {
+  @apply rounded-lg w-full border-[#E9ECEF] border;
+}
+
+.via-label {
+  @apply block text-theme-text-principal dark:text-white font-medium pb-1 pl-0;
+}
+
+.via-input {
+  @apply w-full text-sm text-gray-900 dark:text-neutral-900 rounded-lg border-l-gray-100 border border-gray-300 focus:ring-stone-500 focus:border-stone-500 dark:border-stone-600 dark:placeholder-gray-400  dark:focus:border-stone-500 !important;
+}
+
+.via-input-prepend {
+  @apply w-full text-sm text-gray-900 dark:text-neutral-900 rounded-l-lg border-l-gray-100 border border-gray-300 focus:ring-stone-500 focus:border-stone-500 dark:border-stone-600 dark:placeholder-gray-400  dark:focus:border-stone-500 !important;
+}
+
+.via-text {
+  @apply text-theme-text-principal dark:text-white
+}
+
+.via-sub-text {
+  @apply text-gray-600 dark:text-gray-300
+}
+
+.via-append-input {
+  @apply absolute top-0 -right-1 h-full p-1  text-sm font-medium text-white bg-theme-app-700 rounded-r-lg border border-theme-app-700 hover:bg-theme-app-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+}    
+
+.via-append-input-extra {
+  @apply absolute top-0 -right-1 h-full p-1 mr-6 text-sm font-medium text-white bg-theme-app-700 rounded-r-lg border border-theme-app-700 hover:bg-theme-app-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+}
+
+.via-button {
+  @apply cursor-pointer inline-flex items-center h-8 px-2 m-1 text-white ease-linear transition-colors duration-150 rounded-lg;
+}
+.via-div-actions {
+  @apply flex w-full justify-center flex-wrap;
+}
+
+.via-no {
+  @apply text-red-700 dark:text-red-300;
+}
+
+.via-yes {
+  @apply text-green-700 dark:text-green-300;
+}
+
+.via-yellow {
+  @apply text-yellow-700 dark:text-yellow-300;
+}
+
+.via-translate {
+  @apply -translate-x-1/2;
+}
+
+.via-opacity {
+  @apply bg-opacity-25;
+}
+
+.via-img-preview {
+  @apply h-16 max-h-16 !important; 
+}
+
+.invalid-feedback {
+  @apply h-5;
+}
+
+.table-cell {
+  @apply items-center align-middle text-xs xl:text-sm 2xl:text-base;
+}
+
+.icon {
+  @apply text-lg text-blue-700 hover:text-blue-800 transition-all duration-300 ease-in-out
+}
+
+.responsive-container {
+  @apply p-2 xl:p-3 2xl:p-5 w-full h-auto min-h-[calc(100vh-90px)] mx-auto bg-slate-100 dark:bg-gray-700 mb-10 items-center
+  /* @apply p-2 xl:p-3 2xl:p-5 w-full h-auto min-h-[calc(100vh-90px)] max-w-[1920px] mx-auto bg-slate-100 dark:bg-gray-700 mb-10 items-center */
+}
+
+.via-title {
+  @apply font-bold text-lg text-theme-text-principal
+}
+
+/* Clase para el color warning (azul) */
+.via-warning {
+  @apply bg-warning hover:bg-warning-hover dark:bg-warning-dark dark:hover:bg-warning-hover-dark text-white !important;
+}
+
+/* Clase para el color danger (rojo) */
+.via-danger {
+  @apply bg-danger hover:bg-danger-hover dark:bg-danger-dark dark:hover:bg-danger-hover-dark text-white !important;
+}
+
+/* Clase para el color success (verde) */
+.via-success {
+  @apply bg-success hover:bg-success-hover dark:bg-success-dark dark:hover:bg-success-hover-dark text-white !important;
+}
+

@@ -1,0 +1,28 @@
+.span-label-container {
+  @apply w-full flex py-1 whitespace-nowrap items-center text-[10px] xl:my-1 truncate xl:text-xs  2xl:text-sm ;
+}
+
+.fieldset-form-nuevo {
+  @apply w-full grid mb-2 xl:mb-3 2xl:mb-5 border-none bg-white py-1 lg:py-2 px-2 lg:px-3 2xl:py-5 2xl:px-5 rounded-lg drop-shadow-lg mt-0  ;
+}
+
+.main-form {
+  @apply w-full text-slate-700 mx-auto text-xs xl:text-sm 2xl:text-lg ;
+}
+
+.span-label {
+  @apply border-b-[0px] italic border-slate-700 w-full items-center grid pl-5 ml-3 truncate font-semibold ;
+}
+
+.fieldset-form-doble2 {
+  @apply grid sm:grid-cols-2 sm:gap-x-2 xl:gap-3 2xl:gap-5   ;
+}
+
+.card-info {
+  @apply grid sm:grid-cols-2 sm:gap-x-2 xl:gap-x-3 2xl:gap-x-5   ;
+  grid-template-columns: auto auto;
+}
+
+.icon-inform {
+  @apply w-5 xl:w-6 text-theme-app-700;
+}

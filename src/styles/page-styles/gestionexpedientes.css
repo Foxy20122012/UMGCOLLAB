@@ -1,0 +1,28 @@
+.via-semaforo-verde {
+  @apply border-l-8 border-green-500;
+}
+.via-semaforo-amarillo {
+  @apply border-l-8 border-yellow-500;
+}
+.via-semaforo-rojo {
+  @apply border-l-8 border-red-500;
+}
+.via-bg-verde {
+  @apply bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-300;
+}
+.via-bg-amarillo {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-300;
+}
+.via-bg-rojo {
+  @apply bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-300;
+}
+
+.via-verde {
+  @apply text-green-700;
+}
+.via-amarillo {
+  @apply text-yellow-700;
+}
+.via-rojo {
+  @apply text-red-700;
+}

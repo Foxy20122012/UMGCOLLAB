@@ -1,0 +1,30 @@
+.filtros {
+  @apply grid grid-rows-2 border-none md:grid-rows-1 overflow-hidden items-center md:grid-cols-repeat 2xl:my-3;
+}
+
+.search {
+  @apply grid bg-white rounded-[10px] overflow-hidden md:col-span-10 drop-shadow-lg ;
+  grid-template-columns: auto 40px;
+}
+
+.contenedor-filtros {
+  @apply grid grid-cols-3 items-center justify-around col-span-2 w-full ;
+  grid-template-columns: auto auto auto;
+}
+
+.item-filter {
+  @apply  items-center hover:bg-theme-app-400 dark:hover:bg-theme-app-700 rounded-lg grid grid-cols-2 h-10 px-3 gap-2 text-slate-700 hover:text-white dark:text-white font-medium duration-300;
+  grid-template-columns: auto auto;
+}
+
+.icon-item-filter-up {
+  @apply m-auto opacity-100 rotate-0 ;
+}
+
+.icon-item-filter-down {
+  @apply m-auto opacity-100 rotate-180 ;
+}
+
+.icon-item-filter-hidden {
+  @apply m-auto opacity-0 rotate-180 ;
+}

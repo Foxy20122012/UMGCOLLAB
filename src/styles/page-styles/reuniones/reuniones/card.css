@@ -1,0 +1,112 @@
+.main-container {
+  @apply grid gap-x-4 gap-y-3 2xl:gap-y-8 my-3 2xl:my-6 text-slate-700 justify-items-center items-center content-around;
+  grid-template-columns: repeat(auto-fit, minmax(320px, auto));
+}
+
+.card {
+  @apply overflow-hidden rounded-lg duration-300 items-center drop-shadow-md bg-white dark:bg-gray-800 w-[310px] sm:w-[310px] md:w-[360px] lg:w-[355px] xl:w-[325px] 2xl:w-[330px];
+}
+
+.header-card {
+  @apply flex bg-theme-app-500 dark:bg-theme-app-800 w-full items-center h-12 ;
+}
+
+/* .card {
+  @apply overflow-hidden rounded-lg duration-300 items-center drop-shadow-md bg-white max-w-md ;
+} */
+
+.header-items {
+  @apply grid grid-cols-2 justify-start text-white font-medium gap-2 items-center w-full  py-2 ;
+  grid-template-columns: auto auto;
+}
+
+.text-header {
+    @apply font-semibold md:ml-3 ml-2 text-white justify-start left-0 ;
+    overflow:hidden;
+    height: auto;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+}
+
+.info {
+  @apply font-bold md:mx-5 mx-2 ;
+  overflow:hidden;
+  height: auto;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+.observaciones {
+  @apply xl:mx-5 mx-2 ;
+  overflow:hidden;
+  height: auto;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+.info-lugar {
+  @apply  my-auto items-center justify-center justify-items-center self-center border-l-2 -ml-1 pl-2 ;
+  overflow:hidden;
+  height: auto;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+.lugar-fecha {
+  @apply grid items-center justify-start justify-items-start grid-cols-1 m-2 mx-[8%] ;
+  
+}
+
+.item-lugar-fecha {
+  @apply grid grid-cols-2 gap-3 items-center  my-auto w-full  ;
+  grid-template-columns: 35px auto;
+}
+
+.icon-lugar-fecha {
+  @apply w-8 h-8 grid my-2 justify-items-center group-hover:scale-125 duration-300 group-hover:delay-700 ;
+}
+
+.notifications {
+  @apply w-[95%] mx-auto grid grid-cols-4 justify-center justify-items-center items-center my-2 py-1 border-b-2 ;
+}
+
+.item-notificaction {
+  @apply grid justify-items-center p-0 md:m-1 mx-auto md:hover:scale-110 duration-300  ;
+}
+
+.icon-item-notification {
+  @apply mx-auto ;
+}
+
+.count-item-notification {
+  @apply bg-theme-app-400 -ml-2 font-medium text-white  px-1.5 rounded-full;
+}
+
+.tooltip {
+  @apply bg-slate-700 text-white z-10 group-hover:delay-700 drop-shadow-xl items-center h-full my-auto absolute right-0  w-full text-center font-light italic text-sm invisible group-hover:visible opacity-0 group-hover:opacity-90 group-hover:duration-500 px-3 py-1 rounded-lg ;
+}
+
+.card-menu {
+  @apply absolute bg-white w-full dark:bg-gray-800 h-full z-60 ;
+}
+
+.card-btn-menu {
+  @apply grid grid-cols-2 justify-start justify-items-start gap-5 px-5 py-2 align-middle border-t-[1px] z-60 duration-200 hover:bg-theme-app-100 w-full ;
+  grid-template-columns: auto auto;
+}

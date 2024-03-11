@@ -1,0 +1,89 @@
+.form-nuevo {
+  @apply w-full grid mb-2 xl:mb-3 2xl:mb-5 border-none bg-white py-1 lg:py-2 px-2 lg:px-3 2xl:py-5 2xl:px-5 rounded-lg drop-shadow-lg mt-0 text-xs xl:text-sm 2xl:text-lg ;
+}
+
+.fieldset-form-doble {
+  @apply grid md:grid-cols-2 gap-5 ;
+}
+
+.label-form-nuevo {
+  @apply grid items-center w-full p-0 ;
+}
+
+.input-form {
+  @apply w-full h-8 2xl:h-10 rounded-lg align-middle text-xs xl:text-sm 2xl:text-base mb-3 2xl:mb-5 bg-[#ffffff2c];
+}
+
+.input-form-area {
+  @apply w-full rounded-lg align-middle text-xs xl:text-sm 2xl:text-base mb-3 2xl:mb-5 bg-[#ffffff2c];
+}
+
+.label-form {
+  @apply w-full text-xs xl:text-sm 2xl:text-base ;
+}
+
+.alertas {
+  @apply absolute -bottom-5 text-red-600 text-sm ;
+}
+
+.formulario {
+  @apply grid  sm:gap-x-2 xl:gap-3 2xl:gap-5;
+}
+
+.fieldset-4 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-2 xl:gap-x-3 2xl:gap-x-5 ;
+}
+
+.fieldset-2 {
+  @apply grid grid-cols-1 sm:grid-cols-2 sm:gap-x-2 xl:gap-x-3 2xl:gap-x-5 ;
+}
+
+.select {
+  @apply bg-red-600 z-60 opacity-100 rounded-lg;
+}
+
+.formReunion {
+  @apply grid grid-cols-4 xl:gap-y-2 gap-x-5 py-2
+  [&>div:nth-child(1)]:col-span-4 sm:[&>div:nth-child(1)]:col-span-2 xl:[&>div:nth-child(1)]:col-span-1
+  [&>div:nth-child(2)]:col-span-4 sm:[&>div:nth-child(2)]:col-span-2 xl:[&>div:nth-child(2)]:col-span-1
+  [&>div:nth-child(3)]:col-span-4 sm:[&>div:nth-child(3)]:col-span-2 xl:[&>div:nth-child(3)]:col-span-1
+  [&>div:nth-child(4)]:col-span-4 sm:[&>div:nth-child(4)]:col-span-2 xl:[&>div:nth-child(4)]:col-span-1
+  [&>div:nth-child(5)]:col-span-4 sm:[&>div:nth-child(5)]:col-span-2
+  [&>div:nth-child(6)]:col-span-2 sm:[&>div:nth-child(6)]:col-span-1
+  [&>div:nth-child(7)]:col-span-2 sm:[&>div:nth-child(7)]:col-span-1
+  [&>div:nth-child(8)]:col-span-4
+  [&>div:nth-child(9)]:col-span-4 sm:[&>div:nth-child(9)]:col-span-2
+  [&>div:nth-child(10)]:col-span-4 sm:[&>div:nth-child(10)]:col-span-2;
+}
+
+.formAgenda {
+  @apply grid grid-cols-2 xl:gap-y-2 gap-x-5 py-2
+  [&>div:nth-child(1)]:col-span-2
+  [&>div:nth-child(2)]:col-span-2 sm:[&>div:nth-child(2)]:col-span-1
+  [&>div:nth-child(3)]:col-span-2 sm:[&>div:nth-child(3)]:col-span-1
+  [&>div:nth-child(4)]:col-span-2 
+  [&>div:nth-child(5)]:col-span-2;
+}
+
+.formParticipante {
+  @apply grid grid-cols-4 xl:gap-y-2 gap-x-5 py-2
+  [&>div:nth-child(1)]:col-span-4 sm:[&>div:nth-child(1)]:col-span-3
+  [&>div:nth-child(2)]:col-span-4 sm:[&>div:nth-child(2)]:col-span-1
+  [&>div:nth-child(3)]:col-span-4 sm:[&>div:nth-child(3)]:col-span-2
+  [&>div:nth-child(4)]:col-span-4 sm:[&>div:nth-child(4)]:col-span-2
+  [&>div:nth-child(5)]:col-span-4;
+}
+
+.formResultadoReunion {
+  @apply grid grid-cols-4 xl:gap-y-2 gap-x-5 py-2
+  [&>div:nth-child(1)]:col-span-4 sm:[&>div:nth-child(1)]:col-span-2 xl:[&>div:nth-child(1)]:col-span-1
+  [&>div:nth-child(2)]:col-span-4 sm:[&>div:nth-child(2)]:col-span-2 xl:[&>div:nth-child(2)]:col-span-1
+  [&>div:nth-child(3)]:col-span-4 sm:[&>div:nth-child(3)]:col-span-2 xl:[&>div:nth-child(3)]:col-span-1
+  [&>div:nth-child(4)]:col-span-4 sm:[&>div:nth-child(4)]:col-span-2 xl:[&>div:nth-child(4)]:col-span-1
+  [&>div:nth-child(5)]:col-span-4 sm:[&>div:nth-child(5)]:col-span-2
+  [&>div:nth-child(6)]:col-span-4 sm:[&>div:nth-child(6)]:col-span-2
+  [&>div:nth-child(7)]:col-span-4 sm:[&>div:nth-child(7)]:col-span-2
+  [&>div:nth-child(8)]:col-span-4 sm:[&>div:nth-child(8)]:col-span-2
+  [&>div:nth-child(9)]:col-span-4 sm:[&>div:nth-child(9)]:col-span-2
+  [&>div:nth-child(10)]:col-span-4 sm:[&>div:nth-child(10)]:col-span-2;
+}
