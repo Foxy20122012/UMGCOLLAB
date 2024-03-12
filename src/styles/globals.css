@@ -25,12 +25,63 @@
 	background-color: rgba(221, 233, 233, 0.3);
 }
 
+/* Estilos para la "muesca" del teléfono */
+.phone-notch {
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60px;
+	height: 10px;
+	background-color: #1F2937;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	z-index: 10;
+  }
+  
+  /* Estilos para el botón simulado del teléfono */
+  .phone-button {
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30px;
+	height: 30px;
+	background-color: #1F2937;
+	border-radius: 50%;
+	z-index: 10;
+  }
+  
+  
+  /* Añadir algunos estilos globales para el componente si es necesario */
+  .phone-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+  }
+  
+  .phone-frame {
+	background-color: #E5E7EB; /* Fondo de la pantalla del teléfono, ajusta según tu preferencia */
+	border: 2px solid #4B5563; /* Borde del teléfono, ajusta según tu preferencia */
+	border-radius: 2.5rem; /* Borde redondeado del teléfono */
+	overflow: hidden; /* Asegura que nada se desborde fuera del borde redondeado */
+	width: 320px; /* Ancho del teléfono, ajusta según tu preferencia */
+	height: 640px; /* Alto del teléfono, ajusta según tu preferencia */
+	position: relative; /* Para posicionar la muesca y el botón */
+  }
+  
+  .phone-screen {
+	background-color: #FFFFFF; /* Fondo del contenido de la pantalla */
+	padding: 1rem; /* Espaciado interno para el contenido */
+	height: 100%; /* Alto completo para contener todos los pasos */
+  }
+  
+
 /* Additional Styles */
 @import 'additional-styles/toastify.css';
-/* @import 'component-styles/loading.css';
+@import 'component-styles/loading.css';
 @import 'component-styles/sidebar.css';
 /* @import 'component-styles/navbar.css'; */
- @import 'component-styles/datatable.css';
- @import 'page-styles/common.css';
-/*@import 'page-styles/login.css';*/
-@import 'page-styles/eventos_colores.css';  
+@import 'component-styles/datatable.css';
+@import 'page-styles/common.css';
+@import 'page-styles/login.css';
+@import 'page-styles/eventos_colores.css';

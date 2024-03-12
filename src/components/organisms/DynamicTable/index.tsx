@@ -1,4 +1,4 @@
-import { MasterGetDataProps } from '@/app/admin/users/page'
+
 import ActionButton from '@/components/atoms/ActionButton'
 import Checkbox from '@/components/atoms/Checkbox'
 import IconedButton from '@/components/atoms/IconedButton'
@@ -27,7 +27,7 @@ type Props = {
   values: TableValue[]
   searchPlaceHolder?: string
   searchedText?: string
-  getData?: (props: MasterGetDataProps) => void
+  
   actions?: (index: number, ids?: string[]) => JSX.Element
   paginationData?: PaginationData
   loading?: boolean
@@ -44,7 +44,7 @@ const DynamicTable: React.FC<Props> = ({
   searchedText,
   actions,
   paginationData,
-  getData,
+ 
   loading,
   hideSearchBar,
 }) => {
@@ -74,23 +74,19 @@ const DynamicTable: React.FC<Props> = ({
   }, [selectedRows, setSelectedRows, values])
 
   const handleSearch = useCallback(() => {
-    getData &&
-      getData({
+  ({
         page: 1,
         searchText: searchText,
       })
-  }, [searchText, getData])
+  }, [searchText, ])
 
   const handleChangePage = useCallback(
     (pageNumber: number) => {
-      if (getData) {
-        getData({
-          page: paginationData ? pageNumber : 1,
-          searchText: searchText,
-        })
-      }
+      
+      
+      
     },
-    [searchText, paginationData, getData]
+    [searchText, paginationData, ]
   )
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {

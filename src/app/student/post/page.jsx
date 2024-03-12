@@ -1,7 +1,7 @@
 
 const UserPost = ()=>{
     return(
-        <div>
+        <div className="text-center">
             Post de los usuarios
         </div>
     )
