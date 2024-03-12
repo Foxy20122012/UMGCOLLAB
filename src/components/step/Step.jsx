@@ -34,33 +34,42 @@ const stepsData = [
 
 
 export default function PhoneStepsComponent() {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(null);
+  const [stepsToShow, setStepsToShow] = useState(1);
+
+  const handleButtonClick = () => {
+    setActiveStep(null); // Reset active step
+    setStepsToShow((current) => (current < stepsData.length ? current + 1 : current));
+  };
 
   return (
     <div className="flex justify-center items-center p-10 bg-gray-100">
       <div className="relative w-full max-w-sm">
-        {/* Phone border and screen */}
-        <div className="border-4 border-gray-700 rounded-3xl overflow-hidden shadow-xl">
-          {/* Phone notch */}
+        {/* El borde y la pantalla del teléfono */}
+        <div className="border-4 border-gray-700 rounded-3xl overflow-hidden shadow-xl h-[700px]">
+          {/* La "muesca" del teléfono */}
           <div className="bg-gray-700 text-white text-center p-2 relative">
             <div className="absolute inset-x-0 top-0 m-auto w-24 h-2 bg-gray-800 rounded-b-full"></div>
             12:00
           </div>
-          {/* Content of the screen */}
-          <div className="bg-white overflow-y-scroll" style={{ height: "700px" }}>
-            {/* Ensure each step item has enough space and isn't cramped */}
+          {/* El contenido de la pantalla */}
+          <div className="bg-white overflow-y-scroll h-full">
+            {/* Asegúrate de que cada elemento de paso tiene suficiente espacio para no estar apretado */}
             <div className="space-y-4 p-4">
-              {stepsData.map((step, index) => (
-                <div key={step.id}
-                     className={classNames("flex items-center p-4 my-2 rounded-2xl shadow cursor-pointer transition-all duration-300",
-                     { 'bg-blue-500 text-white': activeStep === step.id, 'bg-gray-100 text-gray-700': activeStep !== step.id })}
-                     onClick={() => setActiveStep(step.id)}>
-                  {/* Circle with the icon and step number */}
-                  <div className={classNames("rounded-full p-2 text-2xl w-12 h-12 flex items-center justify-center mr-4 shadow",
-                    { 'bg-white text-blue-500': activeStep === step.id, 'bg-blue-500 text-white': activeStep !== step.id })}>
+              {stepsData.slice(0, stepsToShow).map((step) => (
+                <div key={step.id} className={classNames(
+                    "flex items-center p-4 my-2 rounded-2xl shadow transition-all duration-300",
+                    { 'bg-blue-500 text-white': activeStep === step.id, 'bg-gray-100 text-gray-700': activeStep !== step.id }
+                  )}
+                  onClick={() => setActiveStep(step.id)}>
+                  {/* El círculo con el icono y el número del paso */}
+                  <div className={classNames(
+                    "rounded-full p-2 text-2xl w-12 h-12 flex items-center justify-center mr-4 shadow",
+                    { 'bg-white text-blue-500': activeStep === step.id, 'bg-blue-500 text-white': activeStep !== step.id }
+                  )}>
                     {step.id}
                   </div>
-                  {/* Title and description of the step */}
+                  {/* El título y la descripción del paso */}
                   <div>
                     <h3 className="font-bold">{step.title}</h3>
                     {activeStep === step.id && <p className="text-sm">{step.description}</p>}
@@ -70,8 +79,11 @@ export default function PhoneStepsComponent() {
             </div>
           </div>
         </div>
-        {/* Phone button (simulated) */}
-        <div className="absolute inset-x-0 bottom-4 mx-auto w-12 h-12 bg-gray-800 rounded-full"></div>
+        {/* Botón del teléfono (simulado) */}
+        <button className="absolute inset-x-0 bottom-4 mx-auto w-12 h-12 bg-gray-800 rounded-full"
+                onClick={handleButtonClick}>
+          {/* Puedes agregar un ícono o texto al botón si es necesario */}
+        </button>
       </div>
     </div>
   );
