@@ -4,12 +4,6 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 const stepsData = [
-  { 
-    id: 0, 
-    title: "Presiona el botón para ver tus mensajes",
-    description: "",
-    isInitialMessage: true, // Marca especial para el mensaje inicial
-  },
   {
     id: 1,
     title: "Generar número de carné",
@@ -35,40 +29,39 @@ const stepsData = [
     title: "Generar número de carné",
     description: "First you need to generate your ID number. Complete the responsibility discharge and generate your number at: [link](https://umg.edu.gt/newstudents/)"
   },
+  {
+    id: 6,
+    title: "Generar número de carné",
+    description: "First you need to generate your ID number. Complete the responsibility discharge and generate your number at: [link](https://umg.edu.gt/newstudents/)"
+  },
+  
   // ... Agrega aquí más pasos
 ];
 
 
 export default function PhoneStepsComponent() {
   const [activeStep, setActiveStep] = useState(0);
-  const [showSteps, setShowSteps] = useState([stepsData[0]]); // Comienza con el mensaje inicial
+  const [stepsToShow, setStepsToShow] = useState([]);
 
   useEffect(() => {
-    let interval;
-    if (activeStep > 0) { // Cuando activeStep es mayor que 0, comienza la secuencia
-      interval = setInterval(() => {
-        setShowSteps((prevSteps) => {
-          // Encuentra el siguiente paso que no está actualmente mostrado
-          const nextStep = stepsData.find(step => !prevSteps.includes(step));
-          // Si no hay más pasos, limpia el intervalo
-          if (!nextStep) {
-            clearInterval(interval);
-            return prevSteps;
-          }
-          // Agrega el siguiente paso a la lista de pasos mostrados
-          return [...prevSteps, nextStep];
-        });
-      }, 1000); // Cada paso se muestra después de un segundo
+    if (activeStep > 0 && stepsToShow.length < stepsData.length) {
+      const timer = setTimeout(() => {
+        setStepsToShow(prevStepsToShow => [
+          ...prevStepsToShow,
+          stepsData[prevStepsToShow.length]
+        ]);
+      }, 500); // Añade un paso cada medio segundo
+
+      return () => clearTimeout(timer);
     }
-    // Limpia el intervalo si el componente se desmonta
-    return () => clearInterval(interval);
-  }, [activeStep]);
+  }, [activeStep, stepsToShow.length]);
+
+  const handleStepClick = id => {
+    setActiveStep(id); // Activa el paso seleccionado
+  };
 
   const handleButtonClick = () => {
-    // Solo inicia la secuencia si estamos en el mensaje inicial
-    if (activeStep === 0) {
-      setActiveStep(1);
-    }
+    setActiveStep(1); // Comienza la secuencia
   };
 
   return (
@@ -83,21 +76,32 @@ export default function PhoneStepsComponent() {
           </div>
           {/* El contenido de la pantalla */}
           <div className="bg-white overflow-y-scroll h-full">
-            {/* Asegúrate de que cada elemento de paso tiene suficiente espacio */}
-            <div className="space-y-4 p-4">
-              {showSteps.map((step) => (
-                <div key={step.id} className={classNames(
-                    "flex items-center p-4 my-2 rounded-2xl shadow transition-all duration-300",
-                    { 'bg-blue-500 text-white': step.id !== 0, 'bg-gray-100 text-gray-700': step.id === 0 }
+            {/* Mensaje inicial que desaparece después de presionar el botón */}
+            {activeStep === 0 && (
+              <div className="text-center p-4">
+                <p className="font-bold mb-2">Presiona el botón para ver tus mensajes</p>
+                <span className="text-3xl">↓</span>
+              </div>
+            )}
+            {/* Los pasos que se muestran */}
+            <div className="space-y-4 p-4 ">
+              {stepsToShow.map((step, index) => (
+                <div key={step.id} 
+                     onClick={() => handleStepClick(step.id)}
+                     className={classNames(
+                       "flex flex-col items-start p-4 my-2 rounded-2xl shadow cursor-pointer transition-all duration-300",
+                       { 'bg-indigo-600 text-white': activeStep === step.id, 'bg-gray-100 text-gray-700': activeStep !== step.id }
+                     )}
+                >
+                  {/* Círculo con el número del paso */}
+                  <div className={classNames(
+                    "rounded-full p-2 text-2xl w-12 h-12 flex items-center justify-center shadow",
+                    { 'bg-indigo-600 text-white': activeStep === step.id, 'bg-blue-500 text-white': activeStep !== step.id }
                   )}>
-                  {/* Círculo con el icono y el número del paso */}
-                  {step.id !== 0 && (
-                    <div className="rounded-full p-2 text-2xl w-12 h-12 flex items-center justify-center mr-4 shadow bg-blue-500 text-white">
-                      {step.id}
-                    </div>
-                  )}
+                    {step.id}
+                  </div>
                   {/* Título y descripción del paso */}
-                  <div>
+                  <div className="mt-2">
                     <h3 className="font-bold">{step.title}</h3>
                     <p className="text-sm">{step.description}</p>
                   </div>
@@ -105,15 +109,15 @@ export default function PhoneStepsComponent() {
               ))}
             </div>
           </div>
+          
         </div>
-        {/* Botón del teléfono (simulado) */}
-        <button 
-          className="absolute inset-x-0 bottom-4 mx-auto w-12 h-12 bg-gray-800 rounded-full"
-          onClick={handleButtonClick}
-        >
-          {/* Icono o texto para el botón */}
-          {activeStep === 0 && <span className="text-white">↓</span>}
-        </button>
+        {/* Botón del teléfono para iniciar la secuencia de pasos */}
+        {activeStep === 0 && (
+          <button className="absolute inset-x-0 bottom-4 mx-auto w-12 h-12 bg-gray-800 rounded-full"
+                  onClick={handleButtonClick}>
+            {/* Ícono o texto en el botón */}
+          </button>
+        )}
       </div>
     </div>
   );
