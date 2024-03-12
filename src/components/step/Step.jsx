@@ -1,9 +1,15 @@
 // components/PhoneStepsComponent.js
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 const stepsData = [
+  { 
+    id: 0, 
+    title: "Presiona el botón para ver tus mensajes",
+    description: "",
+    isInitialMessage: true, // Marca especial para el mensaje inicial
+  },
   {
     id: 1,
     title: "Generar número de carné",
@@ -34,12 +40,35 @@ const stepsData = [
 
 
 export default function PhoneStepsComponent() {
-  const [activeStep, setActiveStep] = useState(null);
-  const [stepsToShow, setStepsToShow] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
+  const [showSteps, setShowSteps] = useState([stepsData[0]]); // Comienza con el mensaje inicial
+
+  useEffect(() => {
+    let interval;
+    if (activeStep > 0) { // Cuando activeStep es mayor que 0, comienza la secuencia
+      interval = setInterval(() => {
+        setShowSteps((prevSteps) => {
+          // Encuentra el siguiente paso que no está actualmente mostrado
+          const nextStep = stepsData.find(step => !prevSteps.includes(step));
+          // Si no hay más pasos, limpia el intervalo
+          if (!nextStep) {
+            clearInterval(interval);
+            return prevSteps;
+          }
+          // Agrega el siguiente paso a la lista de pasos mostrados
+          return [...prevSteps, nextStep];
+        });
+      }, 1000); // Cada paso se muestra después de un segundo
+    }
+    // Limpia el intervalo si el componente se desmonta
+    return () => clearInterval(interval);
+  }, [activeStep]);
 
   const handleButtonClick = () => {
-    setActiveStep(null); // Reset active step
-    setStepsToShow((current) => (current < stepsData.length ? current + 1 : current));
+    // Solo inicia la secuencia si estamos en el mensaje inicial
+    if (activeStep === 0) {
+      setActiveStep(1);
+    }
   };
 
   return (
@@ -54,25 +83,23 @@ export default function PhoneStepsComponent() {
           </div>
           {/* El contenido de la pantalla */}
           <div className="bg-white overflow-y-scroll h-full">
-            {/* Asegúrate de que cada elemento de paso tiene suficiente espacio para no estar apretado */}
+            {/* Asegúrate de que cada elemento de paso tiene suficiente espacio */}
             <div className="space-y-4 p-4">
-              {stepsData.slice(0, stepsToShow).map((step) => (
+              {showSteps.map((step) => (
                 <div key={step.id} className={classNames(
                     "flex items-center p-4 my-2 rounded-2xl shadow transition-all duration-300",
-                    { 'bg-blue-500 text-white': activeStep === step.id, 'bg-gray-100 text-gray-700': activeStep !== step.id }
-                  )}
-                  onClick={() => setActiveStep(step.id)}>
-                  {/* El círculo con el icono y el número del paso */}
-                  <div className={classNames(
-                    "rounded-full p-2 text-2xl w-12 h-12 flex items-center justify-center mr-4 shadow",
-                    { 'bg-white text-blue-500': activeStep === step.id, 'bg-blue-500 text-white': activeStep !== step.id }
+                    { 'bg-blue-500 text-white': step.id !== 0, 'bg-gray-100 text-gray-700': step.id === 0 }
                   )}>
-                    {step.id}
-                  </div>
-                  {/* El título y la descripción del paso */}
+                  {/* Círculo con el icono y el número del paso */}
+                  {step.id !== 0 && (
+                    <div className="rounded-full p-2 text-2xl w-12 h-12 flex items-center justify-center mr-4 shadow bg-blue-500 text-white">
+                      {step.id}
+                    </div>
+                  )}
+                  {/* Título y descripción del paso */}
                   <div>
                     <h3 className="font-bold">{step.title}</h3>
-                    {activeStep === step.id && <p className="text-sm">{step.description}</p>}
+                    <p className="text-sm">{step.description}</p>
                   </div>
                 </div>
               ))}
@@ -80,9 +107,12 @@ export default function PhoneStepsComponent() {
           </div>
         </div>
         {/* Botón del teléfono (simulado) */}
-        <button className="absolute inset-x-0 bottom-4 mx-auto w-12 h-12 bg-gray-800 rounded-full"
-                onClick={handleButtonClick}>
-          {/* Puedes agregar un ícono o texto al botón si es necesario */}
+        <button 
+          className="absolute inset-x-0 bottom-4 mx-auto w-12 h-12 bg-gray-800 rounded-full"
+          onClick={handleButtonClick}
+        >
+          {/* Icono o texto para el botón */}
+          {activeStep === 0 && <span className="text-white">↓</span>}
         </button>
       </div>
     </div>
