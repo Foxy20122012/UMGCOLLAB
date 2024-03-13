@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import 'componentslibrary/styles/generated/output.css'
 import 'componentslibrary/styles/generated/bgColors.min.css'
+import 'vComponents/styles/generated/output.css'
+import 'vComponents/styles/generated/bgColors.min.css'
 import "../styles/globals.css";
 import I18nProvider from '../plugins/i18nContext'
 
