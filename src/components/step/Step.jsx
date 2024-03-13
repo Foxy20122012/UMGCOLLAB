@@ -84,7 +84,7 @@ export default function PhoneStepsComponent() {
               </div>
             )}
             {/* Los pasos que se muestran */}
-            <div className="space-y-4 p-4 ">
+            <div className="space-y-4 p-4 pb-16 ">
               {stepsToShow.map((step, index) => (
                 <div key={step.id} 
                      onClick={() => handleStepClick(step.id)}
