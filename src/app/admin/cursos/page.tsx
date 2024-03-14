@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
-import APIService from '../../../services/umgService'; 
 import { useTranslations } from 'next-intl';
 import useI18n from '@/hooks/useI18n';
 import { Cursos } from '@/models/interface/Cursos';
@@ -15,19 +14,10 @@ import DynamicForm from "@/components/general/DynamicForm/DynamicForm";
 // import VDialog from "@/components/general/VDialog/VDialog";
 import cursosProps from "@/models/cursos/cursosProp"
 
-
-
-
-
 type Header = {
   text: string;
   value: string;
 };
-
-// //@ts-ignore
-// const DataTable = dynamic(() => import('componentslibrary/dist/DataTable'), {
-//   ssr: false,
-// });
 
 //@ts-ignore
 const DataTable = dynamic(() => import("vComponents/dist/DataTable"), {
@@ -47,33 +37,65 @@ const MyPage = () => {
   const cursosService = new CursosService();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCurso, setSelectedCurso] = useState<Cursos | null>(null);
-  const apiService = new APIService();
-  const [codigo, setCodigo] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('');
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [isOpen, setIsOpen] = useState(false)
-  const [formMode, setFormMode] = useState('insert');
-  const [isEditMode, setIsEditMode] = useState(false);
-const [currentCurso, setCurrentCurso] = useState(null);
+  const [cursoCodigo, setCursoCodigo] = useState('');
+  const [cursoNombre, setCursoNombre] = useState('');
+  const [cursoDescripcion, setCursoDescripcion] = useState('');
+  const [currentCurso, setCurrentCurso] = useState<Cursos | null>(null);
 
+  const [cursoSemestre, setCursoSemestre] = useState<number | null>(null);
+const [cursoCreditos, setCursoCreditos] = useState<number | null>(null);
+
+
+const handleEdit = (curso: Cursos) => {
+  setCurrentCurso(curso);
+  setCursoCodigo(curso.codigo);
+  setCursoNombre(curso.nombre);
+  setCursoDescripcion(curso.descripcion);
+  setCursoSemestre(curso.semestre);
+  setCursoCreditos(curso.creditos);
+  setIsFormVisible(true);
+};
+
+const handleUpdateCurso = async (id: number, curso: Partial<Cursos>) => {
+  try {
+      await cursosService.cursosService.updateCurso(id, curso);
+      fetchCursos();
+      setIsFormVisible(false);
+  } catch (error) {
+      console.error('Error al actualizar el curso:', error);
+  }
+};
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (currentCurso && currentCurso.id) {
+      const updatedCurso = {
+          codigo: cursoCodigo,
+          nombre: cursoNombre,
+          descripcion: cursoDescripcion,
+          semestre: cursoSemestre,
+          creditos: cursoCreditos,
+      };
+      await handleUpdateCurso(currentCurso.id, updatedCurso);
+  } else {
+      console.error('Error: No se ha seleccionado ningún curso para actualizar');
+  }
+};
+
+
+
+
+  
 
   useEffect(() => {
     fetchCursos();
     setHeaders(cursosHeaders() as any);
   }, []);
 
-  useEffect(() => {
-    if (selectedCurso && isEditMode) {
-      setCodigo(selectedCurso.codigo);
-      setNombre(selectedCurso.Curso);
-      setDescripcion(selectedCurso.DescripcionCurso);
-    }
-  }, [selectedCurso, isEditMode]);
-  
+
 
   const values = useMemo(() => cursosItems, [cursosItems]); // Si ya tiene la forma correcta, no necesitas mapear
-
 
   const fetchCursos = async () => {
     try {
@@ -88,60 +110,31 @@ const [currentCurso, setCurrentCurso] = useState(null);
     }
   };
 
-  const handleNewClick = () => {
-    // Resetear el formulario a los valores predeterminados para la creación
-    setCurrentCurso({
-      codigo: '',
-      nombre: '',
-      descripcion: ''
-    });
-    setIsEditMode(false);
-    setIsFormVisible(true);
-  };
+
+  
 
 
-  const handleEdit = (curso: Cursos) => {
-    // Usa spread para crear un nuevo objeto con los datos del curso seleccionado
-    setCurrentCurso({
-      codigo: curso.codigo,
-      nombre: curso.Curso,
-      descripcion: curso.DescripcionCurso
-    });
-    setIsEditMode(true);
-    setIsFormVisible(true);
-  };
-
-// Esta función debería recibir los valores del formulario, no los valores de los estados individuales.
-const handleSubmit = async () => {
-  try {
-    let result;
-    if (isEditMode) {
-      // Asegúrate de que currentCurso tenga el id correcto. Deberías confirmar cómo estás pasando el id.
-      result = await apiService.apiService.callSPUpdate('SPR_CURSOS_U', [currentCurso.id, codigo, nombre, descripcion]);
-    } else {
-      result = await apiService.apiService.callSPInsert('SPR_CURSOS_I', [codigo, nombre, descripcion]);
-    }
-    console.log('Operación exitosa:', result);
-    console.log("error", error)
-    // Cerrar el diálogo y restablecer el estado del formulario
-    setIsFormVisible(false);
-    setIsEditMode(false);
-    setCurrentCurso(null);
-    // Limpieza de los campos del formulario
-    setCodigo('');
-    setNombre('');
-    setDescripcion('');
-    // Recargar la lista de cursos
-    fetchCursos();
-  } catch (error) {
-    console.error('Error al realizar la operación:', error);
-  }
-};
-
-// No olvides eliminar el parámetro `formData` del método `handleSubmit` y asegúrate de que el DynamicForm esté pasando correctamente los valores actuales de los estados del formulario.
 
 
   
+  
+
+const handleDeleteCurso = async (curso: Cursos) => {
+  try {
+    await cursosService.cursosService.deleteCurso(curso.id);
+    // Actualizar la lista de cursos después de la eliminación exitosa
+    fetchCursos();
+  } catch (error) {
+    console.error('Error al eliminar el curso:', error);
+  }
+};
+
+
+  const handleNewClick = () => {
+    setIsFormVisible(true);
+  };
+
+
 
 
   return (
@@ -153,7 +146,9 @@ const handleSubmit = async () => {
         presets={presets}
         i18n={i18n}
         onNewItem={handleNewClick}
-        onEditItem={handleEdit} 
+        // onEditItem={handleEdit} 
+        onEditItem={handleEdit}
+    onDeleteItem={(id) => handleDeleteCurso(id)}
         // showNewButton={false}
         showEditButton={true}
         showDeleteButton={true}
@@ -185,16 +180,67 @@ const handleSubmit = async () => {
       size='sm'
       className='-translate-x-1/2 bg-black bg-opacity-25'
       >
-<DynamicForm
-  formProps={cursosProps}
-  onSubmit={handleSubmit}
-  showCreateButton={!isEditMode} // Muestra este botón solo si NO es modo de edición
-  showUpdateButton={isEditMode} // Muestra este botón solo si es modo de edición
-  initialFormData={isEditMode ? currentCurso : {}}
-  // Añade una key para forzar el reinicio del componente cuando cambia el curso seleccionado
-  key={isEditMode ? currentCurso.codigo : 'new'}
-  // Resto de tus props...
-/>
+
+<form onSubmit={handleSubmit} className="p-4">
+                        <div className="mb-4">
+                            <label htmlFor="codigo" className="block text-sm font-medium text-gray-700">Código</label>
+                            <input
+                                type="text"
+                                id="codigo"
+                                value={cursoCodigo}
+                                onChange={(e) => setCursoCodigo(e.target.value)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre</label>
+                            <input
+                                type="text"
+                                id="nombre"
+                                value={cursoNombre}
+                                onChange={(e) => setCursoNombre(e.target.value)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">Descripción</label>
+                            <textarea
+                                id="descripcion"
+                                value={cursoDescripcion}
+                                onChange={(e) => setCursoDescripcion(e.target.value)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="semestre" className="block text-sm font-medium text-gray-700">Semestre</label>
+                            <input
+                                type="number"
+                                id="semestre"
+                                value={cursoSemestre || ''}
+                                onChange={(e) => setCursoSemestre(parseInt(e.target.value) || null)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="creditos" className="block text-sm font-medium text-gray-700">Créditos</label>
+                            <input
+                                type="number"
+                                id="creditos"
+                                value={cursoCreditos || ''}
+                                onChange={(e) => setCursoCreditos(parseInt(e.target.value) || null)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                        </div>
+                        <div className="flex justify-end">
+                            <button
+                                type="submit"
+                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Actualizar
+                            </button>
+                        </div>
+                    </form>
+
             <div className="flex justify-end mt-4">
     <button
       onClick={() => setIsFormVisible(false)} // Cierra el modal o dialogo
@@ -206,38 +252,7 @@ const handleSubmit = async () => {
       </VDialog>
       }
 
-<div>
-<div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="codigo">Código:</label>
-        <input
-          type="text"
-          id="codigo"
-          value={codigo}
-          onChange={(e) => setCodigo(e.target.value)}
-          required
-        />
 
-        <label htmlFor="nombre">Nombre:</label>
-        <input
-          type="text"
-          id="nombre"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          required
-        />
-
-        <label htmlFor="descripcion">Descripción:</label>
-        <textarea
-          id="descripcion"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
-
-        <button type="submit">Insertar Curso</button>
-      </form>
-    </div>
-</div>
     </div>
   );
 };

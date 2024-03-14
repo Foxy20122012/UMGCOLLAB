@@ -1,11 +1,11 @@
 const cursosHeaders = () => {
   return [
-    { text: 'CursoId', value: 'CursoId' },
+    { text: 'id', value: 'id' },
     { text: 'Codigo', value: 'codigo'},
-    { text: 'Curso', value: 'Curso' },
-    { text: 'DescripcionCurso', value: 'DescripcionCurso' },
-    { text: 'Semestre', value: 'Semestre' },
-    { text: 'Creditos', value: 'Creditos'},
+    { text: 'nombre', value: 'nombre' },
+    { text: 'descripcion', value: 'descripcion' },
+    { text: 'semestre', value: 'semestre' },
+    { text: 'creditos', value: 'creditos'},
   ];
 };
 
