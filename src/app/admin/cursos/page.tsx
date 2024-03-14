@@ -78,10 +78,13 @@ const handleSubmit = async (e: React.FormEvent) => {
           creditos: cursoCreditos,
       };
       await handleUpdateCurso(currentCurso.id, updatedCurso);
+      setIsFormVisible(false);  // Cierra el modal
+      fetchCursos();            // Recarga la data
   } else {
       console.error('Error: No se ha seleccionado ningún curso para actualizar');
   }
 };
+
 
 
 
@@ -174,8 +177,8 @@ const handleDeleteCurso = async (curso: Cursos) => {
 )}
 
 {isFormVisible && isFormVisible === true && 
-      <VDialog
 
+      <VDialog
       isOpen={isFormVisible}
       size='sm'
       className='-translate-x-1/2 bg-black bg-opacity-25'
