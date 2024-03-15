@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import useI18n from '@/hooks/useI18n';
 import { Cursos } from '@/models/interface/Cursos';
 import presets from '@/utils/globalPresets';
-import cursosHeaders from '@/models/cursos/encabezadoModel';
+import cursosModel from '@/models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import ViewDetailsModal from './ViewDetailsModal';
 import DynamicForm from "@/components/general/DynamicForm/DynamicForm";
@@ -95,7 +95,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   useEffect(() => {
     fetchCursos();
-    setHeaders(cursosHeaders() as any);
+    setHeaders(cursosModel() as any);
   }, []);
 
 

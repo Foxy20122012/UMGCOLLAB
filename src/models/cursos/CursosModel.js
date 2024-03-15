@@ -1,4 +1,4 @@
-const cursosHeaders = () => {
+const cursosModel = () => {
   return [
     { text: 'id', value: 'id' },
     { text: 'Codigo', value: 'codigo'},
@@ -9,4 +9,4 @@ const cursosHeaders = () => {
   ];
 };
 
-export default cursosHeaders;
+export default cursosModel;

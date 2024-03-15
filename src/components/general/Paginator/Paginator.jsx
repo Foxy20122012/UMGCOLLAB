@@ -152,12 +152,12 @@ export default function Paginator ({ fontClassHeader, fontClassCelda, initialInd
   return (
     <div className='flex px-4 py-2 font-semibold tracking-wide border-t w-full items-center justify-between flex-wrap border rounded-bl-lg rounded-br-lg bg-white'>
       <div className={` sm:flex items-center pr-4  hidden  ${fontClassHeader ?? fsHeader} `}>
-        {t('dataIterator.pageText', { 0: initialIndex, 1: finalIndex, 2: totalItems })}
+        {/* {i18n.t('dataIterator.pageText', { 0: initialIndex, 1: finalIndex, 2: totalItems })} */}
       </div>
       <div className='flex items-center sm:flex-grow-0 flex-grow flex-wrap '>
         <div className='flex items-center '>
           <div className={`sm:flex hidden pr-2  ${fontClassHeader ?? fsHeader} `}>
-            { textRowsPerPage ?? t('dataIterator.roswPerPageText')}
+            { textRowsPerPage ?? t('itemsForPage')}
           </div>
           <select
             value={_selectedRowsPerPage}
