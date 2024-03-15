@@ -1,5 +1,10 @@
 {
   "general": {
+    "common.newItem": "Nuevo ",
+    "common.actions": "Acciones",
+    "common.editRow": "Editar",
+    "common.deleteRow": "Eliminar",
+    "topics": "Temas",
     "register": "Registrarse",
     "Home_Page": "Pagina de inicio",
     "type_your_data": "Ingresa tus datos",

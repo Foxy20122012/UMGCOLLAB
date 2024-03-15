@@ -11,8 +11,10 @@ import cursosHeaders from '@/models/cursos/encabezadoModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import ViewDetailsModal from './ViewDetailsModal';
 import DynamicForm from "@/components/general/DynamicForm/DynamicForm";
+import DataTable from "@/components/general/DataTable/DataTable"
 // import VDialog from "@/components/general/VDialog/VDialog";
 import cursosProps from "@/models/cursos/cursosProp"
+
 
 type Header = {
   text: string;
@@ -20,9 +22,9 @@ type Header = {
 };
 
 //@ts-ignore
-const DataTable = dynamic(() => import("vComponents/dist/DataTable"), {
-  ssr: false,
-});
+// const DataTable = dynamic(() => import("vComponents/dist/DataTable"), {
+//   ssr: false,
+// });
 
 //@ts-ignore
 const VDialog = dynamic(() => {return import("vComponents/dist/VDialog");},
@@ -30,7 +32,7 @@ const VDialog = dynamic(() => {return import("vComponents/dist/VDialog");},
 );
 
 const MyPage = () => {
-  const i18n = useI18n();
+  
   const t = useTranslations('general');
   const [cursosItems, setCursosItems] = useState<Cursos[]>([]);
   const [headers, setHeaders] = useState<Header[]>([]);
@@ -147,7 +149,6 @@ const handleDeleteCurso = async (curso: Cursos) => {
         headers={headers}
         items={values}
         presets={presets}
-        i18n={i18n}
         onNewItem={handleNewClick}
         // onEditItem={handleEdit} 
         onEditItem={handleEdit}
@@ -155,7 +156,7 @@ const handleDeleteCurso = async (curso: Cursos) => {
         // showNewButton={false}
         showEditButton={true}
         showDeleteButton={true}
-        onSearch={true}
+        // onSearch={true}
         PrependActionButtons={(item: any) => (
           <button
             className=""
