@@ -152,7 +152,7 @@ const ResponsiveContainer = ({ children }) => {
             userOptionStyles="via-useroptions-navbar"
             userOptionSelectedStyles="via-useroptions-selected-navbar"
             onClickLogout={() => doLogout()}
-            onClickProfile={() => router.push(`${presets.locations.profile}`)}
+            onClickProfile={() => router.push(`${presets.locations.profileAdmin}`)}
             title={title}
             userObj={userObj}
             presets={presets}

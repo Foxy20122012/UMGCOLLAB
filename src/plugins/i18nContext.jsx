@@ -4,6 +4,10 @@ import { createContext, useState, useEffect } from 'react';
 import useHasMounted from '@/hooks/useHasMounted';
 import APIService from '../services/umgService';
 import useLoading from "@/hooks/useLoading"
+import dynamic from 'next/dynamic'
+import presets from "@/utils/globalPresets"
+
+const LoadingSpinner = dynamic(() => { return import("vComponents/dist/Loading") }, { ssr: false })
 
 const defaultLanguage = 'es';
 export const I18nContext = createContext();
@@ -45,7 +49,7 @@ const I18nProvider = ({ children, locale = defaultLanguage }) => {
   // Renderizar proveedor con el contexto actualizado
   return (
     <I18nContext.Provider value={{ t, langIsLoaded }}>
-      {langIsLoaded ? children : <loading/>}
+      {langIsLoaded ? children :  <LoadingSpinner loading={loading} image={presets.images.imageLoader} background={'backgroundLoader'} color={'colorLoader'} />}
     </I18nContext.Provider>
   );
 };
