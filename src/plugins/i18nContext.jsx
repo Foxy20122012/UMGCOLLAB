@@ -3,6 +3,7 @@
 import { createContext, useState, useEffect } from 'react';
 import useHasMounted from '@/hooks/useHasMounted';
 import APIService from '../services/umgService';
+import useLoading from "@/hooks/useLoading"
 
 const defaultLanguage = 'es';
 export const I18nContext = createContext();
@@ -12,6 +13,7 @@ const I18nProvider = ({ children, locale = defaultLanguage }) => {
   const [messages, setMessages] = useState({});
   const hasMounted = useHasMounted();
   const apiService = new APIService();
+  const loading = useLoading()
 
   // Función para traducir los identificadores a mensajes
   const t = (key) => messages[key] || key;
@@ -43,7 +45,7 @@ const I18nProvider = ({ children, locale = defaultLanguage }) => {
   // Renderizar proveedor con el contexto actualizado
   return (
     <I18nContext.Provider value={{ t, langIsLoaded }}>
-      {langIsLoaded ? children : <p>Cargando traducciones...</p>}
+      {langIsLoaded ? children : <loading/>}
     </I18nContext.Provider>
   );
 };

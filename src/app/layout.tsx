@@ -23,9 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <I18nProvider locale="es"> */}
+        <I18nProvider locale="es">
           {children}
-        {/* </I18nProvider> */}
+        </I18nProvider>
       </body>
     </html>
   );

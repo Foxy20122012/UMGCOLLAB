@@ -368,7 +368,7 @@ export default function Sidebar ({ sidebarOpen, setSidebarOpen = () => {}, menu,
                 onClick={() => onClickLogout()}
               >
                 <ArrowLeftOnRectangleIcon className='h-6 w-6 pr-2' />
-                <div className='flex-1 ml-3 text-left whitespace-nowrap'>{i18n.t('common.logout')}</div>
+                <div className='flex-1 ml-3 text-left whitespace-nowrap'>Salir</div>
               </button>
             </li>
           </ul>

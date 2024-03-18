@@ -11,12 +11,14 @@ import dynamic from 'next/dynamic';
 import useLoading from '../hooks/useLoading';
 import useHasMounted from '../hooks/useHasMounted';
 import useI18n from '../hooks/useI18n';
-import Sidebar from '@/components/general/Sidebar/Sidebar';
+// import Sidebar from '@/components/general/Sidebar/Sidebar';
 
 export const LayoutContext = createContext();
 
 const Footer = dynamic(() => import('vComponents/dist/Footer'), { ssr: false });
 const Navbar = dynamic(() => import('vComponents/dist/Navbar'), { ssr: false });
+
+const Sidebar = dynamic(() => import('@/components/general/Sidebar/Sidebar'), { ssr: false });
 
 const ResponsiveContainer = ({ children }) => {
   // const router = useRouter()
