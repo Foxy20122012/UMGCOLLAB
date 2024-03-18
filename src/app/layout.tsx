@@ -6,6 +6,7 @@ import 'vComponents/styles/generated/output.css'
 import 'vComponents/styles/generated/bgColors.min.css'
 import "../styles/globals.css";
 import I18nProvider from '../plugins/i18nContext'
+import LoadingProvider from '@/plugins/LoadingContext'
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,8 +25,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <I18nProvider locale="es">
+      <LoadingProvider>
+        
           {children}
-        </I18nProvider>
+       
+        </LoadingProvider>
+         </I18nProvider>
       </body>
     </html>
   );

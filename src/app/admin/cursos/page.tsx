@@ -148,6 +148,7 @@ const handleDeleteCurso = async (curso: Cursos) => {
       //@ts-ignore
         headers={headers}
         items={values}
+        //@ts-ignore
         presets={presets}
         onNewItem={handleNewClick}
         // onEditItem={handleEdit} 
@@ -178,7 +179,7 @@ const handleDeleteCurso = async (curso: Cursos) => {
 )}
 
 {isFormVisible && isFormVisible === true && 
-
+//@ts-ignore
       <VDialog
       isOpen={isFormVisible}
       size='sm'

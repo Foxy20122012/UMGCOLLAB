@@ -1,3 +1,4 @@
+'use client'
 import { createContext, useContext, useState } from "react"
 import dynamic from 'next/dynamic'
 import presets from "../utils/globalPresets"
@@ -6,7 +7,8 @@ const LoadingSpinner = dynamic(() => { return import("vComponents/dist/Loading")
 
 export const LoadingContext = createContext()
 
-const LoadingProvider = ({ children }) => {
+const 
+LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
 
   const loadingWrapper = {
