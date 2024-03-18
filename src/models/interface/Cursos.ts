@@ -6,11 +6,11 @@ export interface Tema {
 }
 
 export interface Cursos {
-  CursoId: number;
+  id: number;
   codigo: string;
-  Curso: string;
-  DescripcionCurso: string;
-  Semestre: number;
-  Creditos: number;
-  Temas: Tema[];
+  nombre: string;
+  descripcion: string;
+  semestre: number | null;
+  creditos: number | null;
+  temas: Tema[];
 }
