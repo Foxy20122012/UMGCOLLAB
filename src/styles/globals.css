@@ -25,8 +25,85 @@
 	background-color: rgba(221, 233, 233, 0.3);
 }
 
+/* Estilos para la "muesca" del teléfono */
+.phone-notch {
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60px;
+	height: 10px;
+	background-color: #1F2937;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	z-index: 10;
+  }
+  
+  /* Estilos para el botón simulado del teléfono */
+  .phone-button {
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30px;
+	height: 30px;
+	background-color: #1F2937;
+	border-radius: 50%;
+	z-index: 10;
+  }
+  
+  
+  /* Añadir algunos estilos globales para el componente si es necesario */
+  .phone-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+  }
+  
+  .phone-frame {
+	background-color: #E5E7EB; /* Fondo de la pantalla del teléfono, ajusta según tu preferencia */
+	border: 2px solid #4B5563; /* Borde del teléfono, ajusta según tu preferencia */
+	border-radius: 2.5rem; /* Borde redondeado del teléfono */
+	overflow: hidden; /* Asegura que nada se desborde fuera del borde redondeado */
+	width: 320px; /* Ancho del teléfono, ajusta según tu preferencia */
+	height: 700px; /* Alto del teléfono, ajusta según tu preferencia */
+	position: relative; /* Para posicionar la muesca y el botón */
+  }
+  
+  .phone-screen {
+	background-color: #FFFFFF; /* Fondo del contenido de la pantalla */
+	padding: 1rem; /* Espaciado interno para el contenido */
+	height: 100%; /* Alto completo para contener todos los pasos */
+  }
+  
+
+
+  
+  /* Improved style for step items */
+  .step-item {
+	border: 1px solid #e2e8f0; /* A soft border */
+	background-color: #f8fafc; /* A slightly different background to stand out */
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Subtle shadow for depth */
+  }
+  
+  /* Highlight for the active step */
+  .active-step {
+	background-color: #60a5fa; /* A light blue for the active step */
+	color: #ffffff; /* White text color for contrast */
+	border-color: #3b82f6; /* Darker border color for the active step */
+  }
+  
+  /* Style updates for step icons */
+  .step-icon-container {
+	/* ... (existing styles) */
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Consistent shadow with step items */
+  }
+  
+  /* ... (rest of your styles) */
+  
+  /* Make sure to import this CSS file in your project */
+  
 /* Additional Styles */
-/* @import 'additional-styles/toastify.css'; */
+@import 'additional-styles/toastify.css';
 @import 'component-styles/loading.css';
 @import 'component-styles/sidebar.css';
 /* @import 'component-styles/navbar.css'; */

@@ -1,0 +1,189 @@
+import React, { ReactNode } from 'react';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import HorizontalLine from '@/components/atoms/HorizontalLine'//components/atoms/HorizontalLine
+import LogoutButton from '@/components/atoms/LogoutButton'
+import I18nProvider from '@/plugins/i18nContext'
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "ADMIN",
+  description: "Seccion del Administrador y gestor de la pagina",
+};
+
+type Props = {
+  children: ReactNode;
+};
+      // <main>
+      // <I18nProvider locale="es">
+      //   {children}
+      //   </I18nProvider>
+      //   </main>
+const AdminLayout = ({ children }: Props) => {
+  const t = useTranslations('general')
+  return (
+    <>
+          <main className="flex-grow">
+        <nav className="flex flex-col py-[16px] px-[16px] md:px-[88px] items-start gap-2 self-stretch bg-primary">
+          <Link href={'/store'}>
+            <Image
+              src={"https://pbs.twimg.com/media/CZbf6UrVIAAMrOY.jpg"}
+              alt={'Acate logo'}
+              width={176}
+              height={40}
+              className="w-[76px] h-[17.273px] flex items-center md:w-[176px] md:h-[40px]"
+            />
+          </Link>
+        </nav>
+        {/* <ReduxProvider>
+          <div className="flex flex-col items-center justify-between py-0 md:pb-0 ">
+            <div className=" md:w-[550px]  fixed top-10 z-30">
+              <MessageToastManager />
+            </div>
+          </div>
+        </ReduxProvider> */}
+
+        <div className="flex flex-col items-center justify-between">
+          <div className="flex flex-col items-center gap-4 w-full bg-background0">
+            <div className=" w-full  flex flex-col md:flex-row  ">
+              <div
+                className={`flex w-full md:w-1/5 bg-background3 pl-[20px] md:pl-[88px] pr-6`}
+              >
+                <div className=" flex flex-col  w-full py-4">
+                  <div className=" text-sm font-normal font-medium leading-normal tracking-tight uppercase text-title mt-4 w-full">
+                    {t('dashboard')}
+                  </div>
+                  <Link
+                    href={'/admin/dashboard'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_dashboard"
+                  >
+                    {t('dashboard')}
+                  </Link>
+
+                  <HorizontalLine className="mt-3" bold />
+
+                  <div className=" text-sm font-normal font-medium leading-normal tracking-tight uppercase text-title mt-4 w-full">
+                    {t('admin')}
+                  </div>
+
+                  <Link
+                    href={'/admin/editorial'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_editorial"
+                  >
+                    {t('editorial')}
+                  </Link>
+                  <Link
+                    href={'/admin/categories'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_categories"
+                  >
+                    {t('categories')}
+                  </Link>
+                  <Link
+                    href={'/admin/conditions'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_conditions"
+                  >
+                    {t('conditions')}
+                  </Link>
+                  <Link
+                    href={'/admin/products'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_products"
+                  >
+                    {t('products')}
+                  </Link>
+                  <Link
+                    href={'/admin/requests'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_requests"
+                  >
+                    {t('requests')}
+                  </Link>
+                  <Link
+                    href={'/admin/coupons'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_coupons"
+                  >
+                    {t('coupons')}
+                  </Link>
+                  <Link
+                    href={'/admin/questions'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_questions"
+                  >
+                    {t('questions')}
+                  </Link>
+                  <Link
+                    href={'/admin/users'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_users"
+                  >
+                    {t('users')}
+                  </Link>
+
+
+                  <Link
+                    href={'/admin/carts'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_cards"
+                  >
+                    {t('carts')}
+                  </Link>
+   
+ 
+   
+
+                  <HorizontalLine className="mt-3" bold />
+                  <div className=" text-sm font-normal font-medium leading-normal tracking-tight uppercase text-title mt-4 w-full">
+                    {t('services')}
+                  </div>
+                  <Link
+                    href={'/admin/services'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_subscriptions_services"
+                  >
+                    {t('services')}
+                  </Link>
+                  <Link
+                    href={'/admin/userServices'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_user_services"
+                  >
+                    {t('users')}
+                  </Link>
+                  <Link
+                    href={'/admin/subscriptions'}
+                    className=" text-md text-subtitle font-medium w-full mt-3 admin_nav_items"
+                    id="admin_nav_subscriptions_payments"
+                  >
+                    {t('charges')}
+                  </Link>
+                  <HorizontalLine className="mt-3" bold />
+
+                  <div className=" text-sm font-normal font-medium leading-normal tracking-tight uppercase text-title mt-4 w-full">
+                    {t('others')}
+                  </div>
+                  <LogoutButton />
+                </div>
+              </div>
+              <div className="flex w-full md:w-4/5 bg-background1">
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      
+    </>
+  );
+};
+
+export default AdminLayout;
