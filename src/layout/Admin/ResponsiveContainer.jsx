@@ -5,17 +5,18 @@ import { useEffect, useState, createContext } from 'react';
 import { CogIcon, InformationCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/navigation';
 
-import environment from '../utils/environment';
+import environment from '../../utils/environment';
 import presets from '@/utils/globalPresets';
 import dynamic from 'next/dynamic';
-import useLoading from '../hooks/useLoading';
-import useHasMounted from '../hooks/useHasMounted';
-import useI18n from '../hooks/useI18n';
+import useLoading from '../../hooks/useLoading';
+import useHasMounted from '../../hooks/useHasMounted';
+import useI18n from '../../hooks/useI18n';
+import Footer from "@/components/general/Footer/Footer"
 // import Sidebar from '@/components/general/Sidebar/Sidebar';
 
 export const LayoutContext = createContext();
 
-const Footer = dynamic(() => import('vComponents/dist/Footer'), { ssr: false });
+// const Footer = dynamic(() => import('vComponents/dist/Footer'), { ssr: false });
 const Navbar = dynamic(() => import('vComponents/dist/Navbar'), { ssr: false });
 
 const Sidebar = dynamic(() => import('@/components/general/Sidebar/Sidebar'), { ssr: false });
@@ -32,6 +33,7 @@ const ResponsiveContainer = ({ children }) => {
   const [token, setToken] = useState('');
   // const [router, setRouter] = useState(null);
   const router = useRouter();
+  
 
 
   useEffect(() => {
@@ -82,38 +84,87 @@ const ResponsiveContainer = ({ children }) => {
       id_menu: 1,
       title: 'Cursos',
       icon: 'UserCircleIcon',
-      path: '/admin/cursos',
       type: 'opcion',
       id_menu_padre: null,
-      children: [
-        {
-          id_menu: 2,
-          title: 'Información',
-          icon: 'InformationCircleIcon',
-          path: '/informacion',
-          type: 'opcion',
-          id_menu_padre: 1
-        }
-      ]
     },
     {
       id_menu: 2,
+      title: 'Cursos',
+      icon: 'UserCircleIcon',
+      path: '/admin/cursos',
+      type: 'opcion',
+      id_menu_padre: 1,
+    },
+    {
+      id_menu: 3,
+      title: 'Temas',
+      icon: 'InformationCircleIcon',
+      path: '/admin/topics',
+      type: 'opcion',
+      id_menu_padre: 1
+    },
+    {
+      id_menu: 4,
       title: 'Post',
       icon: 'UserCircleIcon',
-      path: '/admin/post',
       type: 'opcion',
       id_menu_padre: null,
-      children: [
-        {
-          id_menu: 2,
-          title: 'Información',
-          icon: 'InformationCircleIcon',
-          path: '/informacion',
-          type: 'opcion',
-          id_menu_padre: 1
-        }
-      ]
-    }
+    },
+    {
+      id_menu: 5,
+      title: 'Post Catedraticos',
+      icon: 'UserCircleIcon',
+      path: '/admin/cursos',
+      type: 'opcion',
+      id_menu_padre: 4,
+    },
+    {
+      id_menu: 6,
+      title: 'Post Alumnos',
+      icon: 'InformationCircleIcon',
+      path: '/admin/post',
+      type: 'opcion',
+      id_menu_padre: 4
+    },
+    {
+      id_menu: 7,
+      title: 'Post Ex-Alumnos',
+      icon: 'InformationCircleIcon',
+      path: '/admin/post',
+      type: 'opcion',
+      id_menu_padre: 4
+    },
+    {
+      id_menu: 8,
+      title: 'Pendientes de aprobar',
+      icon: 'InformationCircleIcon',
+      path: '/admin/post',
+      type: 'opcion',
+      id_menu_padre: 4
+    },
+    {
+      id_menu: 9,
+      title: 'Configuración',
+      icon: 'CogIcon',
+      type: 'opcion',
+      id_menu_padre: null
+    },
+    {
+      id_menu: 10,
+      title: 'Intenacionalización I18n',
+      icon: 'InformationCircleIcon',
+      path: '/admin/i18n',
+      type: 'opcion',
+      id_menu_padre: 9
+    },
+    {
+      id_menu: 11,
+      title: 'Configuración',
+      icon: 'CogIcon',
+      path: '/admin/config',
+      type: 'opcion',
+      id_menu_padre: 9
+    },
   ];
 
   const environment = {
@@ -166,7 +217,10 @@ const ResponsiveContainer = ({ children }) => {
         </div>
         
       </div>
-      <Footer />
+      <Footer 
+      imageUrl="/icon.jpeg"
+      autor='Instituto Francisco Marroquin'
+      />
     </LayoutContext.Provider>
   );
 };

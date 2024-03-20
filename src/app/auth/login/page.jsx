@@ -6,10 +6,10 @@ import { EyeIcon, EyeSlashIcon, KeyIcon, UserIcon } from '@heroicons/react/20/so
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { signIn } from 'next-auth/react'
 import { FaUserGroup } from "react-icons/fa6";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import AuthService from '../../../services/umgService'; // Asegúrate de que la ruta de importación sea correcta
+import AuthService from '../../../services/umgService'; 
 
 const RegisterForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -17,32 +17,39 @@ const RegisterForm = () => {
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
   const authService = new AuthService();
 
-  const onSubmitAdmin = async (data) => {
-    try {
-      const response = await authService.authService.loginAdmin(data.email, data.password);
-      localStorage.setItem('token', response.token);
-      toast.success('¡Bienvenido, administrador!');
-      window.location.href = '/admin/profile';
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('Credenciales incorrectas');
-    }
-  };
 
-  const onSubmitUsers = async (data) => {
-    try {
-      const response = await authService.authService.loginUser(data.email, data.password);
-      localStorage.setItem('token', response.token);
-      toast.success('¡Bienvenido, usuario!', {
-        style: { backgroundColor: 'green', color: 'white' },
-      });
-      
-      window.location.href = '/user/profile';
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('Credenciales incorrectas');
+  
+const onSubmitAdmin = async (data) => {
+  try {
+    const result = await signIn("admin", { redirect: false, email: data.email, password: data.password });
+    if (result.error) {
+      throw new Error(result.error);
     }
-  };
+    toast.success('¡Bienvenido, administrador!');
+    window.location.href = '/admin/dashboard';
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Credenciales incorrectas');
+  }
+};
+
+const onSubmitUsers = async (data) => {
+  try {
+    const result = await signIn("user", { redirect: false, email: data.email, password: data.password });
+    if (result.error) {
+      throw new Error(result.error);
+    }
+    toast.success('¡Bienvenido, usuario!', {
+      style: { backgroundColor: 'green', color: 'white' },
+    });
+    window.location.href = '/student/dashboard';
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Credenciales incorrectas');
+  }
+};
+
+  
 
   const handleAdminLoginFormClick = () => {
     setShowAdminLoginForm(true);

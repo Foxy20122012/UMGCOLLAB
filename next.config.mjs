@@ -1,6 +1,10 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_API_URL: 'https://umgcollab.azurewebsites.net/',
+    JWT_SECRET: '4a5b9f8c67eafcd2d3b1e5270a84e6f1',
+  },
   redirects() {
     return [
       {

@@ -35,7 +35,7 @@ const MyPage = () => {
 
 
   return (
-    <div>
+    <div className='text-center font-bold text-xl'>
 
   
      
