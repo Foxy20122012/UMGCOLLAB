@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import { FiSearch } from 'react-icons/fi';
 
 const PostsPage = () => {
     const [posts, setPosts] = useState([]);
@@ -150,15 +151,26 @@ const PostsPage = () => {
 
     return (
         <div>
+
+<div className="fixed top-0 left-0 w-full bg-white shadow-md z-10 p-4 flex items-center justify-between">
+    <div className="flex items-center">
+        {/* Contenido de la barra de navegación aquí */}
+        <div className="relative">
             <input
                 type="text"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                placeholder="Search by title, content, or course name"
-                className="block w-full p-2 border border-gray-300 rounded mb-4"
+                placeholder="Busca tus post favoritos"
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-full"
             />
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        </div>
+    </div>
+    {/* Otros elementos de la barra de navegación si los hay */}
+</div>
+          
         
-<div className="max-w-xl mx-auto py-8">
+<div className="max-w-xl mx-auto py-16">
     <h1 className="text-3xl font-bold mb-6">Posts</h1>
     <form onSubmit={editing ? handleUpdate : handleSubmit} className="mb-6">
         <input
