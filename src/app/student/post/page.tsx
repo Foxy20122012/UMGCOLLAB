@@ -11,6 +11,7 @@ const PostsPage = () => {
     const [error, setError] = useState(null);
     const [editing, setEditing] = useState(false);  // Nuevo estado para manejar si estás en modo edición
     const [editPostId, setEditPostId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchPosts();
@@ -126,6 +127,17 @@ const PostsPage = () => {
             }
         }
     };
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+     // Filtrar posts basándose en el término de búsqueda
+     const filteredPosts = posts.filter((post) =>
+     post.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     post.contenido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     post.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+ );
     
 
     if (loading) {
@@ -137,6 +149,15 @@ const PostsPage = () => {
     }
 
     return (
+        <div>
+            <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder="Search by title, content, or course name"
+                className="block w-full p-2 border border-gray-300 rounded mb-4"
+            />
+        
 <div className="max-w-xl mx-auto py-8">
     <h1 className="text-3xl font-bold mb-6">Posts</h1>
     <form onSubmit={editing ? handleUpdate : handleSubmit} className="mb-6">
@@ -169,24 +190,28 @@ const PostsPage = () => {
             </button>
         )}
     </form>
-    <ul className="space-y-4">
-        {posts.map((post) => (
-            <li key={post.id} className="p-4 border border-gray-200 rounded">
-                <h2 className="text-xl font-semibold">{post.titulo}</h2>
-                <p className="mt-2">{post.contenido}</p>
-                <p className="mt-2 font-medium">{post.nombre}</p>
-                <div className="mt-4">
-                    <button onClick={() => handleEdit(post)} className="bg-yellow-500 text-white py-1 px-3 rounded mr-2">
-                        Edit
-                    </button>
-                    <button onClick={() => handleDelete(post.id)} className="bg-red-500 text-white py-1 px-3 rounded">
-                        Delete
-                    </button>
-                </div>
-            </li>
-        ))}
-    </ul>
+
 </div>
+    <ul className="space-y-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {filteredPosts.map((post) => (
+                    <div key={post.id} className="p-4 border border-gray-200 rounded">
+                        <h2 className="text-xl font-semibold">{post.titulo}</h2>
+                        <p className="mt-2">{post.contenido}</p>
+                        <p className="mt-2 font-medium">{post.nombre}</p>
+                        <div className="mt-4">
+                            <button onClick={() => handleEdit(post)} className="bg-yellow-500 text-white py-1 px-3 rounded mr-2">
+                                Edit
+                            </button>
+                            <button onClick={() => handleDelete(post.id)} className="bg-red-500 text-white py-1 px-3 rounded">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
+                </div>
+    </ul>
+    </div>
 
     );
 };
