@@ -41,7 +41,7 @@ const PostsPage = () => {
         }
     };
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const token = localStorage.getItem('token');
@@ -68,7 +68,7 @@ const PostsPage = () => {
 
 
     
-    const handleEdit = (post: any) => {
+    const handleEdit = (post) => {
         // Configura el formulario para la edición
         setEditing(true);
         setEditPostId(post.id);
@@ -77,7 +77,7 @@ const PostsPage = () => {
         setCourseName(post.nombre);
     };
 
-    const handleUpdate = async (event: any) => {
+    const handleUpdate = async (event) => {
         event.preventDefault();
         try {
             const token = localStorage.getItem('token');

@@ -3,7 +3,8 @@ import {
 } from '@/models/interface/Cursos'
 
 class CursosService {
-    getCursos = async (): Promise<any> => {
+
+    getCursos = async (): Promise<Cursos> => {
       try {
         const response = await fetch('https://umgcollab.azurewebsites.net/api/cursos', {
           method: 'GET',
@@ -49,7 +50,8 @@ class CursosService {
       
 
     // Método para eliminar un curso
-    deleteCurso = async (id: number): Promise<void> => {
+    deleteCurso = async (id: number): Promise<void
+    > => {
       try {
         const response = await fetch(`https://umgcollab.azurewebsites.net/api/cursos/${id}`, {
           method: 'DELETE',
@@ -66,6 +68,51 @@ class CursosService {
         return Promise.reject('ERROR: ' + JSON.stringify(err));
       }
     };
+
+    // Método para obtener el archivo Excel de un curso por ID
+getCursoExcelId = async (id: number): Promise<Blob> => {
+  try {
+    const response = await fetch(`https://umgcollab.azurewebsites.net/api/cursos/${id}/excel`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      },
+    });
+
+    if (!response.ok) {
+      const res = await response.json();
+      return Promise.reject(res.message);
+    }
+
+    return await response.blob();
+  } catch (err: any) {
+    return Promise.reject('ERROR: ' + JSON.stringify(err));
+  }
+};
+
+//Metodo para Obtener el archivo excel generar de todos los cursos
+
+
+getCursoExcel = async (): Promise<Blob> => {
+  try {
+    const response = await fetch('https://umgcollab.azurewebsites.net/api/cursosExcel', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      },
+    });
+
+    if (!response.ok) {
+      const res = await response.json();
+      return Promise.reject(res.message);
+    }
+
+    return await response.blob();
+  } catch (err: any) {
+    return Promise.reject('ERROR: ' + JSON.stringify(err));
+  }
+};
+
     
   }
   
