@@ -9,6 +9,7 @@ import { Cursos } from '@/models/interface/Cursos';
 import presets from '@/utils/globalPresets';
 import cursosModel from '@/models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
+import { SiMicrosoftexcel } from "react-icons/si";
 import ViewDetailsModal from './ViewDetailsModal';
 import DynamicForm from "@/components/general/DynamicForm/DynamicForm";
 import DataTable from "@/components/general/DataTable/DataTable"
@@ -115,9 +116,41 @@ const handleSubmit = async (e: React.FormEvent) => {
     }
   };
 
+//Evento para genera el Excel por id de curso
 
+const handleDownloadExcelID = async (id: number) => {
+  try {
+    const blob = await cursosService.cursosService.getCursoExcelId(id);
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `curso_${id}.xlsx`; // Nombre del archivo con el ID del curso
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error al descargar el archivo Excel:', error);
+  }
+};
+
+//Evento para generar el excel general de todos los cursos 
   
 
+const handleDownloadExcel = async () => {
+  try {
+    const blob = await cursosService.cursosService.getCursoExcel();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'cursos.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  } catch (error) {
+    console.error('Error al descargar el archivo Excel:', error);
+  }
+};
 
 
 
@@ -144,6 +177,9 @@ const handleDeleteCurso = async (curso: Cursos) => {
 
   return (
     <div>
+      <div>
+        <button onClick={handleDownloadExcel} className=''><SiMicrosoftexcel /></button>
+      </div>
       <DataTable
       //@ts-ignore
         headers={headers}
@@ -159,6 +195,7 @@ const handleDeleteCurso = async (curso: Cursos) => {
         showDeleteButton={true}
         // onSearch={true}
         PrependActionButtons={(item: any) => (
+          <div className='flex justify-center'>
           <button
             className=""
             onClick={() => {
@@ -168,7 +205,16 @@ const handleDeleteCurso = async (curso: Cursos) => {
           >
             <EyeIcon className="h-5 w-5 mr-2 text-blue-800" />
           </button>
+          <button
+        className=""
+        onClick={() => handleDownloadExcelID(item.id)}
+      >
+        <SiMicrosoftexcel  className='text-green-700'/>
+      </button>
+          </div>
+          
         )}
+     
       />
 
 {isModalOpen && selectedCurso && (

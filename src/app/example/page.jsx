@@ -48,7 +48,7 @@ export default function Page() {
         placeholder="Escribe algo..."
       />
       <div
-        className="w-full p-2 mt-2 border border-gray-300 rounded-md"
+        className="w-full p-2 mt-2 border border-gray-300 rounded-md text-red-600"
         dangerouslySetInnerHTML={{ __html: highlightedText }}
       />
       {warningMessage && <p className="text-red-500 mt-2">{warningMessage}</p>}
