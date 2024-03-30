@@ -24,6 +24,27 @@ class CursosService {
       }
     };
 
+    //Metodo post para crear Cursos
+
+    createCurso = async (cursoData: Partial<Cursos>): Promise<void> => {
+      try {
+        const response = await fetch('https://umgcollab.azurewebsites.net/api/cursos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cursoData),
+        });
+    
+        if (!response.ok) {
+          const res = await response.json();
+          return Promise.reject(res.message);
+        }
+      } catch (err: any) {
+        return Promise.reject('ERROR: ' + JSON.stringify(err));
+      }
+    };
+
        // Método para actualizar un curso
        updateCurso = async (id: number, cursoData: Partial<Cursos>): Promise<void> => {
         try {

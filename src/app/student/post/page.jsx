@@ -1,16 +1,18 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiEdit, FiTrash2 } from 'react-icons/fi';
+
+
 
 const PostsPage = () => {
     const [posts, setPosts] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [courseName, setCourseName] = useState(''); 
+    const [courseName, setCourseName] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [editing, setEditing] = useState(false);  // Nuevo estado para manejar si estás en modo edición
+    const [editing, setEditing] = useState(false);
     const [editPostId, setEditPostId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -60,16 +62,13 @@ const PostsPage = () => {
 
             setTitle('');
             setContent('');
-            fetchPosts(); // Recargar los posts después de agregar uno nuevo
+            fetchPosts();
         } catch (error) {
             setError(error.message);
         }
     };
 
-
-    
     const handleEdit = (post) => {
-        // Configura el formulario para la edición
         setEditing(true);
         setEditPostId(post.id);
         setTitle(post.titulo);
@@ -82,7 +81,7 @@ const PostsPage = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(`http://localhost:3000/api/postStudent/${editPostId}`, {
-                method: 'PUT', // O PATCH si solo actualizas parcialmente
+                method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -94,12 +93,11 @@ const PostsPage = () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Resetear el estado de edición y actualizar la lista de posts
             setEditing(false);
             setEditPostId(null);
             setTitle('');
             setContent('');
-            fetchPosts(); // Recargar los posts después de la actualización
+            fetchPosts();
         } catch (error) {
             setError(error.message);
         }
@@ -116,12 +114,11 @@ const PostsPage = () => {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
-    
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-    
-                // Filtrar el post eliminado fuera del estado posts.
+
                 setPosts(posts.filter((post) => post.id !== postId));
             } catch (error) {
                 setError(error.message);
@@ -133,13 +130,11 @@ const PostsPage = () => {
         setSearchTerm(event.target.value);
     };
 
-     // Filtrar posts basándose en el término de búsqueda
-     const filteredPosts = posts.filter((post) =>
-     post.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     post.contenido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     post.nombre.toLowerCase().includes(searchTerm.toLowerCase())
- );
-    
+    const filteredPosts = posts.filter((post) =>
+        post.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.contenido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (loading) {
         return <div>Loading...</div>;
@@ -151,114 +146,77 @@ const PostsPage = () => {
 
     return (
         <div>
-
-<div className="fixed top-0 left-0 w-full bg-white shadow-md z-10 p-4 flex items-center justify-between">
-    <div className="flex items-center">
-        {/* Contenido de la barra de navegación aquí */}
-        <div className="relative">
-            <input
-                type="text"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                placeholder="Busca tus post favoritos"
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-full"
-            />
-            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-        </div>
-    </div>
-    {/* Otros elementos de la barra de navegación si los hay */}
-</div>
-          
-        
-<div className="max-w-xl mx-auto py-16">
-    <h1 className="text-3xl font-bold mb-6">Posts</h1>
-    <form onSubmit={editing ? handleUpdate : handleSubmit} className="mb-6">
-        <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            className="block w-full p-2 border border-gray-300 rounded mb-4"
-        />
-        <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Content"
-            className="block w-full p-2 border border-gray-300 rounded mb-4 h-32"
-        />
-        <input
-            type="text"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
-            placeholder="Course Name"
-            className="block w-full p-2 border border-gray-300 rounded mb-4"
-        />
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mr-2">
-            {editing ? 'Update Post' : 'Add Post'}
-        </button>
-        {editing && (
-            <button onClick={() => setEditing(false)} className="bg-gray-500 text-white py-2 px-4 rounded">
-                Cancel Edit
-            </button>
-        )}
-    </form>
-
-</div>
-    <ul className="space-y-4">
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {filteredPosts.map((post) => (
-                    <div key={post.id} className="p-4 border border-gray-200 rounded">
-                        <h2 className="text-xl font-semibold">{post.titulo}</h2>
-                        <p className="mt-2">{post.contenido}</p>
-                        <p className="mt-2 font-medium">{post.nombre}</p>
-                        <div className="mt-4">
-                            <button onClick={() => handleEdit(post)} className="bg-yellow-500 text-white py-1 px-3 rounded mr-2">
-                                Edit
-                            </button>
-                            <button onClick={() => handleDelete(post.id)} className="bg-red-500 text-white py-1 px-3 rounded">
-                                Delete
-                            </button>
-                        </div>
+            <div className="fixed top-0 left-0 w-full bg-white shadow-md z-10 p-4 flex items-center justify-between">
+                <div className="flex items-center">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            placeholder="Search for your favorite posts"
+                            className="pl-10 pr-4 py-2 border border-gray-300 rounded-full"
+                        />
+                        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                     </div>
-                ))}
                 </div>
-    </ul>
-    </div>
+            </div>
 
-        <div>
-        <h1>Posts</h1>
-        <form onSubmit={editing ? handleUpdate : handleSubmit}>
-            <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Title"
-            />
-            <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Content"
-            />
-            <input
-                type="text"
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
-                placeholder="Course Name"
-            />
-            <button type="submit">{editing ? 'Update Post' : 'Add Post'}</button>
-            {editing && <button onClick={() => setEditing(false)}>Cancel Edit</button>}
-        </form>
-        <ul>
-            {posts.map(post => (
-                <li key={post.id}>
-                    <h2>{post.titulo}</h2>
-                    <p>{post.contenido}</p>
-                    <p>{post.nombre}</p>
-                    <button onClick={() => handleEdit(post)}>Edit</button>
-                </li>
-            ))}
-        </ul>
-    </div>
+            <div className="max-w-xl mx-auto py-16">
+                <h1 className="text-3xl font-bold mb-6">Posts</h1>
+                <form onSubmit={editing ? handleUpdate : handleSubmit} className="mb-6">
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Title"
+                        className="block w-full p-2 border border-gray-300 rounded mb-4"
+                    />
+                    <textarea
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder="Content"
+                        className="block w-full p-2 border border-gray-300 rounded mb-4 h-32"
+                    />
+                    <input
+                        type="text"
+                        value={courseName}
+                        onChange={(e) => setCourseName(e.target.value)}
+                        placeholder="Course Name"
+                        className="block w-full p-2 border border-gray-300 rounded mb-4"
+                    />
+                    <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mr-2">
+                        {editing ? 'Update Post' : 'Add Post'}
+                    </button>
+                    {editing && (
+                        <button onClick={() => setEditing(false)} className="bg-gray-500 text-white py-2 px-4 rounded">
+                            Cancel Edit
+                        </button>
+                    )}
+                </form>
+            </div>
+
+
+            <div>
+    <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {filteredPosts.map(post => (
+            <li key={post.id} className="border border-gray-200 rounded-lg shadow-md overflow-hidden">
+                <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                    <h2 className="text-lg font-bold mb-2">{post.titulo}</h2>
+                    <p className="text-gray-100 mb-2">{post.contenido}</p>
+                    <p className="text-gray-200">{post.nombre}</p>
+                </div>
+                <div className="flex justify-end items-center p-2 bg-gray-50">
+                    <button onClick={() => handleEdit(post)} className="flex items-center text-gray-500 hover:text-gray-700">
+                        <FiEdit size={20} className="mr-1" />
+                    </button>
+                    <button onClick={() => handleDelete(post.id)} className="text-gray-500 ml-2 hover:text-red-500"><FiTrash2 size={20} /></button>
+                </div>
+            </li>
+        ))}
+    </ul>
+</div>
+
+        </div>
     );
 };
 
