@@ -70,7 +70,7 @@ const handleEdit = (curso: Cursos) => {
   setCursoDescripcion(curso.descripcion);
   setCursoSemestre(curso.semestre);
   setCursoCreditos(curso.creditos);
-  setIsFormVisible(true);ñ
+  setIsFormVisible(true);
 };
 
 const handleUpdateCurso = async (id: number, curso: Partial<Cursos>) => {
