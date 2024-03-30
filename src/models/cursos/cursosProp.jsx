@@ -6,12 +6,6 @@
  */
 const cursosProps = [
     {
-      label: "Código",
-      name: "codigo",
-      type: "text",
-      maxLength: 10,
-    },
-    {
       label: "Nombre",
       name: "nombre",
       type: "text",
