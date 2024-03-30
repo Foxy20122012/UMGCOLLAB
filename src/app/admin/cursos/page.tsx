@@ -49,6 +49,19 @@ const MyPage = () => {
   const [cursoSemestre, setCursoSemestre] = useState<number | null>(null);
 const [cursoCreditos, setCursoCreditos] = useState<number | null>(null);
 
+const handleCreateCurso = async () => {
+  try {
+    const newCurso = {
+      nombre: cursoNombre,
+      descripcion: cursoDescripcion,
+    };
+    await cursosService.cursosService.createCurso(newCurso);
+    setIsFormVisible(false);  // Cierra el modal
+    fetchCursos();            // Recarga la data
+  } catch (error) {
+    console.error('Error al crear el curso:', error);
+  }
+};
 
 const handleEdit = (curso: Cursos) => {
   setCurrentCurso(curso);
@@ -57,7 +70,7 @@ const handleEdit = (curso: Cursos) => {
   setCursoDescripcion(curso.descripcion);
   setCursoSemestre(curso.semestre);
   setCursoCreditos(curso.creditos);
-  setIsFormVisible(true);
+  setIsFormVisible(true);ñ
 };
 
 const handleUpdateCurso = async (id: number, curso: Partial<Cursos>) => {
@@ -223,6 +236,8 @@ const handleDeleteCurso = async (curso: Cursos) => {
     onClose={() => setIsModalOpen(false)}
   />
 )}
+
+
 
 {isFormVisible && isFormVisible === true && 
 //@ts-ignore
