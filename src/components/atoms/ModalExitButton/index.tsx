@@ -15,7 +15,7 @@ const ModalExitButton = (props: IconButtonProps) => {
 
   return (
     <button
-      className="absolute top-1 right-1 m-[10px] bg-white border border-secondary rounded"
+      className="absolute top-1 right-1 m-[10px] bg-white border border-cyan-700 rounded"
       onClick={handleOnClick}
     >
       <Image

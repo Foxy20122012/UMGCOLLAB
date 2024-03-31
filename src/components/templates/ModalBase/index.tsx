@@ -5,7 +5,7 @@ import ModalExitButton from '@/components/atoms/ModalExitButton'
 import SubTitle from '@/components/atoms/SubTitle'
 import { ReactNode } from 'react'
 
-const IconClose = require('@/assets/images/buttons/icon_close_orange.png')
+const IconClose = require('@/assets/images/buttons/icon_close_black.png')
 
 export interface ModalBaseChildrenProps {
   onClose: () => void
