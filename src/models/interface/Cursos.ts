@@ -10,7 +10,7 @@ export interface Cursos {
   codigo: string;
   nombre: string;
   descripcion: string;
-  semestre: number | null;
+  año: number | null;
   creditos: number | null;
   temas: Tema[];
 }

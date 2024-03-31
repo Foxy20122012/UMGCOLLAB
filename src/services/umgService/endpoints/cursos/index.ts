@@ -47,28 +47,27 @@ class CursosService {
 
        // Método para actualizar un curso
        updateCurso = async (id: number, cursoData: Partial<Cursos>): Promise<void> => {
+        const { nombre, descripcion } = cursoData; // Solo nombre y descripción
         try {
-          const response = await fetch(`https://umgcollab.azurewebsites.net/api/cursos/${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(cursoData),
-          });
-      
-          if (!response.ok) {
-            const res = await response.json();
-            return Promise.reject(res.message);
-          }
-      
-          return await response.json();
+            const response = await fetch(`https://umgcollab.azurewebsites.net/api/cursos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nombre, descripcion }), // Solo nombre y descripción
+            });
+    
+            if (!response.ok) {
+                const res = await response.json();
+                return Promise.reject(res.message);
+            }
+    
+            return await response.json();
         } catch (err: any) {
-          return Promise.reject('ERROR: ' + JSON.stringify(err));
+            return Promise.reject('ERROR: ' + JSON.stringify(err));
         }
-      };
-      
-      
-      
+    };
+    
 
     // Método para eliminar un curso
     deleteCurso = async (id: number): Promise<void
