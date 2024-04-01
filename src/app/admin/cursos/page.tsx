@@ -13,6 +13,7 @@ import { FaRegFilePdf } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
 import ViewDetailsModal from './ViewDetailsModal';
 import InsertCoursersModal from "./InsertCousersModal"
+import DeleteConfirmationModal from "@/components/general/DeleteConfirmationModal/DeleteConfirmationModal"
 import DataTable from "@/components/general/DataTable/DataTable"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -40,6 +41,26 @@ const MyPage = () => {
   const [cursoNombre, setCursoNombre] = useState('');
   const [cursoDescripcion, setCursoDescripcion] = useState('');
   const [currentCurso, setCurrentCurso] = useState<Cursos | null>(null);
+
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedCursoToDelete, setSelectedCursoToDelete] = useState<Cursos | null>(null);
+
+  // Mostrar modal de eliminación al presionar el botón de eliminar
+  const handleDeleteClick = (curso: Cursos) => {
+    setSelectedCursoToDelete(curso);
+    setShowDeleteModal(true);
+  };
+
+  // Confirmar la eliminación y eliminar el curso
+  const handleConfirmDelete = async () => {
+    if (selectedCursoToDelete) {
+      await handleDeleteCurso(selectedCursoToDelete);
+      setSelectedCursoToDelete(null);
+      setShowDeleteModal(false);
+    }
+  };
+
 
   //Evento para modificar los estados de los campos de los cursos en el formulario
   const handleEdit = (curso: Cursos) => {
@@ -166,7 +187,7 @@ const MyPage = () => {
   };
 
   //Evento para generar el PDF por id del curso
-  const handleGeneratePdfById = async (id:number) => {
+  const handleGeneratePdfById = async (id: number) => {
     try {
       const response = await cursosService.cursosService.getCursoPdfById(id);
       const blob = await response.arrayBuffer();
@@ -224,7 +245,7 @@ const MyPage = () => {
           presets={presets}
           onNewItem={handleNewClick}
           onEditItem={handleEdit}
-          onDeleteItem={handleDeleteCurso}
+          onDeleteItem={handleDeleteClick}
           showEditButton={true}
           showDeleteButton={true}
           PrependActionButtons={(item: any) => (
@@ -245,14 +266,28 @@ const MyPage = () => {
                 <SiMicrosoftexcel className='text-emerald-700 hover:text-emerald-800 hover:bg-emerald-200' />
               </button>
               <button onClick={() => handleGeneratePdfById(item.id)}>
-              <FaRegFilePdf className="h-5 w-5 mr-2 text-blue-700 hover:text-blue-800 hover:bg-blue-200 " />
+                <FaRegFilePdf className="h-5 w-5 mr-2 text-blue-700 hover:text-blue-800 hover:bg-blue-200 " />
               </button>
-              
             </div>
 
           )}
         />
       </div>
+
+      {/*Agregar el modal de eliminación */}
+      {showDeleteModal && (
+        <div className='flex justify-center'>
+          <DeleteConfirmationModal
+            isOpen={showDeleteModal}
+            onCancel={() => setShowDeleteModal(false)}
+            onConfirm={handleConfirmDelete}
+            message="¿Estás seguro de que quieres eliminar este Curso?"
+          />
+
+        </div>
+
+      )}
+
       {/*Modal para manejar la vista de los cursos y su información.*/}
       {isModalOpen && selectedCurso && (
         <ViewDetailsModal
