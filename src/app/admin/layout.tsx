@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import ResponsiveContainer from '@/layout/Admin/ResponsiveContainer'
 import I18nProvider from '@/plugins/i18nContext'
 import LoadingProvider from '@/plugins/LoadingContext'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,7 @@ const AdminLayout = ({ children }: Props) => {
       <I18nProvider locale="es">
       <LoadingProvider>
       <ResponsiveContainer>
+      <ToastContainer   position="bottom-center" style={{ top: '50%', transform: 'translateY(-50%)' }}/>
         {children}
         </ResponsiveContainer>
         </LoadingProvider>

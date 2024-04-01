@@ -3,7 +3,10 @@ import ModalBase from '@/components/templates/ModalBase';
 import { useTranslations } from 'next-intl';
 import CursosService from '../../../services/umgService';
 import { CiCircleCheck } from "react-icons/ci";
-import FieldViewer from '@/components/atoms/FieldViewer'
+import FieldViewer from '@/components/atoms/FieldViewer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface Props {
   onClose: () => void;
@@ -26,43 +29,48 @@ const InsertCoursersModal: React.FC<Props> = ({ onClose, fetchCursos }) => {
       await cursosService.cursosService.createCurso(newCurso);
       fetchCursos(); // Actualiza la lista de cursos
       onClose();     // Cierra el modal
+      toast.success('Curso agregado con éxito'); // Muestra el toast
     } catch (error) {
       console.error('Error al crear el curso:', error);
+      toast.error('Error al crear el curso');
     }
   };
 
   return (
     <ModalBase onClose={onClose} title={t('details')} width={800} className="bg-white rounded-lg shadow-xl">
-{/* <FieldViewer
-            label={t('description')}
-            value="t"
-          /> */}
       <form onSubmit={handleSubmit} className="p-4">
         <div className="mb-4">
           <label htmlFor="nombre" className="block text-gray-700 text-base font-semibold mb-2">
             {t("name")}<span className='text-red-600'>(*)</span>
           </label>
           <input
-            type="text"
-            id="nombre"
-            value={cursoNombre}
-            onChange={(e) => setCursoNombre(e.target.value)}
-            required={true}
-            minLength={5}
-            maxLength={20}
-            className="border rounded-md w-full py-2 px-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:shadow-outline shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          // className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+  type="text"
+  id="nombre"
+  value={cursoNombre}
+  onChange={(e) => {
+    const inputValue = e.target.value;
+    const regex = /^[A-Za-z\s]*$/; // Expresión regular que permite letras y espacios
+    if (regex.test(inputValue) || inputValue === "") {
+      setCursoNombre(inputValue);
+    }
+  }}
+  required={true}
+  minLength={5}
+  maxLength={20}
+  className="border rounded-md w-full py-2 px-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:shadow-outline shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+/>
+
+
         </div>
         <div className="mb-4">
-
           <label htmlFor="descripcion" className="block text-gray-700 text-base font-semibold mb-2">
-            {t("name")}<span className='text-red-600'>(*)</span>
+            {t("description")}<span className='text-red-600'>(*)</span>
           </label>
           <textarea
             id="descripcion"
             value={cursoDescripcion}
             onChange={(e) => setCursoDescripcion(e.target.value)}
+            
             required={true}
             minLength={5}
             maxLength={240}
@@ -72,7 +80,7 @@ const InsertCoursersModal: React.FC<Props> = ({ onClose, fetchCursos }) => {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline mr-2"
+            className="bg-emerald-500 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline mr-2"
           >
             {t('create')}<CiCircleCheck className="inline ml-2 text-xl font-extrabold" />
           </button>
@@ -92,3 +100,4 @@ const InsertCoursersModal: React.FC<Props> = ({ onClose, fetchCursos }) => {
 };
 
 export default InsertCoursersModal;
+
