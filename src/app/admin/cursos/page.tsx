@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useEffect, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
@@ -142,22 +141,37 @@ const MyPage = () => {
     }
   };
 
+  //Evento para PDF general de todos los cursos
+  const handleGeneratePdf = async () => {
+    try {
+      const blob = await cursosService.cursosService.getCursoPdf();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'cursos.pdf';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      toast.success("Pdf Generado");
+    } catch (error) {
+      console.error('Error al generar el PDF:', error);
+      toast.error("Error al generar el PDF");
+    }
+  };
+  
+
   const handleNewClick = () => {
     setIsOpen(true);
   };
 
   return (
     <div>
-
-
       <div className='my-2'>
         <div className="">
           <div className='flex justify-start'>
             {t("Courses")}
           </div>
           <div className='flex justify-end'>
-
-
             <button
               onClick={handleDownloadExcel}
               className="flex items-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg mr-2"
@@ -166,7 +180,7 @@ const MyPage = () => {
               Generar Excel
             </button>
             <button
-              onClick={() => toast.success("Pdf Generado")}
+              onClick={handleGeneratePdf}
               className="flex items-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
             >
               <FaRegFilePdf className="text-xl mr-2" />
