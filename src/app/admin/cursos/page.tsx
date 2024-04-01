@@ -28,7 +28,7 @@ const VDialog = dynamic(() => { return import("@/components/general/VDialog/VDia
 
 
 const MyPage = () => {
-
+  // I18N 
   const t = useTranslations('general');
   const [cursosItems, setCursosItems] = useState<Cursos[]>([]);
   const [headers, setHeaders] = useState<Header[]>([]);
@@ -41,6 +41,7 @@ const MyPage = () => {
   const [cursoDescripcion, setCursoDescripcion] = useState('');
   const [currentCurso, setCurrentCurso] = useState<Cursos | null>(null);
 
+  //Evento para modificar los estados de los campos de los cursos en el formulario
   const handleEdit = (curso: Cursos) => {
     setCurrentCurso(curso);
     setCursoNombre(curso.nombre);
@@ -48,6 +49,7 @@ const MyPage = () => {
     setIsFormVisible(true);
   };
 
+  //Evento para actualizar los cursos
   const handleUpdateCurso = async (id: number, curso: Partial<Cursos>) => {
     try {
       await cursosService.cursosService.updateCurso(id, curso);
@@ -59,8 +61,8 @@ const MyPage = () => {
     }
   };
 
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  //Evento para Enviar los datos actualizados del formulario de los cursos
+  const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentCurso && currentCurso.id) {
       const updatedCurso = {
@@ -81,8 +83,9 @@ const MyPage = () => {
     setHeaders(cursosModel() as any);
   }, []);
 
-  const values = useMemo(() => cursosItems, [cursosItems]); // Si ya tiene la forma correcta, no necesitas mapear
+  const values = useMemo(() => cursosItems, [cursosItems]); //Mapea los cursos en el formato de la interface de cursos
 
+  //Evento para cargar la respuesta del endpoint de los cursos
   const fetchCursos = async () => {
     try {
       const result = await cursosService.cursosService.getCursos();
@@ -96,6 +99,7 @@ const MyPage = () => {
     }
   };
 
+  //Evento para generar un registro de excel de un curso en especifico
   const handleDownloadExcelID = async (id: number) => {
     try {
       const blob = await cursosService.cursosService.getCursoExcelId(id);
@@ -112,6 +116,7 @@ const MyPage = () => {
     }
   };
 
+  //Evento para descargar el registro general de un excel
   const handleDownloadExcel = async () => {
     try {
       const blob = await cursosService.cursosService.getCursoExcel();
@@ -130,6 +135,7 @@ const MyPage = () => {
     }
   };
 
+  //Evento para eliminar un curso  por id
   const handleDeleteCurso = async (curso: Cursos) => {
     try {
       await cursosService.cursosService.deleteCurso(curso.id);
@@ -158,8 +164,28 @@ const MyPage = () => {
       toast.error("Error al generar el PDF");
     }
   };
-  
 
+  //Evento para generar el PDF por id del curso
+  const handleGeneratePdfById = async (id:number) => {
+    try {
+      const response = await cursosService.cursosService.getCursoPdfById(id);
+      const blob = await response.arrayBuffer();
+      const file = new Blob([blob], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(file);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `curso_${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      toast.success('PDF del curso generado');
+    } catch (error) {
+      console.error('Error al generar el PDF:', error);
+      toast.error('Error al generar el PDF');
+    }
+  };
+
+  //Evento para abrir el modal que contiene el formulario para crear un nuevo registro de cursos
   const handleNewClick = () => {
     setIsOpen(true);
   };
@@ -218,7 +244,7 @@ const MyPage = () => {
               >
                 <SiMicrosoftexcel className='text-emerald-700 hover:text-emerald-800 hover:bg-emerald-200' />
               </button>
-              <button onClick={()=>toast.success("Pdf Generado Exitoxamente")}>
+              <button onClick={() => handleGeneratePdfById(item.id)}>
               <FaRegFilePdf className="h-5 w-5 mr-2 text-blue-700 hover:text-blue-800 hover:bg-blue-200 " />
               </button>
               
@@ -227,28 +253,28 @@ const MyPage = () => {
           )}
         />
       </div>
-
+      {/*Modal para manejar la vista de los cursos y su información.*/}
       {isModalOpen && selectedCurso && (
         <ViewDetailsModal
           selectedCurso={selectedCurso}
           onClose={() => setIsModalOpen(false)}
         />
       )}
-
+      {/*Modal para manejar la inserción de un nuevo curso.*/}
       {isOpen && (
         <InsertCoursersModal
           fetchCursos={fetchCursos}
           onClose={() => setIsOpen(false)}
         />
       )}
-
+      {/*Evento para manejar el modal del formulario de actualización de los cursos.*/}
       {isFormVisible && isFormVisible === true && (
         //@ts-ignore
         <VDialog
           isOpen={isFormVisible}
           size='sm'
         >
-          <form onSubmit={handleSubmit} className="p-4">
+          <form onSubmit={handleUpdate} className="p-4">
             <div className="mb-4">
               <label htmlFor="nombre" className="block text-gray-700 text-base font-semibold mb-2">
                 {t("name")}<span className='text-red-600'>(*)</span>

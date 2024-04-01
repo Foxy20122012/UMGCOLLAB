@@ -154,6 +154,29 @@ class CursosService {
     }
   };
 
+  //Endpoint para obtener el pdf de cada curso por id
+
+  // Método para obtener el archivo PDF de un curso por ID
+getCursoPdfById = async (id: number): Promise<Blob> => {
+  try {
+    const response = await fetch(`https://umgcollab.azurewebsites.net/api/cursos/${id}/pdf`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/pdf',
+      },
+    });
+
+    if (!response.ok) {
+      const res = await response.json();
+      return Promise.reject(res.message);
+    }
+
+    return await response.blob();
+  } catch (err: any) {
+    return Promise.reject('ERROR: ' + JSON.stringify(err));
+  }
+};
+
 
 }
 
