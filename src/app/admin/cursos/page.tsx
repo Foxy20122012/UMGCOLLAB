@@ -16,7 +16,7 @@ import InsertCoursersModal from "./InsertCousersModal"
 import DeleteConfirmationModal from "@/components/general/DeleteConfirmationModal/DeleteConfirmationModal"
 import DataTable from "@/components/general/DataTable/DataTable"
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 type Header = {
   text: string;
