@@ -2,12 +2,12 @@
   "name": "umgcollab",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "npm install --legacy-peer-deps && next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+"scripts": {
+  "dev": "next dev",
+  "build": "npm install --force && next build",
+  "start": "next start",
+  "lint": "next lint"
+},
   "dependencies": {
     "@heroicons/react": "^2.1.1",
     "@reduxjs/toolkit": "^2.2.1",
