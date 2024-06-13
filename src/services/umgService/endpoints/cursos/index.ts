@@ -3,7 +3,23 @@ import {
 } from '@/models/interface/Cursos'
 
 class CursosService {
+   // getAxios = (props) => {
+    //     const url = this.urlBase + endpoint;
+    //     const timeout = this.timeout;
+    //     return (
+    //         {
+    //             ...props,
+    //             url,
+    //             timeout
+    //         }
+    //     )
+    // }
 
+    // request({
+    //     method: 'get',
+    //     endpoint: 'endpont',
+    //     responseType: 'blob'
+    // })
   getCursos = async (): Promise<Cursos> => {
     try {
       const response = await fetch('https://umgcollab.azurewebsites.net/api/cursos', {
