@@ -1,9 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=fallback');
 /* <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> */
 
+/* Additional Styles */
+/* @import 'additional-styles/toastify.css'; */
+/* @import 'component-styles/loading.css'; */
+@import 'component-styles/sidebar.css';
+/* @import 'component-styles/navbar.css'; */
+@import 'component-styles/datatable.css';
+@import 'page-styles/common.css';
+@import 'page-styles/login.css';
+@import 'page-styles/eventos_colores.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -102,12 +114,3 @@
   
   /* Make sure to import this CSS file in your project */
   
-/* Additional Styles */
-@import 'additional-styles/toastify.css';
-@import 'component-styles/loading.css';
-@import 'component-styles/sidebar.css';
-/* @import 'component-styles/navbar.css'; */
-@import 'component-styles/datatable.css';
-@import 'page-styles/common.css';
-@import 'page-styles/login.css';
-@import 'page-styles/eventos_colores.css';

@@ -174,6 +174,7 @@ const ResponsiveContainer = ({ children }) => {
   
   
   return (
+    
     <LayoutContext.Provider value={containerWrapper}>
       <div className="flex h-screen overflow-hidden">
         
