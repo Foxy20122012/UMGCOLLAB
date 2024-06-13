@@ -1,4 +1,25 @@
 import type { Config } from "tailwindcss";
+import { standard, standardThemes } from "via-tailwind"
+
+const themeAppColors = {
+  50: "#b3e5fc",
+  100: "#81d4fa",
+  200: "#4fc3f7",
+  300: "#29b6f6",
+  400: "#03a9f4",
+  500: "#0288d1",
+  600: "#0277bd",
+  700: "#0260a0",
+  800: "#024484",
+  900: "#022865",
+  950: "#011c4c",
+}
+
+const themeTextColors = {
+  principal: "#334155",
+  disabled: "#cbd5e1",
+}
+
 
 const config: Config = {
   mode:"jit",
@@ -8,6 +29,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./public/**/*.html",
+    "./node_modules/vComponents/dist/*/.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
   theme: {
@@ -85,12 +107,19 @@ const config: Config = {
 
         offercolor: '#d70d50',
         bidcolor: '#1ba6d7',
+        "theme-text": themeTextColors,
+        "theme-app": themeAppColors,
       },
     },
   },
   plugins: [
   require('@tailwindcss/line-clamp'),
-  require('flowbite/plugin')
-  ,],
+  require('flowbite/plugin'),
+  standard,
+  standardThemes({
+    "theme-app": themeAppColors,
+    "theme-text": themeTextColors,
+  })
+  ]
 };
 export default config;

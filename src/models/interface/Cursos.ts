@@ -14,3 +14,4 @@ export interface Cursos {
   creditos: number | null;
   temas: Tema[];
 }
+
