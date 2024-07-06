@@ -3,6 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
+import DynamicTable from '@/components/organisms/DynamicTable'
 import useI18n from '@/hooks/useI18n';
 import { Cursos } from '@/models/interface/Cursos';
 import presets from '@/utils/globalPresets';
@@ -354,6 +355,16 @@ const MyPage = () => {
           </div>
         </VDialog>
       )}
+
+<DynamicTable
+          columns={headers}
+        //  values={values}
+       //   actions={ActionsComponent}
+        //  getData={masterGetData}
+       //   loading={loading}
+        //  paginationData={paginationData}
+          hideSearchBar
+        />
     </div>
   );
 };
