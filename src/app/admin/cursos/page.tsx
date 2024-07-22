@@ -1,10 +1,12 @@
 'use client'
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
 import DynamicTable from '@/components/organisms/DynamicTable'
 import useI18n from '@/hooks/useI18n';
+import ActionButton from '@/components/atoms/ActionButton'
+import IconedButton from '@/components/atoms/IconedButton'
 import { Cursos } from '@/models/interface/Cursos';
 import presets from '@/utils/globalPresets';
 import cursosModel from '@/models/cursos/CursosModel';
@@ -28,6 +30,7 @@ const VDialog = dynamic(() => { return import("@/components/general/VDialog/VDia
   { ssr: false }
 );
 
+const IconEyeOrange = require('@/assets/images/buttons/icon_eye_orange.png')
 
 const MyPage = () => {
   // I18N 
@@ -46,6 +49,40 @@ const MyPage = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCursoToDelete, setSelectedCursoToDelete] = useState<Cursos | null>(null);
+
+  const columns =[
+    
+      { key: 'id', name: 'id'},
+      { key: 'codigo', name:'codigo'},
+      { key: 'nombre', name: 'nombre' },
+      { key: 'descripcion', name: 'descripcion' }
+  ]
+
+
+  const ActionsComponent = useCallback(() => (
+    <div className="">
+      <div className="flex flex-col gap-1 justify-left items-center">
+        <div className="flex w-full flex-row gap-1">
+          <div className="flex">
+            <IconedButton
+              icon={IconEyeOrange}
+              onClick={() => alert('prueba')}
+            />
+          </div>
+          <div className="flex">
+            <ActionButton
+              type="primary"
+              mini
+              fullRounded
+              onClick={() => alert('prueba')}
+              title={t('request_liquidation')}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  ), [t]); // Asumiendo que `t` es una dependencia proveniente de `useTranslation` o similar
+  
 
   // Mostrar modal de eliminación al presionar el botón de eliminar
   const handleDeleteClick = (curso: Cursos) => {
@@ -105,6 +142,7 @@ const MyPage = () => {
     setHeaders(cursosModel() as any);
   }, []);
 
+  
   const values = useMemo(() => cursosItems, [cursosItems]); //Mapea los cursos en el formato de la interface de cursos
 
   //Evento para cargar la respuesta del endpoint de los cursos
@@ -357,13 +395,13 @@ const MyPage = () => {
       )}
 
 <DynamicTable
-          columns={headers}
-        //  values={values}
-       //   actions={ActionsComponent}
-        //  getData={masterGetData}
-       //   loading={loading}
-        //  paginationData={paginationData}
-          hideSearchBar
+          columns={ columns}
+         values={cursosItems}
+          actions={ActionsComponent}
+       //   getData={fetchCursos}
+       //   loading={}
+       //   paginationData=""
+          hideSearchBar = {true}
         />
     </div>
   );
