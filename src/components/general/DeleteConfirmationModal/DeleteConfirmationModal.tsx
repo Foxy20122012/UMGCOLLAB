@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ModalBase from '@/components/templates/ModalBase';
+import ModalBase from '../../../components/templates/ModalBase/index';
+//import ModalBase from '@/components/templates/ModalBase';
 import { MdOutlineAccessTime } from "react-icons/md";
 import { useTranslations } from 'next-intl';
 

@@ -1,6 +1,6 @@
 
-import ActionButton from '@/components/atoms/ActionButton'
-import Checkbox from '@/components/atoms/Checkbox'
+import ActionButton from '../../atoms/ActionButton'
+import Checkbox from '../../../components/atoms/Checkbox/index'
 import IconedButton from '@/components/atoms/IconedButton'
 import LoadingIndicator from '@/components/atoms/LoadingIndicator'
 import TextField from '@/components/atoms/TextField'
