@@ -1,10 +1,8 @@
 
 import type { Metadata } from "next";
-//import "vComponents/styles/generated/component-styles/navbar.min.css";
 import "../styles/globals.css";
 import I18nProvider from '../plugins/i18nContext'
-import LoadingProvider from '@/plugins/LoadingContext'
-
+import LoadingProvider from '../plugins/LoadingContext'
 
 export const metadata: Metadata = {
   title: "VISITANTE",

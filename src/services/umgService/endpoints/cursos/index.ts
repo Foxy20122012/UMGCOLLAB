@@ -1,6 +1,6 @@
 import {
   Cursos
-} from '@/models/interface/Cursos'
+} from '../../../../models/interface/Cursos'
 
 class CursosService {
    // getAxios = (props) => {

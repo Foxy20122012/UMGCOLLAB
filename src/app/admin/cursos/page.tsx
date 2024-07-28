@@ -7,9 +7,9 @@ import DynamicTable from '../../../components/organisms/DynamicTable/index'
 
 import IconedButton from '../../../components/atoms/IconedButton/index'
 import { FaEye } from "react-icons/fa";
-import { Cursos } from '@/models/interface/Cursos';
+import { Cursos } from '../../../models/interface/Cursos';
 import presets from '../../../utils/globalPresets';
-import cursosModel from '@/models/cursos/CursosModel';
+import cursosModel from '../../../models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { SiMicrosoftexcel } from "react-icons/si";
 import { FaRegFilePdf } from "react-icons/fa";
@@ -17,17 +17,17 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaPenToSquare } from "react-icons/fa6";
 import ViewDetailsModal from './ViewDetailsModal';
 import InsertCoursersModal from "./InsertCousersModal"
-import DeleteConfirmationModal from "@/components/general/DeleteConfirmationModal/DeleteConfirmationModal"
-import DataTable from "@/components/general/DataTable/DataTable"
+import DeleteConfirmationModal from "../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal"
+import DataTable from "../../../components/general/DataTable/DataTable"
 import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+
 
 type Header = {
   text: string;
   value: string;
 };
 
-const VDialog = dynamic(() => { return import("@/components/general/VDialog/VDialog"); },
+const VDialog = dynamic(() => { return import("../../../components/general/VDialog/VDialog"); },
   { ssr: false }
 );
 
