@@ -6,8 +6,9 @@ import APIService from '../services/umgService';
 import useLoading from "@/hooks/useLoading"
 import dynamic from 'next/dynamic'
 import presets from "@/utils/globalPresets"
+import LoadingSpinner from "@/components/general/Loading/Loading"
 
-const LoadingSpinner = dynamic(() => { return import("vComponents/dist/Loading") }, { ssr: false })
+//const LoadingSpinner = dynamic(() => { return import("vComponents/dist/Loading") }, { ssr: false })
 
 const defaultLanguage = 'es';
 export const I18nContext = createContext();

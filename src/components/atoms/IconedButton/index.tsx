@@ -1,39 +1,37 @@
-import { StaticImageData } from 'next/dist/shared/lib/get-img-props'
-import Image from 'next/image'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react';
+import { IconType } from 'react-icons'; // Importa el tipo para los iconos de react-icons
 
 interface IconButtonProps {
-  onClick?: () => void
-  icon: string | StaticImageData
-  className?: string
-  disabled?: boolean
-  size?: 'mini' | 'normal'
-  hideBorder?: boolean
-  transparent?: boolean
+  onClick?: () => void;
+  icon: IconType; // Asegúrate de que solo acepte iconos
+  className?: string;
+  disabled?: boolean;
+  size?: 'mini' | 'normal';
+  hideBorder?: boolean;
+  transparent?: boolean;
+  iconColor?: string; // Nueva prop para el color del icono
 }
 
 const IconedButton = (props: IconButtonProps) => {
   const handleOnClick = useCallback(() => {
-    props.onClick && !props.disabled && props.onClick()
-  }, [props])
+    props.onClick && !props.disabled && props.onClick();
+  }, [props]);
 
   const iconSize = useMemo(() => {
     switch (props.size) {
       case 'mini':
-        return 12
-
+        return 12;
       case 'normal':
-        return 24
-
+        return 24;
       default:
-        return 24
+        return 24;
     }
-  }, [props.size])
+  }, [props.size]);
 
   return (
     <button
-      className={` border hover:bg-opaque0 ${
-        props.disabled ? 'cursor-pointer' : ''
+      className={`border hover:bg-opaque0 ${
+        props.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
       } 
       
       ${props.transparent ? 'bg-transparent' : 'bg-white'}
@@ -41,25 +39,23 @@ const IconedButton = (props: IconButtonProps) => {
         props.hideBorder
           ? ''
           : props.disabled
-          ? 'border-opaque0'
-          : 'border-secondary'
+          ? 'border-sky-600'
+          : 'border-sky-600'
       }
       
       rounded p-[2px]`}
       onClick={handleOnClick}
+      disabled={props.disabled}
     >
-      <Image
-        src={props.icon}
-        alt="close"
-        height={iconSize}
-        draggable={false}
-        width={iconSize}
-        className={`w-[${iconSize}px] h-[${iconSize}px] min-h-[${iconSize}px] min-w-[${iconSize}px] ${
+      <props.icon
+        size={iconSize}
+        color={props.iconColor || 'sky-600'} // Usar el color pasado o el color por defecto
+        className={`w-[${iconSize}px] h-[${iconSize}px] ${
           props.disabled ? 'filter grayscale' : ''
-        }`}
+        } ${props.className}`}
       />
     </button>
-  )
+  );
 }
 
-export default IconedButton
+export default IconedButton;

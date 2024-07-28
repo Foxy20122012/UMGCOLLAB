@@ -4,22 +4,23 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install --force && next build",
+    "build": "npm install && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.1",
     "@reduxjs/toolkit": "^2.2.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/react-redux": "^7.1.33",
     "axios": "^1.7.2",
-    "componentslibrary": "github:Foxy20122012/ComponentsLibrary",
     "config": "^3.3.8",
     "dotenv": "^16.4.5",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.7",
     "heroicons": "^2.1.1",
+    "js-mq": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "moment-timezone": "^0.5.45",
@@ -37,8 +38,8 @@
     "react-toastify": "^10.0.4",
     "rosetta": "^1.1.0",
     "sharp": "^0.32.1",
+    "underscore": "^1.13.7",
     "v-functions": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/v-functions.git",
-    "vComponents": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/v-components.git",
     "via-tailwind": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/via-tailwind.git"
   },
   "devDependencies": {

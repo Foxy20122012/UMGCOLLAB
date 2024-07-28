@@ -1,8 +1,8 @@
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "via-ui/theme-provider"
-import "vComponents/styles/generated/component-styles/navbar.min.css";
+
+//import "vComponents/styles/generated/component-styles/navbar.min.css";
 import "../styles/globals.css";
 import I18nProvider from '../plugins/i18nContext'
 import LoadingProvider from '@/plugins/LoadingContext'

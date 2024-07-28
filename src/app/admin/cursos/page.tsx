@@ -4,21 +4,23 @@ import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
 import DynamicTable from '@/components/organisms/DynamicTable'
-import useI18n from '@/hooks/useI18n';
-import ActionButton from '@/components/atoms/ActionButton'
+
 import IconedButton from '@/components/atoms/IconedButton'
+import { FaEye } from "react-icons/fa";
 import { Cursos } from '@/models/interface/Cursos';
 import presets from '@/utils/globalPresets';
 import cursosModel from '@/models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { SiMicrosoftexcel } from "react-icons/si";
 import { FaRegFilePdf } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 import { FaPenToSquare } from "react-icons/fa6";
 import ViewDetailsModal from './ViewDetailsModal';
 import InsertCoursersModal from "./InsertCousersModal"
 import DeleteConfirmationModal from "@/components/general/DeleteConfirmationModal/DeleteConfirmationModal"
 import DataTable from "@/components/general/DataTable/DataTable"
 import { toast } from 'react-toastify';
+import { FaBeer } from 'react-icons/fa';
 // import 'react-toastify/dist/ReactToastify.css';
 
 type Header = {
@@ -30,7 +32,7 @@ const VDialog = dynamic(() => { return import("@/components/general/VDialog/VDia
   { ssr: false }
 );
 
-const IconEyeOrange = require('@/assets/images/buttons/icon_eye_orange.png')
+
 
 const MyPage = () => {
   // I18N 
@@ -61,25 +63,39 @@ const MyPage = () => {
 
   const ActionsComponent = useCallback(() => (
     <div className="">
-      <div className="flex flex-col gap-1 justify-left items-center">
-        <div className="flex w-full flex-row gap-1">
-          <div className="flex">
-            <IconedButton
-              icon={IconEyeOrange}
-              onClick={() => alert('prueba')}
-            />
-          </div>
-          <div className="flex">
-            <ActionButton
-              type="primary"
-              mini
-              fullRounded
-              onClick={() => alert('prueba')}
-              title={t('request_liquidation')}
-            />
-          </div>
-        </div>
-      </div>
+
+<IconedButton
+  icon={FaEye}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+/>
+<IconedButton
+  icon={SiMicrosoftexcel}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+  iconColor='green'
+/>
+<IconedButton
+  icon={FaRegFilePdf}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+  iconColor='red'
+/>
+<IconedButton
+  icon={FaPenToSquare}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+/>
+<IconedButton
+  icon={MdDeleteOutline}
+ 
+  size="normal"
+  iconColor='red'
+/>
+          
+         
+          
+  
     </div>
   ), [t]); // Asumiendo que `t` es una dependencia proveniente de `useTranslation` o similar
   
@@ -398,9 +414,6 @@ const MyPage = () => {
           columns={ columns}
          values={cursosItems}
           actions={ActionsComponent}
-       //   getData={fetchCursos}
-       //   loading={}
-       //   paginationData=""
           hideSearchBar = {true}
         />
     </div>

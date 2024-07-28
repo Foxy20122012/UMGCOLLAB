@@ -4,7 +4,7 @@
 import { useEffect, useState, createContext } from 'react';
 import { CogIcon, InformationCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/navigation';
-
+import Navbar from "@/components/general/Navbar/Navbar"
 import environment from '../../utils/environment';
 import presets from '@/utils/globalPresets';
 import dynamic from 'next/dynamic';
@@ -17,7 +17,7 @@ import Footer from "@/components/general/Footer/Footer"
 export const LayoutContext = createContext();
 
 // const Footer = dynamic(() => import('vComponents/dist/Footer'), { ssr: false });
-const Navbar = dynamic(() => import('vComponents/dist/Navbar'), { ssr: false });
+//const Navbar = dynamic(() => import('vComponents/dist/Navbar'), { ssr: false });
 
 const Sidebar = dynamic(() => import('@/components/general/Sidebar/Sidebar'), { ssr: false });
 
