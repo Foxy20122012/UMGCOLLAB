@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ModalBase from '@/components/templates/ModalBase';
+import ModalBase from '../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
 import CursosService from '../../../services/umgService';
 import { CiCircleCheck } from "react-icons/ci";
-import FieldViewer from '@/components/atoms/FieldViewer';
+
 import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 

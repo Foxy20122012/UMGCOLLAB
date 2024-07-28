@@ -3,12 +3,12 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
-import DynamicTable from '@/components/organisms/DynamicTable'
+import DynamicTable from '../../../components/organisms/DynamicTable/index'
 
-import IconedButton from '@/components/atoms/IconedButton'
+import IconedButton from '../../../components/atoms/IconedButton/index'
 import { FaEye } from "react-icons/fa";
 import { Cursos } from '@/models/interface/Cursos';
-import presets from '@/utils/globalPresets';
+import presets from '../../../utils/globalPresets';
 import cursosModel from '@/models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { SiMicrosoftexcel } from "react-icons/si";
@@ -20,7 +20,6 @@ import InsertCoursersModal from "./InsertCousersModal"
 import DeleteConfirmationModal from "@/components/general/DeleteConfirmationModal/DeleteConfirmationModal"
 import DataTable from "@/components/general/DataTable/DataTable"
 import { toast } from 'react-toastify';
-import { FaBeer } from 'react-icons/fa';
 // import 'react-toastify/dist/ReactToastify.css';
 
 type Header = {
