@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, UserIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/20/solid'
-import UserAvatar from '@/components/general/UserAvatar/UserAvatar'
+import UserAvatar from '../../../components/general/UserAvatar/UserAvatar'
+//import UserAvatar from '@/components/general/UserAvatar/UserAvatar'
 import PropTypes from 'prop-types'
 
 UserMenu.propTypes = {
