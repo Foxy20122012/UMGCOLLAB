@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import { standard, standardThemes } from "via-tailwind"
+
 
 const themeAppColors = {
   50: "#b3e5fc",
@@ -115,11 +115,6 @@ const config: Config = {
   plugins: [
   require('@tailwindcss/line-clamp'),
   require('flowbite/plugin'),
-  standard,
-  standardThemes({
-    "theme-app": themeAppColors,
-    "theme-text": themeTextColors,
-  })
   ]
 };
 export default config;
