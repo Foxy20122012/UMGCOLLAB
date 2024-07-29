@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install && npm install react-toastify && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -41,8 +41,7 @@
     "rosetta": "^1.1.0",
     "sharp": "^0.32.1",
     "underscore": "^1.13.7",
-    "v-functions": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/v-functions.git",
-    "via-tailwind": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/via-tailwind.git"
+    "v-functions": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/v-functions.git"
   },
   "devDependencies": {
     "@types/node": "^20",

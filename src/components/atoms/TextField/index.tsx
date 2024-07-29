@@ -106,7 +106,7 @@ const TextField = (props: TextFieldProps) => {
       )}
       <input
         className={`
-          w-full px-3 py-2 rounded-lg border focus:border-secondary focus:outline-none focus:border-secondary 
+          w-full px-3 py-2 rounded-lg border focus:outline-none focus:border-secondary 
           ${props.disabled ? 'text-opaque1 bg-background1' : 'text-title'}
           ${props.hasError ? ' border-error' : ' border-grey-500'}
           ${props.textCentered ? 'text-center' : ''}
