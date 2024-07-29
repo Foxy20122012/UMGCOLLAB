@@ -1,14 +1,10 @@
 import React, { ReactNode } from 'react';
 import type { Metadata } from "next";
-import dynamic from 'next/dynamic'
-import { Inter } from "next/font/google";
-import ResponsiveContainer from '@/layout/Admin/ResponsiveContainer'
-import I18nProvider from '@/plugins/i18nContext'
-import LoadingProvider from '@/plugins/LoadingContext'
+import ResponsiveContainer from '../../layout/Admin/ResponsiveContainer'
+//import ResponsiveContainer from '@/layout/Admin/ResponsiveContainer'
+import I18nProvider from '../../plugins/i18nContext'
+import LoadingProvider from '../../plugins/LoadingContext'
 import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ADMIN",

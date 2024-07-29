@@ -4,22 +4,18 @@
 import { useEffect, useState, createContext } from 'react';
 import { CogIcon, InformationCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/navigation';
-
-import environment from '../../utils/environment';
-import presets from '@/utils/globalPresets';
+import Navbar from "../../components/general/Navbar/Navbar"
+import presets from '../../utils/globalPresets';
 import dynamic from 'next/dynamic';
 import useLoading from '../../hooks/useLoading';
 import useHasMounted from '../../hooks/useHasMounted';
 import useI18n from '../../hooks/useI18n';
-import Footer from "@/components/general/Footer/Footer"
-// import Sidebar from '@/components/general/Sidebar/Sidebar';
+import Footer from "../../components/general/Footer/Footer"
 
 export const LayoutContext = createContext();
 
-// const Footer = dynamic(() => import('vComponents/dist/Footer'), { ssr: false });
-const Navbar = dynamic(() => import('vComponents/dist/Navbar'), { ssr: false });
 
-const Sidebar = dynamic(() => import('@/components/general/Sidebar/Sidebar'), { ssr: false });
+const Sidebar = dynamic(() => import('../../components/general/Sidebar/Sidebar'), { ssr: false });
 
 const ResponsiveContainer = ({ children }) => {
   // const router = useRouter()
@@ -31,7 +27,6 @@ const ResponsiveContainer = ({ children }) => {
   const [title, setTitle] = useState('');
   const [userObj, setUserObj] = useState();
   const [token, setToken] = useState('');
-  // const [router, setRouter] = useState(null);
   const router = useRouter();
   
 
@@ -41,9 +36,6 @@ const ResponsiveContainer = ({ children }) => {
       setRouter(useRouter());
     }
   }, [router]);
-  
-
-// Ahora puedes usar `router` en tus funciones, asegurándote de que no es `null` antes de usarlo.
 
   
   const doLogout = async () => {

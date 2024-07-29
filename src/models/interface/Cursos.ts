@@ -6,6 +6,7 @@ export interface Tema {
 }
 
 export interface Cursos {
+  [key: string]: any;
   id: number;
   codigo: string;
   nombre: string;

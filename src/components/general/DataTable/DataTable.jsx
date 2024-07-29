@@ -717,7 +717,7 @@ export default function DataTable ({ fontClassHeader, fontClassCelda, headers, i
           })
         }
         {showActions === true &&
-          <div className={` align-middle table-cell border border-spacing-0.5 border-transparent group-hover:border-blue-300  text-center border p-0 ${idxRow % 2 !== 0 ? 'bg-neutral-200' : ''} group-hover:border-blue-300 w-24 `}>
+          <div className={` align-middle table-cell border-spacing-0.5 border-transparent group-hover:border-blue-300  text-center border p-0 ${idxRow % 2 !== 0 ? 'bg-neutral-200' : ''} group-hover:border-blue-300 w-24 `}>
             {/* {PrependActionButtons ? PrependActionButtons : ''} */}
             {/* <PrependActionButtons /> */}
             {PrependActionButtons ? PrependActionButtons(item) : ''}
@@ -1028,7 +1028,7 @@ export default function DataTable ({ fontClassHeader, fontClassCelda, headers, i
           </table>
         }
         { isMobile === true &&
-          <div className="flex flex-col bg-white divide-y divide-x items-center block " >
+          <div className="flex flex-col bg-white divide-y divide-x items-center  " >
             {filteredItems && Array.isArray(filteredItems) === false && // crea una fila de agrupacion
               Object.keys(filteredItems).map((groupKey, idxGroupKey) => {
                 if (isMobile === true) {

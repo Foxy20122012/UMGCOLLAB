@@ -1,14 +1,8 @@
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "via-ui/theme-provider"
-import "vComponents/styles/generated/component-styles/navbar.min.css";
 import "../styles/globals.css";
 import I18nProvider from '../plugins/i18nContext'
-import LoadingProvider from '@/plugins/LoadingContext'
-
-
-const inter = Inter({ subsets: ["latin"] });
+import LoadingProvider from '../plugins/LoadingContext'
 
 export const metadata: Metadata = {
   title: "VISITANTE",
@@ -22,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
       {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem> */}
         <I18nProvider locale="es">
       <LoadingProvider>

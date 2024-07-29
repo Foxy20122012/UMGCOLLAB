@@ -1,6 +1,6 @@
 import React from 'react';
-import ModalBase from '@/components/templates/ModalBase';
-import { Cursos } from '@/models/interface/Cursos';
+import ModalBase from '../../../components/templates/ModalBase/index';
+import { Cursos } from '../../../models/interface/Cursos';
 import { useTranslations } from 'next-intl';
 
 interface Props {

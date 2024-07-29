@@ -1,13 +1,11 @@
 'use client'
 
 import { createContext, useState, useEffect } from 'react';
-import useHasMounted from '@/hooks/useHasMounted';
+import useHasMounted from '../hooks/useHasMounted';
 import APIService from '../services/umgService';
-import useLoading from "@/hooks/useLoading"
-import dynamic from 'next/dynamic'
-import presets from "@/utils/globalPresets"
-
-const LoadingSpinner = dynamic(() => { return import("vComponents/dist/Loading") }, { ssr: false })
+import useLoading from "../hooks/useLoading"
+import presets from "../utils/globalPresets"
+import LoadingSpinner from "../components/general/Loading/Loading"
 
 const defaultLanguage = 'es';
 export const I18nContext = createContext();

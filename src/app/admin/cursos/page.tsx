@@ -1,31 +1,36 @@
 'use client'
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
-import useI18n from '@/hooks/useI18n';
-import { Cursos } from '@/models/interface/Cursos';
-import presets from '@/utils/globalPresets';
-import cursosModel from '@/models/cursos/CursosModel';
+
+
+import IconedButton from '../../../components/atoms/IconedButton/index'
+import { FaEye } from "react-icons/fa";
+import { Cursos } from '../../../models/interface/Cursos';
+import presets from '../../../utils/globalPresets';
+import cursosModel from '../../../models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { SiMicrosoftexcel } from "react-icons/si";
 import { FaRegFilePdf } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 import { FaPenToSquare } from "react-icons/fa6";
 import ViewDetailsModal from './ViewDetailsModal';
 import InsertCoursersModal from "./InsertCousersModal"
-import DeleteConfirmationModal from "@/components/general/DeleteConfirmationModal/DeleteConfirmationModal"
-import DataTable from "@/components/general/DataTable/DataTable"
+import DeleteConfirmationModal from "../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal"
+import DataTable from "../../../components/general/DataTable/DataTable"
 import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+
 
 type Header = {
   text: string;
   value: string;
 };
 
-const VDialog = dynamic(() => { return import("@/components/general/VDialog/VDialog"); },
+const VDialog = dynamic(() => { return import("../../../components/general/VDialog/VDialog"); },
   { ssr: false }
 );
+
 
 
 const MyPage = () => {
@@ -45,6 +50,54 @@ const MyPage = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCursoToDelete, setSelectedCursoToDelete] = useState<Cursos | null>(null);
+
+  const columns =[
+    
+      { key: 'id', name: 'id'},
+      { key: 'codigo', name:'codigo'},
+      { key: 'nombre', name: 'nombre' },
+      { key: 'descripcion', name: 'descripcion' }
+  ]
+
+
+  const ActionsComponent = useCallback(() => (
+    <div className="">
+
+<IconedButton
+  icon={FaEye}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+/>
+<IconedButton
+  icon={SiMicrosoftexcel}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+  iconColor='green'
+/>
+<IconedButton
+  icon={FaRegFilePdf}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+  iconColor='red'
+/>
+<IconedButton
+  icon={FaPenToSquare}
+  onClick={() => console.log('Icon button clicked')}
+  size="normal"
+/>
+<IconedButton
+  icon={MdDeleteOutline}
+ 
+  size="normal"
+  iconColor='red'
+/>
+          
+         
+          
+  
+    </div>
+  ), [t]); // Asumiendo que `t` es una dependencia proveniente de `useTranslation` o similar
+  
 
   // Mostrar modal de eliminación al presionar el botón de eliminar
   const handleDeleteClick = (curso: Cursos) => {
@@ -104,6 +157,7 @@ const MyPage = () => {
     setHeaders(cursosModel() as any);
   }, []);
 
+  
   const values = useMemo(() => cursosItems, [cursosItems]); //Mapea los cursos en el formato de la interface de cursos
 
   //Evento para cargar la respuesta del endpoint de los cursos
@@ -354,6 +408,7 @@ const MyPage = () => {
           </div>
         </VDialog>
       )}
+
     </div>
   );
 };
