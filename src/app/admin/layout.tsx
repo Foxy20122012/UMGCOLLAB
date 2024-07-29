@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import type { Metadata } from "next";
-import ResponsiveContainer from '@/layout/Admin/ResponsiveContainer'
+import ResponsiveContainer from '../../layout/Admin/ResponsiveContainer'
+//import ResponsiveContainer from '@/layout/Admin/ResponsiveContainer'
 import I18nProvider from '../../plugins/i18nContext'
 import LoadingProvider from '../../plugins/LoadingContext'
 import { ToastContainer } from 'react-toastify';

@@ -1,8 +1,9 @@
 import FixedSizedImage from '../components/atoms/FixedSizeImage';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import ImgNotFound from '../assets/images/404/404UMGCOLLAB.jpeg'
 
-const ImgNotFound = require('@/assets/images/404/404UMGCOLLAB.jpeg'|| "@/assets/images/404/404ADMIN.jpeg");
+//const ImgNotFound = require('@/assets/images/404/404UMGCOLLAB.jpeg'|| "@/assets/images/404/404ADMIN.jpeg");
 //const ImgNotFound = require('.'|| "@/assets/images/404/404ADMIN.jpeg");
 
 const ErrorPage = () => {
