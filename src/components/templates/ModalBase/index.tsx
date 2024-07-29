@@ -1,8 +1,13 @@
 'use client'
 
-import HintText from '@/components/atoms/HintText'
-import ModalExitButton from '@/components/atoms/ModalExitButton'
-import SubTitle from '@/components/atoms/SubTitle'
+import HintText from '../../atoms/HintText/index'
+//import HintText from '@/components/atoms/HintText'
+import ModalExitButton from '../../atoms/ModalExitButton/index'
+//import ModalExitButton from '@/components/atoms/ModalExitButton'
+import SubTitle from '../../atoms/SubTitle/index'
+//import SubTitle from '@/components/atoms/SubTitle'
+
+
 import { ReactNode } from 'react'
 
 const IconClose = require('@/assets/images/buttons/icon_close_black.png')

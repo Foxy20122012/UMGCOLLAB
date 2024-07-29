@@ -1,10 +1,14 @@
 
 import ActionButton from '../../atoms/ActionButton'
 import Checkbox from '../../../components/atoms/Checkbox/index'
-import IconedButton from '@/components/atoms/IconedButton'
-import LoadingIndicator from '@/components/atoms/LoadingIndicator'
-import TextField from '@/components/atoms/TextField'
-import { PaginationData } from '@/services/umgService/commonInterfaces/IPaginatedData'
+import IconedButton from '../../atoms/IconedButton/index'
+//import IconedButton from '@/components/atoms/IconedButton'
+import LoadingIndicator from '../../atoms/LoadingIndicator/index'
+//import LoadingIndicator from '@/components/atoms/LoadingIndicator'
+import TextField from '../../atoms/TextField/index'
+//import TextField from '@/components/atoms/TextField'
+import { PaginationData } from '../../../services/umgService/commonInterfaces/IPaginatedData'
+//import { PaginationData } from '@/services/umgService/commonInterfaces/IPaginatedData'
 import { useTranslations } from 'next-intl'
 
 import React, { useCallback, useMemo, useState } from 'react'

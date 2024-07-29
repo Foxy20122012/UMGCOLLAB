@@ -1,5 +1,3 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,24 +9,17 @@ const nextConfig = {
     return [
       {
         source: '/equipo',
-        destination: '/',
-        permanent: false,
+        destination: "/",
+        permanent: false
       },
     ];
   },
   images: {
     domains: ['www.via-asesores.com', 'gt.via-asesores.com', 'qa.via-asesores.com'],
-    unoptimized: true,
+    unoptimized: true, // solo para generar sitio estático
   },
   compiler: {
     styledComponents: true,
-  },
-  webpack: (config) => {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    
-    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
-    return config;
   },
 };
 
