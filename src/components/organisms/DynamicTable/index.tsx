@@ -11,10 +11,11 @@ import { PaginationData } from '../../../services/umgService/commonInterfaces/IP
 //import { PaginationData } from '@/services/umgService/commonInterfaces/IPaginatedData'
 import { useTranslations } from 'next-intl'
 
+
 import React, { useCallback, useMemo, useState } from 'react'
 
-const IconLeftArrow = require('@/assets/images/buttons/icon_arrow_left_orange.png')
-const IconRightArrow = require('@/assets/images/buttons/icon_arrow_right_orange.png')
+const IconLeftArrow = require('./../../assets/images/buttons/icon_arrow_left_orange.png')
+const IconRightArrow = require('../../../assets/images/buttons/icon_arrow_right_orange.png')
 
 // Define types for the columns and values
 type TableColumn = {
