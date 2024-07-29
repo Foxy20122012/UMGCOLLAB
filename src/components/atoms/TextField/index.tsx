@@ -3,10 +3,9 @@ import ActionButton from '../ActionButton'
 import { isNumeric } from '../../../helpers/formValidators'
 //import { isNumeric } from '@/helpers/formValidators'
 import { useTranslations } from 'next-intl'
+import IconEyeClosed from "../../../assets/images/buttons/icon_eye_closed_grey.png"
+import IconEyeOpened from "../../../assets/images/buttons/icon_eye_open_grey.png"
 
-
-const IconEyeClosed = require('../../../assets/images/buttons/icon_eye_closed_grey.png')
-const IconEyeOpened = require('../../../assets/images/buttons/icon_eye_open_grey.png')
 
 export interface TextFieldProps {
   placeholder: string
