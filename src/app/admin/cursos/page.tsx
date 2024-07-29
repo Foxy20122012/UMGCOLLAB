@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
-import DynamicTable from '../../../components/organisms/DynamicTable/index'
+
 
 import IconedButton from '../../../components/atoms/IconedButton/index'
 import { FaEye } from "react-icons/fa";
@@ -409,12 +409,6 @@ const MyPage = () => {
         </VDialog>
       )}
 
-<DynamicTable
-          columns={ columns}
-         values={cursosItems}
-          actions={ActionsComponent}
-          hideSearchBar = {true}
-        />
     </div>
   );
 };
