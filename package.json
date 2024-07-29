@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-     "prebuild": "npm install && npm install react-toastify",
-    "build": "next build",
+    "build": "npm install && npm install react-toastify && next build",
     "start": "next start",
     "lint": "next lint"
   },
