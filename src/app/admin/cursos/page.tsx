@@ -33,6 +33,15 @@ const MyPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCursoToDelete, setSelectedCursoToDelete] = useState<Cursos | null>(null);
 
+  const truncateDescription = (description: string, wordLimit: number = 6): string => {
+    const words = description.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return description;
+  };
+  
+
   const columns = [
     {
       title: 'ID',
@@ -53,6 +62,7 @@ const MyPage = () => {
       title: 'Descripción',
       dataIndex: 'descripcion',
       key: 'descripcion',
+      render: (text: string) => truncateDescription(text),
     },
     {
       title: 'Acciones',
