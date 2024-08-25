@@ -4,22 +4,24 @@ import { Layout, Menu, Dropdown, Button, Switch } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  DashboardOutlined,
   UserOutlined,
-  SettingOutlined,
-  TeamOutlined,
   DownOutlined,
   BulbOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import menuItems from '../../utils/menuAdminItems';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { SubMenu } = Menu;
 
 type SidebarProps = {
   children: ReactNode;
+  menuItems: Array<{
+    key: string;
+    icon: ReactNode;
+    label: string;
+    children?: Array<{ key: string; label: string }>;
+  }>;
 };
 
 // Opciones desplegables del menú de usuario
@@ -37,7 +39,7 @@ const userMenu = (
   </Menu>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Sidebar: React.FC<SidebarProps> = ({ children, menuItems }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
   const router = useRouter();
