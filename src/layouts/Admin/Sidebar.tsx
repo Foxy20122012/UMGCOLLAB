@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import menuItems from '../../utils/menuAdminItems';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { SubMenu } = Menu;
@@ -20,49 +21,6 @@ const { SubMenu } = Menu;
 type SidebarProps = {
   children: ReactNode;
 };
-
-const menuItems = [
-  {
-    key: '/admin/dashboard',
-    icon: <DashboardOutlined />,
-    label: 'Dashboard',
-  },
-  {
-    key: '/admin/users',
-    icon: <UserOutlined />,
-    label: 'Usuarios',
-    children: [
-      {
-        key: '/admin/users/list',
-        label: 'Lista de Usuarios',
-      },
-      {
-        key: '/admin/users/add',
-        label: 'Agregar Usuario',
-      },
-    ],
-  },
-  {
-    key: '/admin/settings',
-    icon: <SettingOutlined />,
-    label: 'Configuración',
-  },
-  {
-    key: '/admin/team',
-    icon: <TeamOutlined />,
-    label: 'Equipo',
-    children: [
-      {
-        key: '/admin/team/list',
-        label: 'Miembros del Equipo',
-      },
-      {
-        key: '/admin/team/add',
-        label: 'Agregar Miembro',
-      },
-    ],
-  },
-];
 
 // Opciones desplegables del menú de usuario
 const userMenu = (
@@ -81,7 +39,7 @@ const userMenu = (
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [darkTheme, setDarkTheme] = useState(true);
+  const [darkTheme, setDarkTheme] = useState(false);
   const router = useRouter();
 
   const toggle = () => {
@@ -103,7 +61,16 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         collapsible
         collapsed={collapsed}
         onCollapse={toggle}
-        style={{ background: darkTheme ? '#202020' : '#fff', boxShadow: '3px 0 15px rgba(0, 0, 0, 0.5)' }}
+        style={{
+          background: darkTheme ? '#202020' : '#fff',
+          boxShadow: '3px 0 15px rgba(0, 0, 0, 0.5)',
+          height: '100vh',
+          overflowY: 'auto', // Permite el scroll en el sidebar
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
       >
         <div
           style={{
@@ -113,6 +80,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            position: 'fixed', // Esto hace que el logo sea fijo
+            width: collapsed ? '80px' : '200px', // Ajusta el ancho dinámicamente según el estado del sidebar
+            zIndex: 1001, // Asegura que esté por encima del contenido
+            top: 0, // Mantiene el logo en la parte superior
           }}
         >
           <Image
@@ -124,34 +95,36 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           />
         </div>
 
-        <Menu
-          theme={darkTheme ? 'dark' : 'light'}
-          mode="inline"
-          defaultSelectedKeys={['/admin/dashboard']}
-          onClick={handleMenuClick}
-          style={{
-            background: 'transparent',
-            color: darkTheme ? '#d1d1d1' : '#333',
-          }}
-        >
-          {menuItems.map((item) =>
-            item.children ? (
-              <SubMenu key={item.key} icon={item.icon} title={item.label} style={{ color: darkTheme ? '#d1d1d1' : '#333' }}>
-                {item.children.map((child) => (
-                  <Menu.Item key={child.key} style={{ color: darkTheme ? '#d1d1d1' : '#333' }}>
-                    {child.label}
-                  </Menu.Item>
-                ))}
-              </SubMenu>
-            ) : (
-              <Menu.Item key={item.key} icon={item.icon} style={{ color: darkTheme ? '#d1d1d1' : '#333' }}>
-                {item.label}
-              </Menu.Item>
-            )
-          )}
-        </Menu>
+        <div style={{ marginTop: collapsed ? '60px' : '120px' }}> {/* Espacio para evitar superposición con el logo */}
+          <Menu
+            theme={darkTheme ? 'dark' : 'light'}
+            mode="inline"
+            defaultSelectedKeys={['/admin/dashboard']}
+            onClick={handleMenuClick}
+            style={{
+              background: 'transparent',
+              color: darkTheme ? '#d1d1d1' : '#333',
+            }}
+          >
+            {menuItems.map((item) =>
+              item.children ? (
+                <SubMenu key={item.key} icon={item.icon} title={item.label} style={{ color: darkTheme ? '#d1d1d1' : '#333' }}>
+                  {item.children.map((child) => (
+                    <Menu.Item key={child.key} style={{ color: darkTheme ? '#d1d1d1' : '#333' }}>
+                      {child.label}
+                    </Menu.Item>
+                  ))}
+                </SubMenu>
+              ) : (
+                <Menu.Item key={item.key} icon={item.icon} style={{ color: darkTheme ? '#d1d1d1' : '#333' }}>
+                  {item.label}
+                </Menu.Item>
+              )
+            )}
+          </Menu>
+        </div>
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout" style={{ marginLeft: collapsed ? 80 : 200 }}>
         <Header
           className="site-layout-background"
           style={{
@@ -161,6 +134,11 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            position: 'fixed',
+            width: `calc(100% - ${collapsed ? '80px' : '200px'})`,
+            zIndex: 1000,
+            top: 0,
+            left: collapsed ? '80px' : '200px',
           }}
         >
           <div style={{ paddingLeft: '24px' }}>
@@ -187,7 +165,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </Header>
         <Content
           style={{
-            margin: '24px 16px',
+            marginTop: '100px',
             padding: 24,
             minHeight: 280,
             background: darkTheme ? '#2a2a2a' : '#fff',
@@ -208,9 +186,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             padding: '10px 20px',
             position: 'fixed',
             bottom: 0,
-            left: collapsed ? '80px' : '200px', // Ajuste dinámico del margen izquierdo basado en el estado colapsado
-            width: `calc(100% - ${collapsed ? '80px' : '200px'})`, // Ajuste dinámico del ancho basado en el estado colapsado
-            zIndex: 10,
+            left: collapsed ? '80px' : '200px',
+            width: `calc(100% - ${collapsed ? '80px' : '200px'})`,
+            zIndex: 1000,
           }}
         >
           <div>
