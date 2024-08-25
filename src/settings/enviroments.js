@@ -9,7 +9,8 @@ module.exports = {
             endpoint:{
                 admin:{
                     cursos:{
-                        cursos: '/api/Cursos'
+                        cursos: '/api/Cursos',
+                        temas: '/api/topics'
                     }
                 }
             }
