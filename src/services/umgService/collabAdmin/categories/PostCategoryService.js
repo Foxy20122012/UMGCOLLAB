@@ -1,7 +1,8 @@
+
 import RestfulHandler from '../../../../module/handler/restfulHandler';
 import enviroment from '../../../../settings/enviroments'
 
-class TemaService {
+class TemaServices {
     constructor(){
         const {umgCollab} = enviroment.api
         this.service = new RestfulHandler(umgCollab.url, umgCollab.timeout);
@@ -51,4 +52,6 @@ deleteTema = (id) => {
 
 
 
-export default TemaService
+export default TemaServices
+//cambiar solo para hacer build
+

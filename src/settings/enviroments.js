@@ -1,14 +1,14 @@
-const environment = process.env.NEXT_PUBLIC_API_URL;
-
+const environment = "http://localhost:3000";
+//const environment = process.env.NEXT_PUBLIC_API_URL;
 
 module.exports = {
-    api:{
-        umgCollab:{
-            url: environment,
+    api: {
+        umgCollab: {
+            url: environment, // Asegúrate de que esta URL sea la correcta
             timeout: 900000,
-            endpoint:{
-                admin:{
-                    cursos:{
+            endpoint: {
+                admin: {
+                    cursos: {
                         cursos: '/api/Cursos',
                         temas: '/api/topics'
                     }
@@ -16,4 +16,4 @@ module.exports = {
             }
         }
     }
-}
+};

@@ -292,7 +292,10 @@ const MyPage = () => {
           columns={columns}
           dataSource={values}
           rowKey="id"
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            showSizeChanger: true, // Permite cambiar el número de filas por página
+            pageSizeOptions: ['5', '10', '20', '50'], // Opciones de tamaño de página
+        }}
         />
       </div>
 

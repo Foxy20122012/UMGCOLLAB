@@ -22,7 +22,7 @@ const menuItems = [
     label: 'Dashboard',
   },
   {
-    key: '/admin/pensum',
+    key: 'Pemsun',
     icon: <ReadOutlined />, // Icono de libro para representar cursos y temas
     label: 'Pensum',
     children: [
@@ -31,7 +31,7 @@ const menuItems = [
         label: 'Cursos',
       },
       {
-        key: '/admin/pensum/topics',
+        key: '/admin/topics',
         label: 'Temas Cursos',
       },
     ],
