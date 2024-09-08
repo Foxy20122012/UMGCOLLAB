@@ -147,12 +147,13 @@ const PostCategoryPage = () => {
 
             {/* Modal para editar una categoría */}
             {isEditModalOpen && currentCategory && (
-                <EditPostCategoryModal
-                    onClose={() => setIsEditModalOpen(false)}
-                    fetchCategories={fetchPostCategories}
-                    currentCategory={currentCategory}
-                />
-            )}
+    <EditPostCategoryModal
+        onClose={() => setIsEditModalOpen(false)}
+        fetchPostCategory={fetchPostCategories}
+        currentCategory={currentCategory} // Pasa correctamente el objeto a editar
+    />
+)}
+
 
             {/* Modal de vista de detalles */}
             {isViewModalOpen && currentCategory && (

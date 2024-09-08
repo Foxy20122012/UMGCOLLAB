@@ -32,7 +32,7 @@ class PostCategoryService {
     }
 
     updatePostCategory = (id, data) => {
-        const endpoint = `${this.endpoint.postCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
+        const endpoint = `${this.endpoint.postCategory}/${id}`; // Asume que la API acepta el ID en la URL
         return this.service.request({
             method: 'PUT',
             endpoint,
@@ -42,7 +42,7 @@ class PostCategoryService {
     };
 
     deletePostCategory = (id) => {
-        const endpoint = `${this.endpoint.postCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
+        const endpoint = `${this.endpoint.postCategory}/${id}`; // Asume que la API acepta el ID en la URL
         return this.service.request({
             method: 'DELETE',
             endpoint,

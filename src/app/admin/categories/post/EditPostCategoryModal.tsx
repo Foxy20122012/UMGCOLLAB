@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import { CiCircleCheck } from "react-icons/ci";
 import { PostCategory } from '@/models/interface/categories/PostCategory';
 import PostCategoryService from '../../../../services/umgService/collabAdmin/categories/postCategoryService';
 import { notification } from 'antd';
@@ -9,22 +8,23 @@ import { notification } from 'antd';
 interface Props {
     onClose: () => void;
     fetchPostCategory: () => void;
-    currentPostCategory: PostCategory; // El tema actual que se va a editar
+    currentCategory: PostCategory | null; // Cambié el nombre a 'currentCategory' para hacer que coincida con tu uso anterior
 }
 
-const EditPostCategory: React.FC<Props> = ({ onClose, fetchPostCategory, currentPostCategory }) => {
+const EditPostCategoryModal: React.FC<Props> = ({ onClose, fetchPostCategory, currentCategory }) => {
     const t = useTranslations('general');
-    const [descripcion, setDescripcion] = useState(currentPostCategory?.descripcion || '');
-    const [alias, setAlias] = useState(currentPostCategory?.alias || '');
+    const [descripcion, setDescripcion] = useState('');
+    const [alias, setAlias] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const postCategoryService = new PostCategoryService();
 
+    // Este hook actualiza los campos cuando se recibe un nuevo currentCategory
     useEffect(() => {
-        if (currentPostCategory) {
-            setDescripcion(currentPostCategory.descripcion);
-            setAlias(currentPostCategory.alias);
+        if (currentCategory) {
+            setDescripcion(currentCategory.descripcion);
+            setAlias(currentCategory.alias);
         }
-    }, [currentPostCategory]);
+    }, [currentCategory]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ const EditPostCategory: React.FC<Props> = ({ onClose, fetchPostCategory, current
                 alias,
             };
 
-            await postCategoryService.updatePostCategory(currentPostCategory.id_detalle, updatedCategory);
+            await postCategoryService.updatePostCategory(currentCategory?.id_detalle, updatedCategory);
             notification.success({
                 message: 'Categoría actualizada',
                 description: 'La categoría ha sido actualizada exitosamente',
@@ -101,4 +101,4 @@ const EditPostCategory: React.FC<Props> = ({ onClose, fetchPostCategory, current
     );
 };
 
-export default EditPostCategory;
+export default EditPostCategoryModal;
