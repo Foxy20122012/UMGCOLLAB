@@ -2,7 +2,7 @@ import RestfulHandler from '../../../../module/handler/restfulHandler';
 import enviroment from '../../../../settings/enviroments'
 
 
-class PostCategoryService {
+class EventsCategoryService {
     constructor(){
         const {umgCollab} = enviroment.api
         this.service = new RestfulHandler(umgCollab.url, umgCollab.timeout);
@@ -12,8 +12,8 @@ class PostCategoryService {
         };
     }
 
-    getPostCategory = ()=>{
-        const endpoint = this.endpoint.postCategory;
+    getEventsCategory = ()=>{
+        const endpoint = this.endpoint.eventsCategory;
         return this.service.request({
             method: 'GET',
             endpoint,
@@ -21,8 +21,8 @@ class PostCategoryService {
         })
     }
 
-    createPostCategory = (data)=>{
-        const endpoint = this.endpoint.postCategory;
+    createEventsCategory = (data)=>{
+        const endpoint = this.endpoint.eventsCategory;
         return this.service.request({
             method: 'POST',
             endpoint,
@@ -31,8 +31,8 @@ class PostCategoryService {
         })
     }
 
-    updatePostCategory = (id, data) => {
-        const endpoint = `${this.endpoint.postCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
+    updateEventsCategory = (id, data) => {
+        const endpoint = `${this.endpoint.eventsCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
         return this.service.request({
             method: 'PUT',
             endpoint,
@@ -41,8 +41,8 @@ class PostCategoryService {
         });
     };
 
-    deletePostCategory = (id) => {
-        const endpoint = `${this.endpoint.postCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
+    deleteEventsCategory = (id) => {
+        const endpoint = `${this.endpoint.eventsCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
         return this.service.request({
             method: 'DELETE',
             endpoint,
@@ -52,4 +52,4 @@ class PostCategoryService {
 
 };
 
-export default PostCategoryService
+export default EventsCategoryService

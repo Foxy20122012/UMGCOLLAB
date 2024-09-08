@@ -47,6 +47,7 @@ deleteTema = (id) => {
         headers: this.defaultHeaders
     });
 };
+
 }
 
 

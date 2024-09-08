@@ -12,6 +12,13 @@ module.exports = {
                         cursos: '/api/Cursos',
                         temas: '/api/topics'
                     }
+                },
+                general:{
+                    categories:{
+                        postCategory: '/api/categoria/post',
+                        eventsCategory: '/api/categoria/Eventos',
+                        newsCategory: '/api/categoria/news'
+                    }
                 }
             }
         }
