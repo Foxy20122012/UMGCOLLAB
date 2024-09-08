@@ -138,12 +138,14 @@ const PostCategoryPage = () => {
             </div>
 
             {/* Modal para insertar nueva categoría */}
-            {isModalOpen && (
-                <InsertPostCategoryModal
-                    onClose={() => setIsModalOpen(false)}
-                    fetchCategories={fetchPostCategories}
-                />
-            )}
+{/* Modal para insertar nueva categoría */}
+{isModalOpen && (
+    <InsertPostCategoryModal
+        onClose={() => setIsModalOpen(false)}
+        fetchPostCategory={fetchPostCategories} // Asegúrate de pasar la función correctamente
+    />
+)}
+
 
             {/* Modal para editar una categoría */}
             {isEditModalOpen && currentCategory && (

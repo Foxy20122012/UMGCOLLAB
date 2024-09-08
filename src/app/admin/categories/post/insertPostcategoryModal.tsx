@@ -6,7 +6,7 @@ import { notification } from 'antd';
 
 interface Props {
     onClose: () => void;
-    fetchPostCategory: () => void; // Función para actualizar la lista después de insertar una nueva categoría
+    fetchPostCategory: () => void;
 }
 
 const InsertPostCategoryModal: React.FC<Props> = ({ onClose, fetchPostCategory }) => {
@@ -18,31 +18,42 @@ const InsertPostCategoryModal: React.FC<Props> = ({ onClose, fetchPostCategory }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
-
+        setIsLoading(true); // Bloquea el botón para evitar múltiples clics.
+    
         try {
-            const newCategory = {
-                descripcion,
-                alias
-            };
-
-            await postCategoryService.createPostCategory(newCategory);
-            notification.success({
-                message: 'Categoría creada',
-                description: 'La categoría ha sido creada exitosamente',
-            });
-
-            fetchPostCategory(); // Actualiza la lista de categorías
-            onClose(); // Cierra el modal
+            const newCategory = { descripcion, alias };
+    
+            // Inserta la nueva categoría
+            const response = await postCategoryService.createPostCategory(newCategory);
+    
+            // Validamos que `response` exista y contenga los datos correctos
+            if (response && response.data && response.status === 201) {
+                notification.success({
+                    message: 'Categoría creada',
+                    description: 'La categoría ha sido creada exitosamente',
+                });
+    
+                // Refresca la tabla de categorías
+                fetchPostCategory();
+    
+                // Cierra el modal
+                onClose();
+            } else {
+                // Si la respuesta no es exitosa, lanza un error
+                throw new Error('Error en la creación de la categoría');
+            }
         } catch (error) {
+            // Captura y maneja cualquier error
+            console.error('Error al crear categoría:', error);
             notification.error({
                 message: 'Error al crear categoría',
                 description: 'Ocurrió un error al intentar crear la categoría. Inténtalo de nuevo.',
             });
         } finally {
-            setIsLoading(false);
+            setIsLoading(false); // Desbloquea el botón tras la finalización
         }
     };
+    
 
     return (
         <ModalBase onClose={onClose} title={t('details')} width={800} className="bg-white rounded-lg shadow-xl">
