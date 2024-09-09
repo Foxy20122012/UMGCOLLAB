@@ -89,7 +89,7 @@ const menuItems = [
     label: 'Categorias',
     children: [
       {
-        key: '/admin/categorias/post',
+        key: '/admin/categories/post',
         label: 'Categorias Post',
       },
       {
