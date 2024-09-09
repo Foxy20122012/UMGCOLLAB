@@ -46,11 +46,6 @@ const PostCategoryPage = () => {
             key: 'id_detalle',
         },
         {
-            title: 'Nombre',
-            dataIndex: 'nombre_categoria',
-            key: 'nombre_categoria',
-        },
-        {
             title: 'Código',
             dataIndex: 'codigo_categoria',
             key: 'codigo_categoria',
@@ -59,6 +54,16 @@ const PostCategoryPage = () => {
             title: 'Descripción',
             dataIndex: 'descripcion',
             key: 'descripcion',
+        },
+        {
+            title: 'Alias',
+            dataIndex: 'alias',
+            key: 'alias',
+        },
+        {
+            title: 'Creado por',
+            dataIndex: 'nombre_usuario_creador',
+            key: 'nombre_usuario_creador',
         },
         {
             title: 'Acciones',
