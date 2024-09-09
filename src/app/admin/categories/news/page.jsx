@@ -5,14 +5,14 @@ import { Table } from 'antd';
 import { FaPlus } from "react-icons/fa";
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { MdEdit, MdDeleteOutline } from "react-icons/md";
-import PostCategoryService from '../../../../services/umgService/collabAdmin/categories/postCategoryService';
-import InsertPostCategoryModal from './insertPostCategoryModal'; 
-import EditPostCategoryModal from './EditPostCategoryModal'; 
+import NewsCategoryService  from '../../../../services/umgService/collabAdmin/categories/newsCategoryService';
+import InsertNewsCategoryModal from './insertNewCategory'; 
+import EditNewsCategoryModal from './EditNewCategoryModal'; 
 import DeleteConfirmationModal from "../../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal";
 import ViewDetailsModal from './ViewDetailsModal'; 
 
 const PostCategoryPage = () => {
-    const [postCategory, setPostCategory] = useState([]);
+    const [newsCategory, setNewsCategory] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -20,13 +20,13 @@ const PostCategoryPage = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
 
-    const postCategoryService = new PostCategoryService();
+    const newsCategoryService = new NewsCategoryService();
 
     const fetchPostCategories = async () => {
         try {
-            const result = await postCategoryService.getPostCategory();
+            const result = await newsCategoryService.getNewsCategory();
             if (result && Array.isArray(result.data)) {
-                setPostCategory(result.data);
+                setNewsCategory(result.data);
             } else {
                 console.error('Formato de respuesta inesperado:', result);
             }
@@ -61,11 +61,6 @@ const PostCategoryPage = () => {
             key: 'alias',
         },
         {
-            title: 'Creado por',
-            dataIndex: 'nombre_usuario_creador',
-            key: 'nombre_usuario_creador',
-        },
-        {
             title: 'Acciones',
             key: 'actions',
             render: (text, record) => (
@@ -97,7 +92,7 @@ const PostCategoryPage = () => {
     const handleConfirmDelete = async () => {
         if (selectedCategoryToDelete) {
             try {
-                await postCategoryService.deletePostCategory(selectedCategoryToDelete.id_detalle);
+                await newsCategoryService.deleteNewsCategory(selectedCategoryToDelete.id_detalle);
                 fetchPostCategories();
                 setSelectedCategoryToDelete(null);
                 setShowDeleteModal(false);
@@ -119,7 +114,7 @@ const PostCategoryPage = () => {
     return (
         <div>
             <div className="my-2">
-                <h2 className="text-center font-bold text-xl">Categorías de Post</h2>
+                <h2 className="text-center font-bold text-xl">Categorías de Noticias</h2>
             </div>
             <div className="flex justify-end mb-4">
                 <button
@@ -133,7 +128,7 @@ const PostCategoryPage = () => {
             <div className='my-8'>
                 <Table
                     columns={columns}
-                    dataSource={postCategory}
+                    dataSource={newsCategory}
                     rowKey="id_detalle"
                     pagination={{
                         showSizeChanger: true,
@@ -145,7 +140,7 @@ const PostCategoryPage = () => {
             {/* Modal para insertar nueva categoría */}
 {/* Modal para insertar nueva categoría */}
 {isModalOpen && (
-    <InsertPostCategoryModal
+    <InsertNewsCategoryModal
         onClose={() => setIsModalOpen(false)}
         fetchPostCategory={fetchPostCategories} // Asegúrate de pasar la función correctamente
     />
@@ -154,7 +149,7 @@ const PostCategoryPage = () => {
 
             {/* Modal para editar una categoría */}
             {isEditModalOpen && currentCategory && (
-    <EditPostCategoryModal
+    <EditNewsCategoryModal
         onClose={() => setIsEditModalOpen(false)}
         fetchPostCategory={fetchPostCategories}
         currentCategory={currentCategory} // Pasa correctamente el objeto a editar
@@ -167,7 +162,7 @@ const PostCategoryPage = () => {
     <ViewDetailsModal
         isOpen={isViewModalOpen}
         onClose={() => setIsViewModalOpen(false)}
-        selectedPostCategory={currentCategory} // Asegúrate de que el objeto seleccionado está correcto
+        selectedNewsCategory={currentCategory} // Asegúrate de que el objeto seleccionado está correcto
     />
 )}
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
 import { NewsCategory } from '@/models/interface/categories/Newscategory';
@@ -8,56 +8,54 @@ import { notification } from 'antd';
 interface Props {
     onClose: () => void;
     fetchNewsCategory: () => void;
+    currentCategory: NewsCategory | null; // Cambié el nombre a 'currentCategory' para hacer que coincida con tu uso anterior
 }
 
-const InsertNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory }) => {
+const EditNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory, currentCategory }) => {
     const t = useTranslations('general');
     const [descripcion, setDescripcion] = useState('');
     const [alias, setAlias] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const newsCategoryService  = new NewsCategoryService ();
+    const newsCategoryService = new NewsCategoryService ();
+
+    // Este hook actualiza los campos cuando se recibe un nuevo currentCategory
+    useEffect(() => {
+        if (currentCategory) {
+            setDescripcion(currentCategory.descripcion);
+            setAlias(currentCategory.alias);
+        }
+    }, [currentCategory]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true); // Bloquea el botón para evitar múltiples clics.
-    
+        setIsLoading(true);
+
         try {
-            const newCategory = { descripcion, alias };
-    
-            // Inserta la nueva categoría
-            const response = await newsCategoryService.createNewsCategory(newCategory);
-    
-            // Validamos que `response` exista y contenga los datos correctos
-            if (response && response.data && response.status === 201) {
-                notification.success({
-                    message: 'Categoría creada',
-                    description: 'La categoría ha sido creada exitosamente',
-                });
-    
-                // Refresca la tabla de categorías
-                fetchNewsCategory();
-    
-                // Cierra el modal
-                onClose();
-            } else {
-                // Si la respuesta no es exitosa, lanza un error
-                throw new Error('Error en la creación de la categoría');
-            }
+            const updatedCategory = {
+                descripcion,
+                alias,
+            };
+
+            await newsCategoryService.updateNewsCategory(currentCategory?.id_detalle, updatedCategory);
+            notification.success({
+                message: 'Categoría actualizada',
+                description: 'La categoría ha sido actualizada exitosamente',
+            });
+
+            fetchNewsCategory(); // Actualiza la lista de categorías
+            onClose(); // Cierra el modal
         } catch (error) {
-            // Captura y maneja cualquier error
-            console.error('Error al crear categoría:', error);
             notification.error({
-                message: 'Error al crear categoría',
-                description: 'Ocurrió un error al intentar crear la categoría. Inténtalo de nuevo.',
+                message: 'Error al actualizar categoría',
+                description: 'Ocurrió un error al intentar actualizar la categoría. Inténtalo de nuevo.',
             });
         } finally {
-            setIsLoading(false); // Desbloquea el botón tras la finalización
+            setIsLoading(false);
         }
     };
-    
 
     return (
-        <ModalBase onClose={onClose} title={t('details')} width={800} className="bg-white rounded-lg shadow-xl">
+        <ModalBase onClose={onClose} title={t('edit_details')} width={800} className="bg-white rounded-lg shadow-xl">
             <form onSubmit={handleSubmit} className="p-4">
                 <div className="mb-4">
                     <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">
@@ -70,7 +68,7 @@ const InsertNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory }
                         onChange={(e) => setDescripcion(e.target.value)}
                         required
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
-                        placeholder="Ingresa la descripción de la categoría"
+                        placeholder="Ingresa la nueva descripción de la categoría"
                     />
                 </div>
 
@@ -85,7 +83,7 @@ const InsertNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory }
                         onChange={(e) => setAlias(e.target.value)}
                         required
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
-                        placeholder="Ingresa el alias de la categoría"
+                        placeholder="Ingresa el nuevo alias de la categoría"
                     />
                 </div>
 
@@ -103,4 +101,4 @@ const InsertNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory }
     );
 };
 
-export default InsertNewsCategoryModal;
+export default EditNewsCategoryModal;
