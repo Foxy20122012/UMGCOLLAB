@@ -8,21 +8,23 @@ import { notification } from 'antd';
 interface Props {
     onClose: () => void;
     fetchPostCategory: () => void;
-    currentCategory: PostCategory | null; // Cambié el nombre a 'currentCategory' para hacer que coincida con tu uso anterior
+    currentCategory: PostCategory | null; // El objeto de categoría actual para editar
 }
 
 const EditPostCategoryModal: React.FC<Props> = ({ onClose, fetchPostCategory, currentCategory }) => {
     const t = useTranslations('general');
     const [descripcion, setDescripcion] = useState('');
     const [alias, setAlias] = useState('');
+    const [estado, setEstado] = useState(''); // Estado para el campo 'estado'
     const [isLoading, setIsLoading] = useState(false);
     const postCategoryService = new PostCategoryService();
 
-    // Este hook actualiza los campos cuando se recibe un nuevo currentCategory
+    // Actualiza los campos cuando se recibe un nuevo currentCategory
     useEffect(() => {
         if (currentCategory) {
-            setDescripcion(currentCategory.descripcion);
-            setAlias(currentCategory.alias);
+            setDescripcion(currentCategory.descripcion || '');  // Mantén el valor actual o vacío si no existe
+            setAlias(currentCategory.alias || '');              // Mantén el valor actual o vacío si no existe
+            setEstado(currentCategory.estado || 'activo');      // Mantén el estado actual, por defecto 'activo'
         }
     }, [currentCategory]);
 
@@ -31,11 +33,14 @@ const EditPostCategoryModal: React.FC<Props> = ({ onClose, fetchPostCategory, cu
         setIsLoading(true);
 
         try {
+            // Creamos un objeto que contendrá solo los campos que han cambiado
             const updatedCategory = {
-                descripcion,
-                alias,
+                descripcion: descripcion || currentCategory?.descripcion,
+                alias: alias || currentCategory?.alias,
+                estado: estado || currentCategory?.estado,
             };
 
+            // Realiza la actualización solo con los campos modificados
             await postCategoryService.updatePostCategory(currentCategory?.id_detalle, updatedCategory);
             notification.success({
                 message: 'Categoría actualizada',
@@ -85,6 +90,23 @@ const EditPostCategoryModal: React.FC<Props> = ({ onClose, fetchPostCategory, cu
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
                         placeholder="Ingresa el nuevo alias de la categoría"
                     />
+                </div>
+
+                {/* Campo Select para el estado */}
+                <div className="mb-4">
+                    <label htmlFor="estado" className="block text-sm font-medium text-gray-700">
+                        Estado
+                    </label>
+                    <select
+                        id="estado"
+                        value={estado}
+                        onChange={(e) => setEstado(e.target.value)}
+                        required
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
+                    >
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
                 </div>
 
                 <div className="flex justify-end">

@@ -32,7 +32,7 @@ class EventsCategoryService {
     }
 
     updateEventsCategory = (id, data) => {
-        const endpoint = `${this.endpoint.eventsCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
+        const endpoint = `${this.endpoint.eventsCategory}/${id}`; // Asume que la API acepta el ID en la URL
         return this.service.request({
             method: 'PUT',
             endpoint,
@@ -42,7 +42,7 @@ class EventsCategoryService {
     };
 
     deleteEventsCategory = (id) => {
-        const endpoint = `${this.endpoint.eventsCategory}/${id_detalle}`; // Asume que la API acepta el ID en la URL
+        const endpoint = `${this.endpoint.eventsCategory}/${id}`; // Asume que la API acepta el ID en la URL
         return this.service.request({
             method: 'DELETE',
             endpoint,

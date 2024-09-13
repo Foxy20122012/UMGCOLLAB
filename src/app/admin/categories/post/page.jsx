@@ -61,6 +61,11 @@ const PostCategoryPage = () => {
             key: 'alias',
         },
         {
+            title: 'Estado',
+            dataIndex: 'estado',
+            key: 'estado',
+        },
+        {
             title: 'Creado por',
             dataIndex: 'nombre_usuario_creador',
             key: 'nombre_usuario_creador',

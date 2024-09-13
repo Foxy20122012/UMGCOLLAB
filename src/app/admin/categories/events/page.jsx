@@ -5,14 +5,14 @@ import { Table } from 'antd';
 import { FaPlus } from "react-icons/fa";
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { MdEdit, MdDeleteOutline } from "react-icons/md";
-import NewsCategoryService  from '../../../../services/umgService/collabAdmin/categories/newsCategoryService';
-import InsertNewsCategoryModal from './insertNewCategory'; 
-import EditNewsCategoryModal from './EditNewCategoryModal'; 
+import EventsCategoryService from '../../../../services/umgService/collabAdmin/categories/eventsCategoryService'; // Cambiado a EventsCategoryService
+import InsertEventsCategoryModal from './insertEventsCategory'; // Cambiado a InsertEventsCategoryModal
+import EditEventsCategoryModal from './EditEventsCategory'; // Cambiado a EditEventsCategoryModal
 import DeleteConfirmationModal from "../../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal";
-import ViewDetailsModal from './ViewDetailsModal'; 
+import ViewDetailsModal from './ViewDetailsModal'; // Reutilizado, pero usando EventsCategory
 
-const PostCategoryPage = () => {
-    const [newsCategory, setNewsCategory] = useState([]);
+const EventsCategoryPage = () => {
+    const [eventsCategory, setEventsCategory] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -20,23 +20,23 @@ const PostCategoryPage = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
 
-    const newsCategoryService = new NewsCategoryService();
+    const eventsCategoryService = new EventsCategoryService(); // Cambiado a EventsCategoryService
 
-    const fetchNewsCategories = async () => {
+    const fetchEventsCategories = async () => {
         try {
-            const result = await newsCategoryService.getNewsCategory();
+            const result = await eventsCategoryService.getEventsCategory(); // Cambiado a getEventsCategory
             if (result && Array.isArray(result.data)) {
-                setNewsCategory(result.data);
+                setEventsCategory(result.data);
             } else {
                 console.error('Formato de respuesta inesperado:', result);
             }
         } catch (error) {
-            console.error('Error al obtener categorías:', error);
+            console.error('Error al obtener categorías de eventos:', error);
         }
     };
 
     useEffect(() => {
-        fetchNewsCategories();
+        fetchEventsCategories();
     }, []);
 
     const columns = [
@@ -97,12 +97,12 @@ const PostCategoryPage = () => {
     const handleConfirmDelete = async () => {
         if (selectedCategoryToDelete) {
             try {
-                await newsCategoryService.deleteNewsCategory(selectedCategoryToDelete.id_detalle);
-                fetchNewsCategories();
+                await eventsCategoryService.deleteEventsCategory(selectedCategoryToDelete.id_detalle); // Cambiado a deleteEventsCategory
+                fetchEventsCategories();
                 setSelectedCategoryToDelete(null);
                 setShowDeleteModal(false);
             } catch (error) {
-                console.error('Error al eliminar la categoría:', error);
+                console.error('Error al eliminar la categoría de evento:', error);
             }
         }
     };
@@ -119,7 +119,7 @@ const PostCategoryPage = () => {
     return (
         <div>
             <div className="my-2">
-                <h2 className="text-center font-bold text-xl">Categorías de Noticias</h2>
+                <h2 className="text-center font-bold text-xl">Categorías de Eventos</h2>
             </div>
             <div className="flex justify-end mb-4">
                 <button
@@ -133,7 +133,7 @@ const PostCategoryPage = () => {
             <div className='my-8'>
                 <Table
                     columns={columns}
-                    dataSource={newsCategory}
+                    dataSource={eventsCategory} // Cambiado a eventsCategory
                     rowKey="id_detalle"
                     pagination={{
                         showSizeChanger: true,
@@ -143,34 +143,29 @@ const PostCategoryPage = () => {
             </div>
 
             {/* Modal para insertar nueva categoría */}
-{/* Modal para insertar nueva categoría */}
-{isModalOpen && (
-    <InsertNewsCategoryModal
-        onClose={() => setIsModalOpen(false)}
-        fetchNewsCategory={fetchNewsCategories} // Asegúrate de pasar la función correctamente
-    />
-)}
-
+            {isModalOpen && (
+                <InsertEventsCategoryModal
+                    onClose={() => setIsModalOpen(false)}
+                    fetchEventsCategory={fetchEventsCategories} // Asegúrate de pasar la función correctamente
+                />
+            )}
 
             {/* Modal para editar una categoría */}
             {isEditModalOpen && currentCategory && (
-    <EditNewsCategoryModal
-        onClose={() => setIsEditModalOpen(false)}
-        fetchNewsCategory={fetchNewsCategories}
-        currentCategory={currentCategory} // Pasa correctamente el objeto a editar
-    />
-)}
-
+                <EditEventsCategoryModal
+                    onClose={() => setIsEditModalOpen(false)}
+                    fetchEventsCategory={fetchEventsCategories}
+                    currentCategory={currentCategory} // Pasa correctamente el objeto a editar
+                />
+            )}
 
             {/* Modal de vista de detalles */}
             {isViewModalOpen && currentCategory && (
-    <ViewDetailsModal
-        isOpen={isViewModalOpen}
-        onClose={() => setIsViewModalOpen(false)}
-        selectedNewsCategory={currentCategory} // Asegúrate de que el objeto seleccionado está correcto
-    />
-)}
-
+                <ViewDetailsModal
+                    onClose={() => setIsViewModalOpen(false)}
+                    selectedEventsCategory={currentCategory} // Pasa el objeto EventsCategory
+                />
+            )}
 
             {/* Modal de confirmación para eliminar una categoría */}
             {showDeleteModal && (
@@ -179,7 +174,7 @@ const PostCategoryPage = () => {
                         isOpen={showDeleteModal}
                         onCancel={() => setShowDeleteModal(false)}
                         onConfirm={handleConfirmDelete}
-                        message="¿Estás seguro de que quieres eliminar esta categoría?"
+                        message="¿Estás seguro de que quieres eliminar esta categoría de evento?"
                     />
                 </div>
             )}
@@ -187,4 +182,4 @@ const PostCategoryPage = () => {
     );
 };
 
-export default PostCategoryPage;
+export default EventsCategoryPage;

@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import { NewsCategory } from '@/models/interface/categories/Newscategory';
-import NewsCategoryService from '../../../../services/umgService/collabAdmin/categories/newsCategoryService';
+import { EventsCategory } from '../../../../models/interface/categories/EventsCategory'; // Cambiar el modelo
+import EventsCategoryService from '../../../../services/umgService/collabAdmin/categories/eventsCategoryService'; // Cambiar el servicio
 import { notification } from 'antd';
 
 interface Props {
     onClose: () => void;
-    fetchNewsCategory: () => void;
-    currentCategory: NewsCategory | null; // El objeto de categoría actual para editar
+    fetchEventsCategory: () => void; // Cambié la función de actualización para eventos
+    currentCategory: EventsCategory | null; // Ahora utilizamos 'EventsCategory'
 }
 
-const EditNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory, currentCategory }) => {
+const EditEventsCategoryModal: React.FC<Props> = ({ onClose, fetchEventsCategory, currentCategory }) => {
     const t = useTranslations('general');
     const [descripcion, setDescripcion] = useState('');
     const [alias, setAlias] = useState('');
-    const [estado, setEstado] = useState(''); // Agregar el estado
+    const [estado, setEstado] = useState(''); // Estado para el campo 'estado'
     const [isLoading, setIsLoading] = useState(false);
-    const newsCategoryService = new NewsCategoryService();
+    const eventsCategoryService = new EventsCategoryService(); // Cambiar a EventsCategoryService
 
-    // Actualiza los campos cuando se recibe un nuevo currentCategory
+    // Este hook actualiza los campos cuando se recibe un nuevo currentCategory
     useEffect(() => {
         if (currentCategory) {
             setDescripcion(currentCategory.descripcion || '');  // Mantén el valor actual o vacío si no existe
@@ -33,26 +33,24 @@ const EditNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory, cu
         setIsLoading(true);
 
         try {
-            // Creamos un objeto vacío que contendrá solo los campos que han cambiado
             const updatedCategory = {
                 descripcion: descripcion || currentCategory?.descripcion,
                 alias: alias || currentCategory?.alias,
                 estado: estado || currentCategory?.estado,
             };
 
-            // Realiza la actualización solo con los campos modificados
-            await newsCategoryService.updateNewsCategory(currentCategory?.id_detalle, updatedCategory);
+            await eventsCategoryService.updateEventsCategory(currentCategory?.id_detalle, updatedCategory); // Cambiar a updateEventCategory
             notification.success({
-                message: 'Categoría actualizada',
-                description: 'La categoría ha sido actualizada exitosamente',
+                message: 'Categoría de evento actualizada',
+                description: 'La categoría de evento ha sido actualizada exitosamente',
             });
 
-            fetchNewsCategory(); // Actualiza la lista de categorías
+            fetchEventsCategory(); // Actualiza la lista de categorías de eventos
             onClose(); // Cierra el modal
         } catch (error) {
             notification.error({
-                message: 'Error al actualizar categoría',
-                description: 'Ocurrió un error al intentar actualizar la categoría. Inténtalo de nuevo.',
+                message: 'Error al actualizar categoría de evento',
+                description: 'Ocurrió un error al intentar actualizar la categoría de evento. Inténtalo de nuevo.',
             });
         } finally {
             setIsLoading(false);
@@ -73,7 +71,7 @@ const EditNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory, cu
                         onChange={(e) => setDescripcion(e.target.value)}
                         required
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
-                        placeholder="Ingresa la nueva descripción de la categoría"
+                        placeholder="Ingresa la nueva descripción de la categoría de evento"
                     />
                 </div>
 
@@ -88,7 +86,7 @@ const EditNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory, cu
                         onChange={(e) => setAlias(e.target.value)}
                         required
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
-                        placeholder="Ingresa el nuevo alias de la categoría"
+                        placeholder="Ingresa el nuevo alias de la categoría de evento"
                     />
                 </div>
 
@@ -123,4 +121,4 @@ const EditNewsCategoryModal: React.FC<Props> = ({ onClose, fetchNewsCategory, cu
     );
 };
 
-export default EditNewsCategoryModal;
+export default EditEventsCategoryModal;
