@@ -84,7 +84,7 @@ const menuItems = [
     ],
   },
   {
-    key: '/admin/categorias',
+    key: '/admin/categories',
     icon: <TagsOutlined />, // Icono de etiquetas para representar categorías
     label: 'Categorias',
     children: [
@@ -93,11 +93,11 @@ const menuItems = [
         label: 'Categorias Post',
       },
       {
-        key: '/admin/categorias/noticias',
+        key: '/admin/categories/news',
         label: 'Categoria Noticias',
       },
       {
-        key: '/admin/categorias/eventos',
+        key: '/admin/categories/events',
         label: 'Categoria Eventos',
       },
     ],

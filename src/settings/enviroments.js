@@ -1,3 +1,5 @@
+
+
 const environment = "http://localhost:3000";
 //const environment = process.env.NEXT_PUBLIC_API_URL;
 
@@ -11,6 +13,9 @@ module.exports = {
                     cursos: {
                         cursos: '/api/Cursos',
                         temas: '/api/topics'
+                    },
+                    registerProfessors:{
+                        registroProcesor: '/api/usuarios/catedraticos'
                     }
                 },
                 general:{
@@ -19,6 +24,7 @@ module.exports = {
                         eventsCategory: '/api/categoria/Eventos',
                         newsCategory: '/api/categoria/news'
                     }
+
                 }
             }
         }
