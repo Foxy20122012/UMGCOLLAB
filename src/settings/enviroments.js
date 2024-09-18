@@ -1,3 +1,4 @@
+const { register } = require("module");
 
 
 const environment = "http://localhost:3000";
@@ -16,7 +17,10 @@ module.exports = {
                     },
                     registerProfessors:{
                         registroProcesor: '/api/usuarios/catedraticos'
-                    }
+                    },
+                    registerStudents:{
+                        registroEstudiante: '/api/usuarios/estudiantes'
+                    },
                 },
                 general:{
                     categories:{
