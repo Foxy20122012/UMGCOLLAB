@@ -11,6 +11,17 @@ interface Props {
 const ViewDetailsModal: React.FC<Props> = ({ selectedProfesor, onClose }) => {
   const t = useTranslations('general');
 
+  // Función para formatear la fecha
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'No disponible';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
   // Si no hay detalles del profesor seleccionado
   if (!selectedProfesor) {
     return (
@@ -49,7 +60,7 @@ const ViewDetailsModal: React.FC<Props> = ({ selectedProfesor, onClose }) => {
           </div>
           <div>
             <p className="font-medium">Fecha de Registro:</p>
-            <p>{new Date(selectedProfesor.fecha_registro).toLocaleString()}</p>
+            <p>{formatDate(selectedProfesor.fecha_registro)}</p>
           </div>
           <div>
             <p className="font-medium">Dirección:</p>
@@ -57,7 +68,7 @@ const ViewDetailsModal: React.FC<Props> = ({ selectedProfesor, onClose }) => {
           </div>
           <div>
             <p className="font-medium">Fecha de Nacimiento:</p>
-            <p>{selectedProfesor.fecha_nacimiento || 'No disponible'}</p>
+            <p>{formatDate(selectedProfesor.fecha_nacimiento)}</p>
           </div>
           <div>
             <p className="font-medium">Estado Civil:</p>

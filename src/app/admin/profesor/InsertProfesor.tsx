@@ -24,6 +24,11 @@ const InsertProfesor: React.FC<Props> = ({ onClose, fetchProfesores }) => {
     const [isLoading, setIsLoading] = useState(false);
     const registroProfesorService = new RegistroProfesorService();
 
+    // Calcula la fecha mínima permitida (hace 18 años desde hoy)
+    const today = new Date();
+    const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const minDate = eighteenYearsAgo.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true); // Bloquea el botón para evitar múltiples clics.
@@ -174,6 +179,7 @@ const InsertProfesor: React.FC<Props> = ({ onClose, fetchProfesores }) => {
                         type="date"
                         value={fechaNacimiento}
                         onChange={(e) => setFechaNacimiento(e.target.value)}
+                        max={minDate} // Restringe la fecha a una fecha máxima de hace 18 años
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
                         placeholder="Ingresa la fecha de nacimiento del profesor"
                     />

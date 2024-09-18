@@ -22,8 +22,14 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
     const [ocupacion, setOcupacion] = useState('');
     const [intereses, setIntereses] = useState('');
     const [activo, setActivo] = useState(true); // Para manejar el campo activo
+    const [contraseña, setContraseña] = useState(''); // Campo para la nueva contraseña (opcional)
     const [isLoading, setIsLoading] = useState(false);
     const registroProfesorService = new RegistroProfesorService();
+
+    // Calcula la fecha mínima permitida (hace 18 años desde hoy)
+    const today = new Date();
+    const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const minDate = eighteenYearsAgo.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
 
     // Actualiza los campos cuando se recibe un nuevo currentProfesor
     useEffect(() => {
@@ -33,7 +39,7 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
             setCorreo(currentProfesor.correo || '');
             setTelefono(currentProfesor.telefono || '');
             setDireccion(currentProfesor.direccion || '');
-    
+
             // Convertimos la fecha de nacimiento al formato 'YYYY-MM-DD'
             if (currentProfesor.fecha_nacimiento) {
                 const formattedDate = new Date(currentProfesor.fecha_nacimiento).toISOString().split('T')[0];
@@ -41,7 +47,7 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
             } else {
                 setFechaNacimiento('');
             }
-    
+
             setOcupacion(currentProfesor.ocupacion || '');
             setIntereses(currentProfesor.intereses || '');
             setActivo(currentProfesor.activo || false);
@@ -53,8 +59,8 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
         setIsLoading(true);
 
         try {
-            // Creamos un objeto que contendrá solo los campos que han cambiado
-            const updatedProfesor = {
+            // Creamos un objeto que contendrá solo los campos que han cambiado, incluyendo la contraseña solo si es proporcionada
+            const updatedProfesor: Partial<Usuario> = {
                 nombre: nombre || currentProfesor?.nombre,
                 apellido: apellido || currentProfesor?.apellido,
                 correo: correo || currentProfesor?.correo,
@@ -64,6 +70,7 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
                 ocupacion: ocupacion || currentProfesor?.ocupacion,
                 intereses: intereses || currentProfesor?.intereses,
                 activo: activo,
+                ...(contraseña && { contraseña }) // Solo agregar la contraseña si ha sido proporcionada
             };
 
             // Realiza la actualización solo con los campos modificados
@@ -75,11 +82,19 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
 
             fetchProfesores(); // Actualiza la lista de profesores
             onClose(); // Cierra el modal
-        } catch (error) {
-            notification.error({
-                message: 'Error al actualizar profesor',
-                description: 'Ocurrió un error al intentar actualizar la información del profesor. Inténtalo de nuevo.',
-            });
+        } catch (error: any) {
+            // Comprobamos si el error viene de un conflicto de correo ya registrado
+            if (error.response && error.response.status === 409) {
+                notification.error({
+                    message: 'Error al actualizar profesor',
+                    description: 'El correo ya está registrado. Por favor, utiliza otro correo.',
+                });
+            } else {
+                notification.error({
+                    message: 'Error al actualizar profesor',
+                    description: 'Ocurrió un error al intentar actualizar la información del profesor. Inténtalo de nuevo.',
+                });
+            }
         } finally {
             setIsLoading(false);
         }
@@ -134,6 +149,20 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
                 </div>
 
                 <div className="mb-4">
+                    <label htmlFor="contraseña" className="block text-sm font-medium text-gray-700">
+                        Nueva Contraseña (opcional)
+                    </label>
+                    <input
+                        id="contraseña"
+                        type="password"
+                        value={contraseña}
+                        onChange={(e) => setContraseña(e.target.value)}
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
+                        placeholder="Ingresa una nueva contraseña"
+                    />
+                </div>
+
+                <div className="mb-4">
                     <label htmlFor="telefono" className="block text-sm font-medium text-gray-700">
                         Teléfono
                     </label>
@@ -170,6 +199,7 @@ const EditProfesor: React.FC<Props> = ({ onClose, fetchProfesores, currentProfes
                         type="date"
                         value={fechaNacimiento}
                         onChange={(e) => setFechaNacimiento(e.target.value)}
+                        max={minDate} // Restringe la fecha a una fecha máxima de hace 18 años
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-opacity-50"
                     />
                 </div>
