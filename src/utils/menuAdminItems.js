@@ -103,32 +103,24 @@ const menuItems = [
     ],
   },
   {
-    key: '/admin/team',
+    key: '/admin/profesor',
     icon: <TeamOutlined />, // Icono para representar el equipo o catedráticos
     label: 'Equipo',
     children: [
       {
-        key: '/admin/team/catedraticos',
+        key: '/admin/profesor',
         label: 'Catedráticos',
-      },
-      {
-        key: '/admin/team/catedraticos-cursos',
-        label: 'Catedrático Cursos',
-      },
+      }
     ],
   },
   {
-    key: '/admin/estudiantes',
+    key: '/admin/students',
     icon: <UsergroupAddOutlined />, // Icono de grupo para representar estudiantes
     label: 'Estudiantes',
     children: [
       {
-        key: '/admin/estudiantes/lista',
+        key: '/admin/students',
         label: 'Lista de Estudiantes',
-      },
-      {
-        key: '/admin/estudiantes/cursos',
-        label: 'Cursos Estudiantes',
       },
     ],
   },
@@ -138,7 +130,7 @@ const menuItems = [
     icon: <BarChartOutlined />, // Icono para estadísticas o visitas de la página
     label: 'Visitas Página',
   },
-  {
+ /* {
     key: '/admin/permisos',
     icon: <IdcardOutlined />, // Icono de grupo para representar estudiantes
     label: 'Roles Y Permisos',
@@ -156,7 +148,7 @@ const menuItems = [
         label: 'Permisos',
       },
     ],
-  },
+  },*/
     {
     key: '/admin/settings',
     icon: <SettingOutlined />,

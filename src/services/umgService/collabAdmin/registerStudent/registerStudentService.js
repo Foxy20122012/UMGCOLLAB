@@ -10,7 +10,7 @@ class RegistroStudentService {
             'Content-Type': 'application/json'
         };
     }
-getRegistroProfesor = ()=>{
+getRegistroStudent = ()=>{
     const endpoint = this.endpoint.registroEstudiante;
     return this.service.request({
         method: 'GET',
@@ -19,7 +19,7 @@ getRegistroProfesor = ()=>{
     })
 }
 
-createRegistroProfesor = (data)=>{
+createRegistroStudent  = (data)=>{
     const endpoint = this.endpoint.registroEstudiante;
     return this.service.request({
         method: 'POST',
@@ -29,8 +29,8 @@ createRegistroProfesor = (data)=>{
     })
 }
 
-updateRegistroProfesor = (id, data) => {
-    const endpoint = `${this.endpoint.registroEstudiante}/${id}`; // Asume que la API acepta el ID en la URL
+updateRegistroStudent  = (id, data) => {
+    const endpoint = `${this.endpoint.registroEstudiante}/${id}`; 
     return this.service.request({
         method: 'PUT',
         endpoint,
@@ -39,8 +39,8 @@ updateRegistroProfesor = (id, data) => {
     });
 };
 
-deleteRegistroProfesor = (id) => {
-    const endpoint = `${this.endpoint.registroEstudiante}/${id}`; // Asume que la API acepta el ID en la URL
+deleteRegistroStudent  = (id) => {
+    const endpoint = `${this.endpoint.registroEstudiante}/${id}`; 
     return this.service.request({
         method: 'DELETE',
         endpoint,
