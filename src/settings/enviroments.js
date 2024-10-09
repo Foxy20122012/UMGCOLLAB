@@ -27,7 +27,12 @@ module.exports = {
                         postCategory: '/api/categoria/post',
                         eventsCategory: '/api/categoria/Eventos',
                         newsCategory: '/api/categoria/news'
-                    }
+                    },
+                    posts:{
+                        posts: '/api/posts',
+                        news: '/api/news',
+                        events: '/api/events'
+                    },
 
                 }
             }
