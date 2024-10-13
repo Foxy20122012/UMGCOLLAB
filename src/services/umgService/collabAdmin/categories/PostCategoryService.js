@@ -27,7 +27,7 @@ class PostCategoryService {
             method: 'POST',
             endpoint,
             data: data,
-            headers: this.defaultHeaders
+          //  headers: this.defaultHeaders
         })
     }
 

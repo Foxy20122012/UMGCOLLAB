@@ -25,7 +25,7 @@ createPosts = (data)=>{
         method: 'POST',
         endpoint,
         data: data,
-        headers: this.defaultHeaders
+       
     })
 }
 
