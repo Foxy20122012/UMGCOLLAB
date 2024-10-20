@@ -4,7 +4,7 @@ import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
 import PostsService from '../../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
-import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
 
 interface Props {
   onClose: () => void;
@@ -13,6 +13,7 @@ interface Props {
 
 const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const t = useTranslations('general');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
   const [contenido, setContenido] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -35,6 +36,9 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [errorHora, setErrorHora] = useState(false);
 
   const postsService = new PostsService();
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -154,7 +158,17 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
 
   return (
-    <ModalBase onClose={onClose} title={t('create_post')} width={800} className="bg-white rounded-lg shadow-xl">
+    <>
+    <div className='flex justify-end'>
+      <button
+        onClick={handleOpenModal}
+        className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+      >
+        <PlusOutlined /> Crear Post
+      </button>
+    </div>
+      {isModalOpen && (
+    <ModalBase onClose={handleCloseModal} title={t('create_post')} width={800} className="bg-white rounded-lg shadow-xl">
       <form onSubmit={handleSubmit} className="p-4">
         <div className="grid grid-cols-5 gap-4">
           <div className="mb-4 col-span-1">
@@ -375,16 +389,29 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
         <div className="flex justify-end">
           <button
+            type='button'
+            className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:ring focus:ring-opacity-50 focus:ring-red-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={handleCloseModal}
+          >
+            Cancelar
+          </button>
+          <div className='ml-4'>
+          <button
             type="submit"
-            className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:ring focus:ring-opacity-50 focus:ring-blue-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:ring focus:ring-opacity-50 focus:ring-green-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={isLoading}
           >
             {isLoading ? 'Creando...' : 'Crear Post'}
           </button>
+          </div> 
         </div>
+        
       </form>
     </ModalBase>
+    )}
+    </>
   );
 };
 
 export default CreatePostsModal;
+
