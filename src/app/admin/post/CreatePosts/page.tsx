@@ -55,15 +55,17 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const handleFechaEventoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = new Date(e.target.value);
     const hour = selectedDate.getHours();
-
+  
     // Validar que la hora esté entre 6 AM y 11 PM
-    if (hour < 6 || hour > 23) {
+    if (hour < 6 || hour >= 23) {
       setErrorHora(true);
+      setFechaEvento(''); // Limpiar la selección si no es válida
     } else {
       setErrorHora(false);
       setFechaEvento(e.target.value); // Solo actualizar si es válido
     }
   };
+  
 
   const handleDocumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -242,6 +244,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               </p>
             )}
           </div>
+
 
 
           <div className="mb-4 col-span-1">
