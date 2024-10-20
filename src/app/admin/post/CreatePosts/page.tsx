@@ -32,6 +32,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [imageIndex, setImageIndex] = useState(0); // Carrusel de imágenes
   const [docIndex, setDocIndex] = useState(0); // Carrusel de documentos
   const [isLoading, setIsLoading] = useState(false);
+  const [errorHora, setErrorHora] = useState(false);
 
   const postsService = new PostsService();
 
@@ -48,6 +49,19 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       });
 
       Promise.all(previews).then(setPreviewImages);
+    }
+  };
+
+  const handleFechaEventoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = new Date(e.target.value);
+    const hour = selectedDate.getHours();
+
+    // Validar que la hora esté entre 6 AM y 11 PM
+    if (hour < 6 || hour > 23) {
+      setErrorHora(true);
+    } else {
+      setErrorHora(false);
+      setFechaEvento(e.target.value); // Solo actualizar si es válido
     }
   };
 
@@ -111,29 +125,36 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
         }
       }
 
-      await postsService.createPosts(formData);
+      // Espera la respuesta del servicio.
+      const response = await postsService.createPosts(formData);
 
-      notification.success({
-        message: 'Post creado exitosamente',
-        description: 'El post ha sido creado y subido con éxito',
-      });
+      // Verifica si la respuesta fue exitosa.
+      if (response.status === 201) {
+        notification.success({
+          message: 'Post creado exitosamente',
+          description: 'El post ha sido creado y subido con éxito',
+        });
 
-      fetchPosts();
-      onClose();
+        fetchPosts(); // Actualiza la lista de posts.
+        onClose(); // Cierra el modal.
+      } else {
+        throw new Error('Error al crear el post'); // Forzamos error si no es 201.
+      }
     } catch (error) {
-      notification.error({
-        message: 'Error al crear el post',
-        description: 'Hubo un error al crear el post. Intenta nuevamente.',
-      });
+     //notification.error({
+     //   message: 'Error al crear el post',
+       // description: error || 'Hubo un error al crear el post. Intenta nuevamente.',
+ //     });
     } finally {
       setIsLoading(false);
     }
-  };
+};
+
 
   return (
     <ModalBase onClose={onClose} title={t('create_post')} width={800} className="bg-white rounded-lg shadow-xl">
       <form onSubmit={handleSubmit} className="p-4">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-5 gap-4">
           <div className="mb-4 col-span-1">
             <label htmlFor="titulo" className="block text-sm font-medium text-gray-700">Título</label>
             <input
@@ -149,15 +170,31 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
           <div className="mb-4 col-span-1">
             <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de post</label>
-            <input
+            <select
               id="tipo_post"
-              type="text"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+            >
+              <option value="evento">Evento</option>
+              <option value="noticia">Noticia</option>
+              <option value="anuncio">Anuncio</option>
+            </select>
+          </div>
+
+          <div className="mb-4 col-span-1">
+            <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">Nombre del Curso</label>
+            <input
+              id="nombre_curso"
+              type="text"
+              value={nombreCurso}
+              onChange={(e) => setNombreCurso(e.target.value)}
+              required
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-              placeholder="Tipo de post"
+              placeholder="Nombre del curso"
             />
           </div>
+
 
           <div className="mb-4 col-span-1">
             <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">Contenido</label>
@@ -185,16 +222,27 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="fecha_evento" className="block text-sm font-medium text-gray-700">Fecha del evento</label>
+            <label htmlFor="fecha_evento" className="block text-sm font-medium text-gray-700">
+              Fecha del evento
+            </label>
             <input
               id="fecha_evento"
               type="datetime-local"
               value={fechaEvento}
-              onChange={(e) => setFechaEvento(e.target.value)}
+              onChange={handleFechaEventoChange}
+              min={new Date().toISOString().slice(0, 16)} // Fecha mínima: ahora mismo
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className={`mt-1 block w-full border rounded-md shadow-sm p-2 ${
+                errorHora ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
+            {errorHora && (
+              <p className="text-red-500 text-sm mt-1">
+                Por favor selecciona una hora entre 6:00 AM y 11:00 PM.
+              </p>
+            )}
           </div>
+
 
           <div className="mb-4 col-span-1">
             <label htmlFor="ubicacion_evento" className="block text-sm font-medium text-gray-700">Ubicación del evento</label>
