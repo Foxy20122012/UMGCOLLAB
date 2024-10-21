@@ -2,12 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
+import CursosService from '../../../../services/umgService';
 import EventsCategoryService from '../../../../services/umgService/collabAdmin/categories/eventsCategoryService';
 import PostsService from '../../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
 import { Categoria } from '../../../../models/categorias/Events';
+import {  Cursos } from '../../../../models/interface/Cursos'
 
 const eventsCategoryService = new EventsCategoryService();
 
@@ -31,6 +33,8 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [ubicacionDetallada, setUbicacionDetallada] = useState('');
   const [urlExterna, setUrlExterna] = useState('');
   const [tipoContenido, setTipoContenido] = useState('');
+  const cursosService = new CursosService(); // Servicio de cursos
+  const [cursos, setCursos] = useState<Cursos[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]); // Categorías de eventos
   const [imagenes, setImagenes] = useState<FileList | null>(null);
   const [archivos, setArchivos] = useState<FileList | null>(null);
@@ -60,6 +64,22 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       }
     };
     fetchCategorias();
+  }, []);
+
+  useEffect(() => {
+    const fetchCursos = async () => {
+      try {
+        const result = await cursosService.cursosService.getCursos();
+        if (result && Array.isArray(result)) {
+          setCursos(result); // Guardar los cursos en el estado
+        } else {
+          console.error('Formato de respuesta inesperado:', result);
+        }
+      } catch (error) {
+        console.error('Error al obtener cursos:', error);
+      }
+    };
+    fetchCursos();
   }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -221,17 +241,25 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">Nombre del Curso</label>
-            <input
+            <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">
+              Nombre del Curso
+            </label>
+            <select
               id="nombre_curso"
-              type="text"
               value={nombreCurso}
               onChange={(e) => setNombreCurso(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-              placeholder="Nombre del curso"
-            />
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+            >
+              <option value="">Selecciona un curso</option>
+              {cursos.map((curso) => (
+                <option key={curso.id} value={curso.nombre}>
+                  {curso.nombre}
+                </option>
+              ))}
+            </select>
           </div>
+
 
 
           <div className="mb-4 col-span-1">
