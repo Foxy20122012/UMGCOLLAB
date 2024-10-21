@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import PostsService from '../../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
+import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
 
 interface Props {
   onClose: () => void;
@@ -409,6 +410,53 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       </form>
     </ModalBase>
     )}
+<div className="flex flex-col items-center justify-center mt-8 p-4">
+  <h2 className="text-2xl font-semibold text-gray-800 flex items-center transition-transform transform hover:scale-105">
+    ¿Qué publicaremos hoy?
+  </h2>
+  <p className="text-gray-600  text-center mt-2 flex items-center transition-transform transform hover:scale-105">
+    Comparte tus ideas, eventos o noticias con toda la comunidad.
+  </p>
+  <img 
+    src="/posts.jpeg" 
+    alt="Crea tu post" 
+    className="max-w-md w-full h-auto rounded-lg shadow-lg transform transition duration-500 hover:scale-105 mt-4"
+  />
+</div>
+
+<div className="mt-10 p-6 rounded-lg shadow-lg bg-gradient-to-r from-gray-100 to-gray-200">
+  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    ¿Tienes algo en mente?
+  </h3>
+  <ul className="list-none space-y-4 text-gray-700">
+    <li className="flex items-center transition-transform transform hover:scale-105">
+      <FaLightbulb className="text-yellow-500 mr-2" />
+      Comparte tus ideas con todos.
+    </li>
+    <li className="flex items-center transition-transform transform hover:scale-105">
+      <FaHandsHelping className="text-green-500 mr-2" />
+      Aporta contenido que inspire a otros.
+    </li>
+    <li className="flex items-center transition-transform transform hover:scale-105">
+      <FaHandsHelping className="text-green-500 mr-2" />
+      Pon tu granito de arena aportando conocimiento.
+    </li>
+  </ul>
+</div>
+
+<div className="mt-10 text-center">
+  <p className="text-gray-500 italic transition-colors  transform hover:scale-105">
+    "Cada aporte cuenta. Crecemos todos juntos con tus ideas."
+  </p>
+  <button className="mt-4 px-6 py-2 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600 transition-colors  transform hover:scale-105"
+  onClick={handleOpenModal}
+  >
+    Crea un nuevo post
+  </button>
+</div>
+<div className='mt-10'>
+
+</div>
     </>
   );
 };
