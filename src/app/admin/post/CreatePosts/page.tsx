@@ -1,11 +1,15 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
+import EventsCategoryService from '../../../../services/umgService/collabAdmin/categories/eventsCategoryService';
 import PostsService from '../../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
+import { Categoria } from '../../../../models/categorias/Events';
+
+const eventsCategoryService = new EventsCategoryService();
 
 interface Props {
   onClose: () => void;
@@ -27,6 +31,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [ubicacionDetallada, setUbicacionDetallada] = useState('');
   const [urlExterna, setUrlExterna] = useState('');
   const [tipoContenido, setTipoContenido] = useState('');
+  const [categorias, setCategorias] = useState<Categoria[]>([]); // Categorías de eventos
   const [imagenes, setImagenes] = useState<FileList | null>(null);
   const [archivos, setArchivos] = useState<FileList | null>(null);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
@@ -38,8 +43,24 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
   const postsService = new PostsService();
 
+
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const response = await eventsCategoryService.getEventsCategory();
+        const categoriasActivas = response.data.filter(
+          (categoria: Categoria) => categoria.estado.toLowerCase() === 'activo'
+        ); // Filtrar solo las categorías activas
+        setCategorias(categoriasActivas);
+      } catch (error) {
+        console.error('Error al obtener las categorías:', error);
+      }
+    };
+    fetchCategorias();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -288,16 +309,24 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="tipo_contenido" className="block text-sm font-medium text-gray-700">Tipo de contenido</label>
-            <input
+            <label htmlFor="tipo_contenido" className="block text-sm font-medium text-gray-700">
+              Tipo de contenido
+            </label>
+            <select
               id="tipo_contenido"
-              type="text"
               value={tipoContenido}
               onChange={(e) => setTipoContenido(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-              placeholder="Tipo de contenido"
-            />
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+            >
+              <option value="">Selecciona un tipo de contenido</option>
+              {categorias.map((categoria) => (
+                <option key={categoria.id} value={categoria.alias}>
+                  {categoria.alias}
+                </option>
+              ))}
+            </select>
           </div>
+
 
           <div className="mb-4 col-span-1">
             <label htmlFor="url_externa" className="block text-sm font-medium text-gray-700">URL externa</label>
