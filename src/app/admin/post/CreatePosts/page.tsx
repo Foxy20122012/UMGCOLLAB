@@ -9,7 +9,7 @@ import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
 import { Categoria } from '../../../../models/categorias/Events';
-import {  Cursos } from '../../../../models/interface/Cursos'
+import {  Cursos, Tema } from '../../../../models/interface/Cursos'
 
 const eventsCategoryService = new EventsCategoryService();
 
@@ -44,6 +44,10 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [docIndex, setDocIndex] = useState(0); // Carrusel de documentos
   const [isLoading, setIsLoading] = useState(false);
   const [errorHora, setErrorHora] = useState(false);
+  const [temaSeleccionado, setTemaSeleccionado] = useState('');
+  const [temas, setTemas] = useState<Tema[]>([]);
+  const [temasCurso, setTemasCurso] = useState<string>('');
+
 
   const postsService = new PostsService();
 
@@ -81,6 +85,18 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     };
     fetchCursos();
   }, []);
+
+  const handleCursoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const cursoSeleccionado = cursos.find(curso => curso.nombre === e.target.value);
+    setNombreCurso(e.target.value);
+  
+    if (cursoSeleccionado) {
+      setTemas(cursoSeleccionado.temas); // Carga los temas del curso seleccionado
+    } else {
+      setTemas([]); // Limpia los temas si no hay curso seleccionado
+    }
+  };
+  
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -240,6 +256,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
             </select>
           </div>
 
+
           <div className="mb-4 col-span-1">
             <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">
               Nombre del Curso
@@ -247,7 +264,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
             <select
               id="nombre_curso"
               value={nombreCurso}
-              onChange={(e) => setNombreCurso(e.target.value)}
+              onChange={handleCursoChange}
               required
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             >
@@ -261,18 +278,25 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
           </div>
 
 
-
           <div className="mb-4 col-span-1">
-            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">Contenido</label>
-            <textarea
+            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">Contenido (Tema)</label>
+            <select
               id="contenido"
-              value={contenido}
-              onChange={(e) => setContenido(e.target.value)}
+              value={temaSeleccionado}
+              onChange={(e) => setTemaSeleccionado(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-              placeholder="Contenido del post"
-            />
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+            >
+              <option value="">Selecciona un tema</option>
+              {temas.map((tema) => (
+                <option key={tema.id} value={tema.nombre}>
+                  {tema.nombre}
+                </option>
+              ))}
+            </select>
           </div>
+
+
 
           <div className="mb-4 col-span-1">
             <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">Descripción</label>
