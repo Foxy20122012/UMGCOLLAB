@@ -18,7 +18,7 @@ interface Props {
   fetchPosts: () => void;
 }
 
-const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -250,9 +250,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             >
-              <option value="Post">Post</option>
-              <option value="noticia">Noticia</option>
-              <option value="anuncio">Anuncio</option>
+              <option value="evento">Evento</option>
             </select>
           </div>
 
@@ -542,5 +540,5 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   );
 };
 
-export default CreatePostsModal;
+export default CreateEventsModal;
 

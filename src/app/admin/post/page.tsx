@@ -1,15 +1,15 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import ModalBase from '../../../../components/templates/ModalBase/index';
+import ModalBase from '../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import CursosService from '../../../../services/umgService';
-import EventsCategoryService from '../../../../services/umgService/collabAdmin/categories/eventsCategoryService';
-import PostsService from '../../../../services/umgService/collabAdmin/posts/postsService';
+import CursosService from '../../../services/umgService';
+import EventsCategoryService from '../../../services/umgService/collabAdmin/categories/eventsCategoryService';
+import PostsService from '../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
 import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
-import { Categoria } from '../../../../models/categorias/Events';
-import {  Cursos, Tema } from '../../../../models/interface/Cursos'
+import { Categoria } from '../../../models/categorias/Events';
+import {  Cursos, Tema } from '../../../models/interface/Cursos'
 
 const eventsCategoryService = new EventsCategoryService();
 
@@ -18,7 +18,7 @@ interface Props {
   fetchPosts: () => void;
 }
 
-const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -250,9 +250,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             >
-              <option value="Post">Post</option>
-              <option value="noticia">Noticia</option>
-              <option value="anuncio">Anuncio</option>
+              <option value="post">Post</option>
             </select>
           </div>
 
@@ -542,5 +540,5 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   );
 };
 
-export default CreatePostsModal;
+export default CreatePostModal;
 

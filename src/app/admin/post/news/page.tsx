@@ -18,7 +18,7 @@ interface Props {
   fetchPosts: () => void;
 }
 
-const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -222,7 +222,7 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
         onClick={handleOpenModal}
         className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
       >
-        <PlusOutlined /> Crear Post
+        <PlusOutlined /> Crear Noticia.
       </button>
     </div>
       {isModalOpen && (
@@ -243,14 +243,14 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de post</label>
+            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de publicación</label>
             <select
               id="tipo_post"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             >
-              <option value="Post">Post</option>
+              <option value="evento">Evento</option>
               <option value="noticia">Noticia</option>
               <option value="anuncio">Anuncio</option>
             </select>
@@ -493,10 +493,10 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     )}
 <div className="flex flex-col items-center justify-center mt-8 p-4">
   <h2 className="text-2xl font-semibold text-gray-800 flex items-center transition-transform transform hover:scale-105">
-    ¿Qué publicaremos hoy?
+    ¿Qué noticias daremos a conocer hoy?
   </h2>
   <p className="text-gray-600  text-center mt-2 flex items-center transition-transform transform hover:scale-105">
-    Comparte tus ideas, eventos o noticias con toda la comunidad.
+    Compartamos juntos noticias relevantes para mantener informada a la comunidad educativa y usuarios de interes.
   </p>
   <img 
     src="/posts.jpeg" 
@@ -507,32 +507,32 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
 <div className="mt-10 p-6 rounded-lg shadow-lg bg-gradient-to-r from-gray-100 to-gray-200">
   <h3 className="text-lg font-semibold text-gray-800 mb-4">
-    ¿Tienes algo en mente?
+    ¿Tienes algún suceso relevante?
   </h3>
   <ul className="list-none space-y-4 text-gray-700">
     <li className="flex items-center transition-transform transform hover:scale-105">
       <FaLightbulb className="text-yellow-500 mr-2" />
-      Comparte tus ideas con todos.
+      Comparte los sucesos relevantes.
     </li>
     <li className="flex items-center transition-transform transform hover:scale-105">
       <FaHandsHelping className="text-green-500 mr-2" />
-      Aporta contenido que inspire a otros.
+      Aporta contenido que mantenga informado a otros.
     </li>
     <li className="flex items-center transition-transform transform hover:scale-105">
       <FaHandsHelping className="text-green-500 mr-2" />
-      Pon tu granito de arena aportando conocimiento.
+      Pon tu granito de arena aportando información relevante.
     </li>
   </ul>
 </div>
 
 <div className="mt-10 text-center">
   <p className="text-gray-500 italic transition-colors  transform hover:scale-105">
-    "Cada aporte cuenta. Crecemos todos juntos con tus ideas."
+    "Cada aporte cuenta. Manteniendo informado al publico de interes común."
   </p>
   <button className="mt-4 px-6 py-2 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600 transition-colors  transform hover:scale-105"
   onClick={handleOpenModal}
   >
-    Crea un nuevo post
+    Crea una nueva noticia.
   </button>
 </div>
 <div className='mt-10'>
@@ -542,5 +542,5 @@ const CreatePostsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   );
 };
 
-export default CreatePostsModal;
+export default CreateNewsModal;
 

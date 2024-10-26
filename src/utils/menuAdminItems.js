@@ -54,15 +54,15 @@ const menuItems = [
         label: 'Post Pendientes',
       },
       {
-        key: '/admin/publicar/post',
+        key: '/admin/post/post',
         label: 'Publicar Post',
       },
       {
-        key: '/admin/publicar/noticias',
+        key: '/admin/post/news',
         label: 'Noticias',
       },
       {
-        key: '/admin/publicar/noticias',
+        key: '/admin/post/news',
         label: 'Publicar Noticias',
       },
       {
@@ -74,7 +74,7 @@ const menuItems = [
         label: 'Eventos',
       },
       {
-        key: '/admin/publicar/eventos',
+        key: '/admin/post/events',
         label: 'Publicar Eventos',
       },
       {
