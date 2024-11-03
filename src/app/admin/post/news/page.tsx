@@ -227,7 +227,7 @@ setIsModalOpen(false);
       </button>
     </div>
       {isModalOpen && (
-    <ModalBase onClose={handleCloseModal} title={t('create_post')} width={800} className="bg-gradient-to-b from-white to-gray-100 rounded-lg shadow-xl p-6">
+    <ModalBase onClose={handleCloseModal} title={t('create_news')} width={800} className="bg-gradient-to-b from-white to-gray-100 rounded-lg shadow-xl p-6">
       <form onSubmit={handleSubmit} className="p-4">
         <div className="grid grid-cols-5 gap-4">
           <div className="mb-4 col-span-1">
