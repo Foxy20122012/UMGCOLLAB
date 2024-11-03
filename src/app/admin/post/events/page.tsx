@@ -18,7 +18,7 @@ interface Props {
   fetchPosts: () => void;
 }
 
-const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -165,7 +165,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     try {
       const formData = new FormData();
       formData.append('titulo', titulo);
-      formData.append('contenido', contenido);
+      formData.append('tema', temaSeleccionado || ''); // Cambia aquí de 'contenido' a 'tema'
       formData.append('descripcion', descripcion);
       formData.append('fecha_evento', fechaEvento);
       formData.append('ubicacion_evento', ubicacionEvento);
@@ -176,6 +176,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       formData.append('url_externa', urlExterna);
       formData.append('tipo_contenido', tipoContenido);
       formData.append('estado', estado);
+      
 
       if (imagenes) {
         for (let i = 0; i < imagenes.length; i++) {
@@ -191,7 +192,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
       // Espera la respuesta del servicio.
       const response = await postsService.createPosts(formData);
-
+setIsModalOpen(false);
       // Verifica si la respuesta fue exitosa.
       if (response.status === 201) {
         notification.success({
@@ -200,7 +201,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
         });
 
         fetchPosts(); // Actualiza la lista de posts.
-        onClose(); // Cierra el modal.
+         // Cierra el modal.
       } else {
         throw new Error('Error al crear el post'); // Forzamos error si no es 201.
       }
@@ -220,13 +221,13 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     <div className='flex justify-end'>
       <button
         onClick={handleOpenModal}
-        className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+        className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transform transition-transform hover:scale-105"
       >
         <PlusOutlined /> Crear Post
       </button>
     </div>
       {isModalOpen && (
-    <ModalBase onClose={handleCloseModal} title={t('create_post')} width={800} className="bg-white rounded-lg shadow-xl">
+    <ModalBase onClose={handleCloseModal} title={t('create_post')} width={800} className="bg-gradient-to-b from-white to-gray-100 rounded-lg shadow-xl p-6">
       <form onSubmit={handleSubmit} className="p-4">
         <div className="grid grid-cols-5 gap-4">
           <div className="mb-4 col-span-1">
@@ -237,7 +238,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Título del post"
             />
           </div>
@@ -248,9 +249,9 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               id="tipo_post"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
-              <option value="evento">Evento</option>
+              <option value="post">Post</option>
             </select>
           </div>
 
@@ -264,7 +265,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={nombreCurso}
               onChange={handleCursoChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un curso</option>
               {cursos.map((curso) => (
@@ -283,7 +284,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={temaSeleccionado}
               onChange={(e) => setTemaSeleccionado(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un tema</option>
               {temas.map((tema) => (
@@ -304,7 +305,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Descripción breve del post"
             />
           </div>
@@ -320,7 +321,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               onChange={handleFechaEventoChange}
               min={new Date().toISOString().slice(0, 16)} // Fecha mínima: ahora mismo
               required
-              className={`mt-1 block w-full border rounded-md shadow-sm p-2 ${
+              className={`mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105 ${
                 errorHora ? 'border-red-500' : 'border-gray-300'
               }`}
             />
@@ -341,10 +342,22 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={ubicacionEvento}
               onChange={(e) => setUbicacionEvento(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Ubicación del evento"
             />
           </div>
+          <div className="mb-4 col-span-1">
+  <label htmlFor="prioridad" className="block text-sm font-medium text-gray-700">Prioridad</label>
+  <input
+    id="prioridad"
+    type="number" // Cambia el tipo a number
+    value={prioridad}
+    onChange={(e) => setPrioridad(parseInt(e.target.value) )} // Cambia a `setPrioridad`
+    required
+    className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+    placeholder="Prioridad del evento"
+  />
+</div>
 
           <div className="mb-4 col-span-1">
             <label htmlFor="ubicacion_detallada" className="block text-sm font-medium text-gray-700">Ubicación detallada</label>
@@ -353,7 +366,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               type="text"
               value={ubicacionDetallada}
               onChange={(e) => setUbicacionDetallada(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Ubicación detallada"
             />
           </div>
@@ -366,7 +379,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               id="tipo_contenido"
               value={tipoContenido}
               onChange={(e) => setTipoContenido(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un tipo de contenido</option>
               {categorias.map((categoria) => (
@@ -385,7 +398,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               type="text"
               value={urlExterna}
               onChange={(e) => setUrlExterna(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="URL externa"
             />
           </div>
@@ -401,7 +414,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               multiple
               accept="image/*"
               onChange={handleImageChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             />
             <div className="mt-2 flex items-center">
               <button type="button" onClick={prevImage} className="mr-2">
@@ -440,7 +453,7 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               multiple
               accept=".pdf,.doc,.docx"
               onChange={handleDocumentChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             />
             <div className="mt-2 flex items-center">
               <button type="button" onClick={prevDoc} className="mr-2">
@@ -540,5 +553,5 @@ const CreateEventsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   );
 };
 
-export default CreateEventsModal;
+export default CreatePostModal;
 

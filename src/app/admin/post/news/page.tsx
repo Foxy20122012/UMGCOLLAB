@@ -18,7 +18,7 @@ interface Props {
   fetchPosts: () => void;
 }
 
-const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -165,7 +165,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     try {
       const formData = new FormData();
       formData.append('titulo', titulo);
-      formData.append('contenido', contenido);
+      formData.append('tema', temaSeleccionado || ''); // Cambia aquí de 'contenido' a 'tema'
       formData.append('descripcion', descripcion);
       formData.append('fecha_evento', fechaEvento);
       formData.append('ubicacion_evento', ubicacionEvento);
@@ -176,6 +176,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       formData.append('url_externa', urlExterna);
       formData.append('tipo_contenido', tipoContenido);
       formData.append('estado', estado);
+      
 
       if (imagenes) {
         for (let i = 0; i < imagenes.length; i++) {
@@ -191,7 +192,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
       // Espera la respuesta del servicio.
       const response = await postsService.createPosts(formData);
-
+setIsModalOpen(false);
       // Verifica si la respuesta fue exitosa.
       if (response.status === 201) {
         notification.success({
@@ -200,7 +201,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
         });
 
         fetchPosts(); // Actualiza la lista de posts.
-        onClose(); // Cierra el modal.
+         // Cierra el modal.
       } else {
         throw new Error('Error al crear el post'); // Forzamos error si no es 201.
       }
@@ -220,13 +221,13 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     <div className='flex justify-end'>
       <button
         onClick={handleOpenModal}
-        className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+        className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transform transition-transform hover:scale-105"
       >
-        <PlusOutlined /> Crear Noticia.
+        <PlusOutlined /> Crear Post
       </button>
     </div>
       {isModalOpen && (
-    <ModalBase onClose={handleCloseModal} title={t('create_post')} width={800} className="bg-white rounded-lg shadow-xl">
+    <ModalBase onClose={handleCloseModal} title={t('create_post')} width={800} className="bg-gradient-to-b from-white to-gray-100 rounded-lg shadow-xl p-6">
       <form onSubmit={handleSubmit} className="p-4">
         <div className="grid grid-cols-5 gap-4">
           <div className="mb-4 col-span-1">
@@ -237,22 +238,20 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Título del post"
             />
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de publicación</label>
+            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de post</label>
             <select
               id="tipo_post"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
-              <option value="evento">Evento</option>
-              <option value="noticia">Noticia</option>
-              <option value="anuncio">Anuncio</option>
+              <option value="post">Post</option>
             </select>
           </div>
 
@@ -266,7 +265,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={nombreCurso}
               onChange={handleCursoChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un curso</option>
               {cursos.map((curso) => (
@@ -285,7 +284,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={temaSeleccionado}
               onChange={(e) => setTemaSeleccionado(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un tema</option>
               {temas.map((tema) => (
@@ -306,7 +305,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Descripción breve del post"
             />
           </div>
@@ -322,7 +321,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               onChange={handleFechaEventoChange}
               min={new Date().toISOString().slice(0, 16)} // Fecha mínima: ahora mismo
               required
-              className={`mt-1 block w-full border rounded-md shadow-sm p-2 ${
+              className={`mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105 ${
                 errorHora ? 'border-red-500' : 'border-gray-300'
               }`}
             />
@@ -343,10 +342,22 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={ubicacionEvento}
               onChange={(e) => setUbicacionEvento(e.target.value)}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Ubicación del evento"
             />
           </div>
+          <div className="mb-4 col-span-1">
+  <label htmlFor="prioridad" className="block text-sm font-medium text-gray-700">Prioridad</label>
+  <input
+    id="prioridad"
+    type="number" // Cambia el tipo a number
+    value={prioridad}
+    onChange={(e) => setPrioridad(parseInt(e.target.value) )} // Cambia a `setPrioridad`
+    required
+    className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+    placeholder="Prioridad del evento"
+  />
+</div>
 
           <div className="mb-4 col-span-1">
             <label htmlFor="ubicacion_detallada" className="block text-sm font-medium text-gray-700">Ubicación detallada</label>
@@ -355,7 +366,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               type="text"
               value={ubicacionDetallada}
               onChange={(e) => setUbicacionDetallada(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Ubicación detallada"
             />
           </div>
@@ -368,7 +379,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               id="tipo_contenido"
               value={tipoContenido}
               onChange={(e) => setTipoContenido(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un tipo de contenido</option>
               {categorias.map((categoria) => (
@@ -387,7 +398,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               type="text"
               value={urlExterna}
               onChange={(e) => setUrlExterna(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="URL externa"
             />
           </div>
@@ -403,7 +414,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               multiple
               accept="image/*"
               onChange={handleImageChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             />
             <div className="mt-2 flex items-center">
               <button type="button" onClick={prevImage} className="mr-2">
@@ -442,7 +453,7 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               multiple
               accept=".pdf,.doc,.docx"
               onChange={handleDocumentChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             />
             <div className="mt-2 flex items-center">
               <button type="button" onClick={prevDoc} className="mr-2">
@@ -493,10 +504,10 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     )}
 <div className="flex flex-col items-center justify-center mt-8 p-4">
   <h2 className="text-2xl font-semibold text-gray-800 flex items-center transition-transform transform hover:scale-105">
-    ¿Qué noticias daremos a conocer hoy?
+    ¿Qué publicaremos hoy?
   </h2>
   <p className="text-gray-600  text-center mt-2 flex items-center transition-transform transform hover:scale-105">
-    Compartamos juntos noticias relevantes para mantener informada a la comunidad educativa y usuarios de interes.
+    Comparte tus ideas, eventos o noticias con toda la comunidad.
   </p>
   <img 
     src="/posts.jpeg" 
@@ -507,32 +518,32 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
 <div className="mt-10 p-6 rounded-lg shadow-lg bg-gradient-to-r from-gray-100 to-gray-200">
   <h3 className="text-lg font-semibold text-gray-800 mb-4">
-    ¿Tienes algún suceso relevante?
+    ¿Tienes algo en mente?
   </h3>
   <ul className="list-none space-y-4 text-gray-700">
     <li className="flex items-center transition-transform transform hover:scale-105">
       <FaLightbulb className="text-yellow-500 mr-2" />
-      Comparte los sucesos relevantes.
+      Comparte tus ideas con todos.
     </li>
     <li className="flex items-center transition-transform transform hover:scale-105">
       <FaHandsHelping className="text-green-500 mr-2" />
-      Aporta contenido que mantenga informado a otros.
+      Aporta contenido que inspire a otros.
     </li>
     <li className="flex items-center transition-transform transform hover:scale-105">
       <FaHandsHelping className="text-green-500 mr-2" />
-      Pon tu granito de arena aportando información relevante.
+      Pon tu granito de arena aportando conocimiento.
     </li>
   </ul>
 </div>
 
 <div className="mt-10 text-center">
   <p className="text-gray-500 italic transition-colors  transform hover:scale-105">
-    "Cada aporte cuenta. Manteniendo informado al publico de interes común."
+    "Cada aporte cuenta. Crecemos todos juntos con tus ideas."
   </p>
   <button className="mt-4 px-6 py-2 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600 transition-colors  transform hover:scale-105"
   onClick={handleOpenModal}
   >
-    Crea una nueva noticia.
+    Crea un nuevo post
   </button>
 </div>
 <div className='mt-10'>
@@ -542,5 +553,5 @@ const CreateNewsModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   );
 };
 
-export default CreateNewsModal;
+export default CreatePostModal;
 

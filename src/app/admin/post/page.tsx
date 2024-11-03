@@ -192,7 +192,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
 
       // Espera la respuesta del servicio.
       const response = await postsService.createPosts(formData);
-
+setIsModalOpen(false);
       // Verifica si la respuesta fue exitosa.
       if (response.status === 201) {
         notification.success({
@@ -201,7 +201,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
         });
 
         fetchPosts(); // Actualiza la lista de posts.
-        onClose(); // Cierra el modal.
+         // Cierra el modal.
       } else {
         throw new Error('Error al crear el post'); // Forzamos error si no es 201.
       }
@@ -238,7 +238,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
               required
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Título del post"
             />
           </div>
@@ -249,7 +249,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               id="tipo_post"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="post">Post</option>
             </select>
@@ -265,7 +265,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={nombreCurso}
               onChange={handleCursoChange}
               required
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un curso</option>
               {cursos.map((curso) => (
@@ -284,7 +284,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={temaSeleccionado}
               onChange={(e) => setTemaSeleccionado(e.target.value)}
               required
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un tema</option>
               {temas.map((tema) => (
@@ -305,7 +305,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               required
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Descripción breve del post"
             />
           </div>
@@ -321,7 +321,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               onChange={handleFechaEventoChange}
               min={new Date().toISOString().slice(0, 16)} // Fecha mínima: ahora mismo
               required
-              className={`mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105 ${
+              className={`mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105 ${
                 errorHora ? 'border-red-500' : 'border-gray-300'
               }`}
             />
@@ -342,7 +342,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               value={ubicacionEvento}
               onChange={(e) => setUbicacionEvento(e.target.value)}
               required
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Ubicación del evento"
             />
           </div>
@@ -354,7 +354,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     value={prioridad}
     onChange={(e) => setPrioridad(parseInt(e.target.value) )} // Cambia a `setPrioridad`
     required
-    className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+    className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
     placeholder="Prioridad del evento"
   />
 </div>
@@ -366,7 +366,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               type="text"
               value={ubicacionDetallada}
               onChange={(e) => setUbicacionDetallada(e.target.value)}
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="Ubicación detallada"
             />
           </div>
@@ -379,7 +379,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               id="tipo_contenido"
               value={tipoContenido}
               onChange={(e) => setTipoContenido(e.target.value)}
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
               <option value="">Selecciona un tipo de contenido</option>
               {categorias.map((categoria) => (
@@ -398,7 +398,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               type="text"
               value={urlExterna}
               onChange={(e) => setUrlExterna(e.target.value)}
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
               placeholder="URL externa"
             />
           </div>
@@ -414,7 +414,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               multiple
               accept="image/*"
               onChange={handleImageChange}
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             />
             <div className="mt-2 flex items-center">
               <button type="button" onClick={prevImage} className="mr-2">
@@ -453,7 +453,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               multiple
               accept=".pdf,.doc,.docx"
               onChange={handleDocumentChange}
-              className="mt-1 block w-full p-3 border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             />
             <div className="mt-2 flex items-center">
               <button type="button" onClick={prevDoc} className="mr-2">
