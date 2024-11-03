@@ -165,7 +165,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     try {
       const formData = new FormData();
       formData.append('titulo', titulo);
-      formData.append('contenido', contenido);
+      formData.append('tema', temaSeleccionado || ''); // Cambia aquí de 'contenido' a 'tema'
       formData.append('descripcion', descripcion);
       formData.append('fecha_evento', fechaEvento);
       formData.append('ubicacion_evento', ubicacionEvento);
@@ -176,6 +176,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       formData.append('url_externa', urlExterna);
       formData.append('tipo_contenido', tipoContenido);
       formData.append('estado', estado);
+      
 
       if (imagenes) {
         for (let i = 0; i < imagenes.length; i++) {
@@ -345,6 +346,18 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
               placeholder="Ubicación del evento"
             />
           </div>
+          <div className="mb-4 col-span-1">
+  <label htmlFor="prioridad" className="block text-sm font-medium text-gray-700">Prioridad</label>
+  <input
+    id="prioridad"
+    type="number" // Cambia el tipo a number
+    value={prioridad}
+    onChange={(e) => setPrioridad(parseInt(e.target.value) )} // Cambia a `setPrioridad`
+    required
+    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+    placeholder="Prioridad del evento"
+  />
+</div>
 
           <div className="mb-4 col-span-1">
             <label htmlFor="ubicacion_detallada" className="block text-sm font-medium text-gray-700">Ubicación detallada</label>
