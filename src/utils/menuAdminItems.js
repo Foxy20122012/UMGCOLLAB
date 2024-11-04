@@ -54,7 +54,7 @@ const menuItems = [
         label: 'Post Pendientes',
       },
       {
-        key: '/admin/post/post',
+        key: '/admin/post',
         label: 'Publicar Post',
       },
       {

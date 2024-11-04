@@ -223,7 +223,7 @@ setIsModalOpen(false);
         onClick={handleOpenModal}
         className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transform transition-transform hover:scale-105"
       >
-        <PlusOutlined /> Crear Post
+        <PlusOutlined /> Crear Eventos
       </button>
     </div>
       {isModalOpen && (
@@ -244,55 +244,53 @@ setIsModalOpen(false);
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de post</label>
+            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de evento</label>
             <select
               id="tipo_post"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
-              <option value="post">Post</option>
+              <option value="conferencias">Conferencias</option>
+              <option value="talleres">Talleres</option>
+              <option value="concursos">Concursos</option>
+              <option value="feria">Feria</option>
+              <option value="exposiciones">Exposiciones</option>
+              <option value="jornada">Jornada</option>
+              <option value="actividades">Actividades</option>
+              <option value="otros">Otros</option>
             </select>
           </div>
-
 
           <div className="mb-4 col-span-1">
             <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">
-              Nombre del Curso
+              Nombre
             </label>
-            <select
+            <input
               id="nombre_curso"
+              type="text"
               value={nombreCurso}
-              onChange={handleCursoChange}
+              onChange={(e) => setNombreCurso(e.target.value)}
               required
               className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
-            >
-              <option value="">Selecciona un curso</option>
-              {cursos.map((curso) => (
-                <option key={curso.id} value={curso.nombre}>
-                  {curso.nombre}
-                </option>
-              ))}
-            </select>
+              placeholder="Escribe el nombre"
+            />
           </div>
 
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">Contenido (Tema)</label>
-            <select
+            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">
+              Contenido (Tema)
+            </label>
+            <input
               id="contenido"
+              type="text"
               value={temaSeleccionado}
               onChange={(e) => setTemaSeleccionado(e.target.value)}
               required
-              className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
-            >
-              <option value="">Selecciona un tema</option>
-              {temas.map((tema) => (
-                <option key={tema.id} value={tema.nombre}>
-                  {tema.nombre}
-                </option>
-              ))}
-            </select>
+              className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              placeholder="Escribe el contenido o tema"
+            />
           </div>
 
 
