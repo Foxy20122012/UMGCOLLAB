@@ -28,7 +28,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [ubicacionEvento, setUbicacionEvento] = useState('');
   const [prioridad, setPrioridad] = useState(1);
   const [nombreCurso, setNombreCurso] = useState('');
-  const [tipoPost, setTipoPost] = useState('evento');
+  const [tipoPost, setTipoPost] = useState('noticia');
   const [estado, setEstado] = useState('pendiente');
   const [ubicacionDetallada, setUbicacionDetallada] = useState('');
   const [urlExterna, setUrlExterna] = useState('');
@@ -244,54 +244,48 @@ setIsModalOpen(false);
           </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de noticia</label>
+            <label htmlFor="tipo_post" className="block text-sm font-medium text-gray-700">Tipo de post</label>
             <select
               id="tipo_post"
               value={tipoPost}
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
-              <option value="destacadas">Noticias destacadas</option>
-              <option value="aviso">Aviso</option>
-              <option value="reporte">Reporte</option>
-              <option value="comunicado">Comunicado</option>
-              <option value="otros">Otros</option>
+              <option value="post">noticias</option>
             </select>
           </div>
 
           <div className="mb-4 col-span-1">
-  <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">
-    Nombre
-  </label>
-  <input
-    id="nombre_curso"
-    type="text"
-    value={nombreCurso}
-    onChange={(e) => setNombreCurso(e.target.value)}
-    required
-    className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
-    placeholder="Escribe el nombre del curso"
-  />
-</div>
+            <label htmlFor="nombre_curso" className="block text-sm font-medium text-gray-700">
+              Nombre
+            </label>
+            <input
+              id="nombre_curso"
+              type="text"
+              value={nombreCurso}
+              onChange={(e) => setNombreCurso(e.target.value)}
+              required
+              className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+              placeholder="Escribe el nombre del curso"
+            />
+          </div>
 
 
-<div className="mb-4 col-span-1">
-  <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">
-    Contenido (Tema)
-  </label>
-  <input
-    id="contenido"
-    type="text"
-    value={temaSeleccionado}
-    onChange={(e) => setTemaSeleccionado(e.target.value)}
-    required
-    className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
-    placeholder="Escribe el contenido o tema"
-  />
-</div>
-
-
-
+          <div className="mb-4 col-span-1">
+            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">Contenido (Tema)</label>
+            <select
+              id="contenido"
+              value={temaSeleccionado}
+              onChange={(e) => setTemaSeleccionado(e.target.value)}
+              className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
+            >
+            <option value="destacadas">Noticias destacadas</option>
+              <option value="aviso">Aviso</option>
+              <option value="reporte">Reporte</option>
+              <option value="comunicado">Comunicado</option>
+              <option value="otros">otros</option>
+            </select>
+          </div>
 
           <div className="mb-4 col-span-1">
             <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">Descripción</label>

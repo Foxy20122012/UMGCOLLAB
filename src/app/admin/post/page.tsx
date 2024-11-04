@@ -28,7 +28,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [ubicacionEvento, setUbicacionEvento] = useState('');
   const [prioridad, setPrioridad] = useState(1);
   const [nombreCurso, setNombreCurso] = useState('');
-  const [tipoPost, setTipoPost] = useState('evento');
+  const [tipoPost, setTipoPost] = useState('post');
   const [estado, setEstado] = useState('pendiente');
   const [ubicacionDetallada, setUbicacionDetallada] = useState('');
   const [urlExterna, setUrlExterna] = useState('');
@@ -251,7 +251,7 @@ setIsModalOpen(false);
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
-              <option value="post">Post</option>
+              <option value="post">post</option>
             </select>
           </div>
 

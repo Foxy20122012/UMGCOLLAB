@@ -251,14 +251,8 @@ setIsModalOpen(false);
               onChange={(e) => setTipoPost(e.target.value)}
               className="mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
             >
-              <option value="conferencias">Conferencias</option>
-              <option value="talleres">Talleres</option>
-              <option value="concursos">Concursos</option>
-              <option value="feria">Feria</option>
-              <option value="exposiciones">Exposiciones</option>
-              <option value="jornada">Jornada</option>
-              <option value="actividades">Actividades</option>
-              <option value="otros">Otros</option>
+              <option value="eventos">eventos</option>
+ 
             </select>
           </div>
 
@@ -279,19 +273,24 @@ setIsModalOpen(false);
 
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">
-              Contenido (Tema)
-            </label>
-            <input
+            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700">Contenido (Tema)</label>
+            <select
               id="contenido"
-              type="text"
               value={temaSeleccionado}
               onChange={(e) => setTemaSeleccionado(e.target.value)}
-              required
               className="mt-1 block w-full border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105"
-              placeholder="Escribe el contenido o tema"
-            />
+            >
+              <option value="conferencias">Conferencias</option>
+              <option value="talleres">Talleres</option>
+              <option value="concursos">Concursos</option>
+              <option value="feria">Feria</option>
+              <option value="exposiciones">Exposiciones</option>
+              <option value="jornada">Jornada</option>
+              <option value="actividades">Actividades</option>
+              <option value="otros">Otros</option>
+            </select>
           </div>
+
 
 
 
