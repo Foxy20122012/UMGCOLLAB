@@ -31,7 +31,15 @@ module.exports = {
                     posts:{
                         posts: '/api/posts',
                         news: '/api/news',
-                        events: '/api/events'
+                        events: '/api/events',
+                        pending:{
+                            posts: '/api/postsvisible',
+                            news: '/api/newssvisible',
+                            events: '/api/eventsvisible'
+                        },
+                        approoval:{
+                            approval: '/api/posts/visibility',
+                        }
                     },
 
                 }
