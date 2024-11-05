@@ -66,7 +66,7 @@ const menuItems = [
         label: 'Publicar Noticias',
       },
       {
-        key: '/admin/noticias/pendientes',
+        key: '/admin/pending/newspendient',
         label: 'Noticias Pendientes',
       },
       {
@@ -78,7 +78,7 @@ const menuItems = [
         label: 'Publicar Eventos',
       },
       {
-        key: '/admin/eventos/pendientes',
+        key: '/admin/pending/eventspendient',
         label: 'Eventos Pendientes',
       },
     ],
