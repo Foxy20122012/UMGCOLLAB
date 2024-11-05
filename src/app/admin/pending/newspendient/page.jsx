@@ -5,7 +5,7 @@ import { Table, notification } from 'antd';
 import { FaPlus } from "react-icons/fa";
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { MdEdit, MdDeleteOutline } from "react-icons/md";
-import visiblePostsService from '../../../../services/umgService/collabAdmin/posts/visible/visiblePostService';
+import visibleNewsService from '../../../../services/umgService/collabAdmin/posts/visible/visibleNewsService';
 import ViewDetailsModal from './ViewDetailsModal';
 import ApprovalModal from './approval';
 import DeleteConfirmationModal from "../../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal";
@@ -17,7 +17,7 @@ const PendingPostsPage = () => {
     const [currentPost, setCurrentPost] = useState(null);
     const [postIdToApprove, setPostIdToApprove] = useState(null);
 
-    const service = new visiblePostsService();
+    const service = new visibleNewsService();
 
     const fetchPendingPosts = async () => {
         try {
@@ -50,7 +50,7 @@ const PendingPostsPage = () => {
         fetchPendingPosts(); // Refresca la lista de posts después de aprobar uno
         notification.success({
             message: 'Éxito',
-            description: 'El post ha sido aprobado correctamente.',
+            description: 'La Noticia ha sido aprobado correctamente.',
         });
     };
 
@@ -81,7 +81,7 @@ const PendingPostsPage = () => {
 
     return (
         <div>
-            <h2 className="text-center font-bold text-xl">Post pendientes de publicación.</h2>
+            <h2 className="text-center font-bold text-xl">Noticias pendientes de aprobación.</h2>
             <Table columns={columns} dataSource={pendingPosts} rowKey="id" pagination={{ showSizeChanger: true, pageSizeOptions: ['5', '10', '20', '50'] }} />
 
             {isViewModalOpen && currentPost && (

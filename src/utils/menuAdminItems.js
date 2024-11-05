@@ -50,7 +50,7 @@ const menuItems = [
         label: 'Post Visibles',
       },
       {
-        key: '/admin/post/pendientes',
+        key: '/admin/pending/postspendient',
         label: 'Post Pendientes',
       },
       {

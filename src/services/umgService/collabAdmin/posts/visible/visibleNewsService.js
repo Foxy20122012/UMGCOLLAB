@@ -1,4 +1,4 @@
-import RestfulHandler from '../../../../module/handler/restfulHandler';
+import RestfulHandler from '../../../../../module/handler/restfulHandler';
 import enviroment from '../../../../../settings/enviroments'
 
 class visibleNewsService {
@@ -19,10 +19,10 @@ getPosts = ()=>{
     })
 }
 
-createPosts = (data)=>{
+visiblePosts = (data)=>{
     const endpoint = this.endpoint.approoval.approval
     return this.service.request({
-        method: 'POST',
+        method: 'PUT',
         endpoint,
         data: data,
        

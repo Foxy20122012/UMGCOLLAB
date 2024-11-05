@@ -19,10 +19,10 @@ getPosts = ()=>{
     })
 }
 
-createPosts = (data)=>{
+visiblePosts = (data)=>{
     const endpoint = this.endpoint.approoval.approval
     return this.service.request({
-        method: 'POST',
+        method: 'PUT',
         endpoint,
         data: data,
        

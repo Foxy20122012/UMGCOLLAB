@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
-import visiblePostsService from '../../../../services/umgService/collabAdmin/posts/visible//visiblePostService';
+import visibleEventsService from '../../../../services/umgService/collabAdmin/posts/visible/visiblePostService';
 
 const ApprovalModal = ({ visible, onClose, postId, onApprove }) => {
-    const service = new visiblePostsService();
+    const service = new visibleEventsService();
 
     const handleApprove = async () => {
         try {
@@ -29,7 +29,7 @@ const ApprovalModal = ({ visible, onClose, postId, onApprove }) => {
                 </Button>,
             ]}
         >
-            <p>¿Estás seguro de que deseas aprobar este post?</p>
+            <p>¿Estás seguro de que deseas aprobar este evento?</p>
         </Modal>
     );
 };
