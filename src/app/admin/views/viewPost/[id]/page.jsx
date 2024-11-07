@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import approvedPostsService from '../../../../../services/umgService/collabAdmin/posts/approved/postsApprovedService';
 import { Card, Col, Row, Typography, Divider, Tag, Space, Modal, Button, Tooltip } from 'antd';
 import { useParams } from 'next/navigation';
-import { CheckCircleOutlined, ClockCircleOutlined, DownloadOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, ClockCircleOutlined, DownloadOutlined, LeftOutlined, RightOutlined, FileTextOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;
 
@@ -98,8 +98,17 @@ const ApprovedPostDetails = () => {
       <Row justify="center">
         <Col span={22}>
           <Space direction="vertical" size="large" className="w-full bg-white p-8 rounded-xl shadow-md border border-gray-200">
+          <Paragraph className="text-lg font-medium text-gray-700">
+              <strong>Curso:</strong> {postDetails.nombre}
+            </Paragraph>   
             <Paragraph className="text-lg font-medium text-gray-700">
-              <strong>Contenido:</strong> {postDetails.contenido}
+              <strong>Tema:</strong> {postDetails.contenido}
+            </Paragraph>   
+            <Paragraph className="text-lg font-medium text-gray-700">
+              <strong>Descripción:</strong> {postDetails.descripcion}
+            </Paragraph>
+            <Paragraph className="text-lg font-medium text-gray-700">
+              <strong>categoria proyecto:</strong> {postDetails.tipo_contenido}
             </Paragraph>
             <Paragraph className="text-lg font-medium text-gray-700">
               <strong>Estado:</strong>{' '}
@@ -116,11 +125,7 @@ const ApprovedPostDetails = () => {
               </Tag>
             </Paragraph>
             <Paragraph className="text-lg font-medium text-gray-700">
-              <strong>Fecha de Evento:</strong>{' '}
-              {new Date(postDetails.fecha_evento).toLocaleString('es-ES', {
-                dateStyle: 'full',
-                timeStyle: 'short',
-              })}
+              <strong>Tipo:</strong> {postDetails.tipo_post}
             </Paragraph>
             <Paragraph className="text-lg font-medium text-gray-700">
               <strong>Ubicación del Evento:</strong> {postDetails.ubicacion_evento}
@@ -165,11 +170,12 @@ const ApprovedPostDetails = () => {
           <Col key={index} xs={24} sm={12} md={8}>
             <Card
               hoverable
-              className="shadow-lg transition-transform transform hover:scale-105 rounded-2xl overflow-hidden border border-gray-200 bg-gradient-to-r from-white to-blue-50"
+              className="shadow-lg transition-transform transform hover:scale-105 rounded-2xl border border-gray-200 bg-gradient-to-b from-white to-blue-50"
               title={
-                <span className="font-semibold text-lg text-blue-800">
-                  Documento {index + 1}
-                </span>
+                <div className="flex items-center">
+                  <FileTextOutlined className="text-3xl text-blue-600 mr-2" />
+                  <span className="font-semibold text-lg text-blue-800">Documento {index + 1}</span>
+                </div>
               }
               extra={
                 <Tooltip title="Descargar archivo">
@@ -185,6 +191,7 @@ const ApprovedPostDetails = () => {
               }
             >
               <p className="text-sm text-gray-600">Public ID: {file.public_id}</p>
+              <p className="text-sm text-gray-500 italic">Haga clic en descargar para obtener el archivo.</p>
             </Card>
           </Col>
         ))}
