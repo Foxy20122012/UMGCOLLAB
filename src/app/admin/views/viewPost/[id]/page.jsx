@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import approvedPostsService from '../../../../../services/umgService/collabAdmin/posts/approved/postsApprovedService';
 import { Card, Col, Row, Typography, Divider, Tag, Space, Modal, Button, Tooltip } from 'antd';
 import { useParams } from 'next/navigation';
-import { CheckCircleOutlined, ClockCircleOutlined, EyeOutlined, DownloadOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, ClockCircleOutlined, DownloadOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;
 
@@ -14,20 +14,17 @@ const downloadFileWithExtension = async (url, defaultName) => {
     const response = await fetch(url, { method: 'HEAD' });
     const contentType = response.headers.get('Content-Type');
 
-    // Mapear los tipos de contenido a extensiones comunes
     const mimeToExtension = {
       'image/jpeg': '.jpg',
       'image/png': '.png',
       'application/pdf': '.pdf',
       'application/msword': '.doc',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
-      // Agrega más tipos de contenido según sea necesario
     };
 
     const extension = mimeToExtension[contentType] || '';
     const fileName = `${defaultName}${extension}`;
 
-    // Crear un enlace temporal para forzar la descarga
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', fileName);
@@ -36,7 +33,6 @@ const downloadFileWithExtension = async (url, defaultName) => {
     document.body.removeChild(link);
   } catch (error) {
     console.error('Error al obtener la extensión del archivo:', error);
-    // Descargar con el nombre predeterminado si ocurre un error
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', defaultName);
@@ -49,7 +45,7 @@ const downloadFileWithExtension = async (url, defaultName) => {
 const ApprovedPostDetails = () => {
   const [postDetails, setPostDetails] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -67,14 +63,26 @@ const ApprovedPostDetails = () => {
     fetchPostDetails();
   }, [id]);
 
-  const showModal = (img) => {
-    setSelectedImage(img);
+  const showModal = (index) => {
+    setSelectedImageIndex(index);
     setIsModalVisible(true);
   };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
-    setSelectedImage(null);
+    setSelectedImageIndex(0);
+  };
+
+  const handlePreviousImage = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex === 0 ? postDetails.imagenes.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex === postDetails.imagenes.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   if (!postDetails) {
@@ -133,7 +141,7 @@ const ApprovedPostDetails = () => {
                   alt={`Imagen ${index + 1}`}
                   src={img.url}
                   className="object-cover h-64 w-full cursor-pointer transition-transform duration-200 hover:opacity-90"
-                  onClick={() => showModal(img)}
+                  onClick={() => showModal(index)}
                 />
               }
             >
@@ -157,21 +165,23 @@ const ApprovedPostDetails = () => {
           <Col key={index} xs={24} sm={12} md={8}>
             <Card
               hoverable
-              className="shadow-lg transition-transform transform hover:scale-105 rounded-2xl overflow-hidden border border-gray-200"
+              className="shadow-lg transition-transform transform hover:scale-105 rounded-2xl overflow-hidden border border-gray-200 bg-gradient-to-r from-white to-blue-50"
               title={
-                <span className="font-semibold text-lg text-blue-700">
+                <span className="font-semibold text-lg text-blue-800">
                   Documento {index + 1}
                 </span>
               }
               extra={
-                <Button
-                  type="link"
-                  icon={<DownloadOutlined />}
-                  className="flex items-center text-blue-600 hover:text-blue-800"
-                  onClick={() => downloadFileWithExtension(file.url, `documento_${index + 1}`)}
-                >
-                  Descargar
-                </Button>
+                <Tooltip title="Descargar archivo">
+                  <Button
+                    type="link"
+                    icon={<DownloadOutlined />}
+                    className="flex items-center text-blue-600 hover:text-blue-800"
+                    onClick={() => downloadFileWithExtension(file.url, `documento_${index + 1}`)}
+                  >
+                    Descargar
+                  </Button>
+                </Tooltip>
               }
             >
               <p className="text-sm text-gray-600">Public ID: {file.public_id}</p>
@@ -189,17 +199,33 @@ const ApprovedPostDetails = () => {
         width={900}
         bodyStyle={{ padding: '20px', textAlign: 'center' }}
       >
-        {selectedImage && (
-          <div>
-            <img src={selectedImage.url} alt="Vista detallada" className="w-full h-auto rounded-md mb-4 shadow-lg" />
+        {postDetails.imagenes[selectedImageIndex] && (
+          <div className="relative">
+            <img
+              src={postDetails.imagenes[selectedImageIndex].url}
+              alt={`Imagen ${selectedImageIndex + 1}`}
+              className="w-full h-auto rounded-md mb-4 shadow-lg"
+            />
             <Button
               type="primary"
               icon={<DownloadOutlined />}
-              onClick={() => downloadFileWithExtension(selectedImage.url, 'imagen_modal')}
+              onClick={() => downloadFileWithExtension(postDetails.imagenes[selectedImageIndex].url, `imagen_${selectedImageIndex + 1}`)}
               className="mt-2 bg-gradient-to-r from-blue-500 to-blue-700 border-none text-white"
             >
               Descargar
             </Button>
+            <Button
+              type="link"
+              icon={<LeftOutlined />}
+              onClick={handlePreviousImage}
+              className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white hover:bg-gray-700"
+            />
+            <Button
+              type="link"
+              icon={<RightOutlined />}
+              onClick={handleNextImage}
+              className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white hover:bg-gray-700"
+            />
           </div>
         )}
       </Modal>
