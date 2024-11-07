@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import approvedPostsService from '../../../../../services/umgService/collabAdmin/posts/approved/postsApprovedService';
-import { Card, Col, Row, Typography, Divider, Tag, Space, Modal, Button } from 'antd';
+import { Card, Col, Row, Typography, Divider, Tag, Space, Modal, Button, Tooltip } from 'antd';
 import { useParams } from 'next/navigation';
 import { CheckCircleOutlined, ClockCircleOutlined, EyeOutlined, DownloadOutlined } from '@ant-design/icons';
 
@@ -78,43 +78,43 @@ const ApprovedPostDetails = () => {
   };
 
   if (!postDetails) {
-    return <p className="text-center mt-10">Cargando...</p>;
+    return <p className="text-center mt-10 text-lg font-semibold">Cargando...</p>;
   }
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-2xl">
-      <Title level={2} className="text-center text-blue-700 font-extrabold mb-8">
+    <div className="p-8 bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-xl">
+      <Title level={2} className="text-center text-blue-700 font-extrabold mb-6">
         {postDetails.titulo}
       </Title>
-      <Divider className="border-t-2 border-blue-200" />
+      <Divider className="border-t-2 border-blue-300 mb-6" />
       <Row justify="center">
         <Col span={22}>
-          <Space direction="vertical" size="large" className="w-full bg-blue-50 p-6 rounded-xl shadow-inner">
-            <Paragraph className="text-xl font-semibold text-gray-800">
+          <Space direction="vertical" size="large" className="w-full bg-white p-8 rounded-xl shadow-md border border-gray-200">
+            <Paragraph className="text-lg font-medium text-gray-700">
               <strong>Contenido:</strong> {postDetails.contenido}
             </Paragraph>
-            <Paragraph className="text-xl font-semibold text-gray-800">
+            <Paragraph className="text-lg font-medium text-gray-700">
               <strong>Estado:</strong>{' '}
-              <Tag color={postDetails.estado === 'aprobado' ? 'green' : 'orange'} className="rounded-full px-4 py-2 text-lg">
+              <Tag color={postDetails.estado === 'aprobado' ? 'green' : 'orange'} className="rounded-full px-4 py-1 text-lg">
                 {postDetails.estado === 'aprobado' ? (
-                  <>
+                  <Tooltip title="Este post está aprobado">
                     <CheckCircleOutlined /> Aprobado
-                  </>
+                  </Tooltip>
                 ) : (
-                  <>
+                  <Tooltip title="Este post está pendiente">
                     <ClockCircleOutlined /> Pendiente
-                  </>
+                  </Tooltip>
                 )}
               </Tag>
             </Paragraph>
-            <Paragraph className="text-xl font-semibold text-gray-800">
+            <Paragraph className="text-lg font-medium text-gray-700">
               <strong>Fecha de Evento:</strong>{' '}
               {new Date(postDetails.fecha_evento).toLocaleString('es-ES', {
                 dateStyle: 'full',
                 timeStyle: 'short',
               })}
             </Paragraph>
-            <Paragraph className="text-xl font-semibold text-gray-800">
+            <Paragraph className="text-lg font-medium text-gray-700">
               <strong>Ubicación del Evento:</strong> {postDetails.ubicacion_evento}
             </Paragraph>
           </Space>
@@ -132,16 +132,16 @@ const ApprovedPostDetails = () => {
                 <img
                   alt={`Imagen ${index + 1}`}
                   src={img.url}
-                  className="object-cover h-64 w-full cursor-pointer"
+                  className="object-cover h-64 w-full cursor-pointer transition-transform duration-200 hover:opacity-90"
                   onClick={() => showModal(img)}
                 />
               }
             >
-              <Card.Meta title={`Imagen ${index + 1}`} className="text-center" />
+              <Card.Meta title={`Imagen ${index + 1}`} className="text-center text-gray-800 font-semibold" />
               <Button
                 type="primary"
                 icon={<DownloadOutlined />}
-                className="mt-2 w-full bg-gradient-to-r from-blue-500 to-blue-700 border-none"
+                className="mt-2 w-full bg-gradient-to-r from-green-400 to-green-600 text-white border-none hover:from-green-500 hover:to-green-700"
                 onClick={() => downloadFileWithExtension(img.url, `imagen_${index + 1}`)}
               >
                 Descargar
@@ -196,7 +196,7 @@ const ApprovedPostDetails = () => {
               type="primary"
               icon={<DownloadOutlined />}
               onClick={() => downloadFileWithExtension(selectedImage.url, 'imagen_modal')}
-              className="mt-2 bg-gradient-to-r from-blue-500 to-blue-700 border-none"
+              className="mt-2 bg-gradient-to-r from-blue-500 to-blue-700 border-none text-white"
             >
               Descargar
             </Button>
