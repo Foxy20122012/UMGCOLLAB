@@ -9,6 +9,43 @@ import { CheckCircleOutlined, ClockCircleOutlined, EyeOutlined, DownloadOutlined
 
 const { Title, Paragraph } = Typography;
 
+const downloadFileWithExtension = async (url, defaultName) => {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    const contentType = response.headers.get('Content-Type');
+
+    // Mapear los tipos de contenido a extensiones comunes
+    const mimeToExtension = {
+      'image/jpeg': '.jpg',
+      'image/png': '.png',
+      'application/pdf': '.pdf',
+      'application/msword': '.doc',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
+      // Agrega más tipos de contenido según sea necesario
+    };
+
+    const extension = mimeToExtension[contentType] || '';
+    const fileName = `${defaultName}${extension}`;
+
+    // Crear un enlace temporal para forzar la descarga
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error al obtener la extensión del archivo:', error);
+    // Descargar con el nombre predeterminado si ocurre un error
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', defaultName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+};
+
 const ApprovedPostDetails = () => {
   const [postDetails, setPostDetails] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -104,9 +141,8 @@ const ApprovedPostDetails = () => {
               <Button
                 type="primary"
                 icon={<DownloadOutlined />}
-                href={img.url}
-                download
                 className="mt-2 w-full bg-gradient-to-r from-blue-500 to-blue-700 border-none"
+                onClick={() => downloadFileWithExtension(img.url, `imagen_${index + 1}`)}
               >
                 Descargar
               </Button>
@@ -128,9 +164,14 @@ const ApprovedPostDetails = () => {
                 </span>
               }
               extra={
-                <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
-                  Ver
-                </a>
+                <Button
+                  type="link"
+                  icon={<DownloadOutlined />}
+                  className="flex items-center text-blue-600 hover:text-blue-800"
+                  onClick={() => downloadFileWithExtension(file.url, `documento_${index + 1}`)}
+                >
+                  Descargar
+                </Button>
               }
             >
               <p className="text-sm text-gray-600">Public ID: {file.public_id}</p>
@@ -154,8 +195,7 @@ const ApprovedPostDetails = () => {
             <Button
               type="primary"
               icon={<DownloadOutlined />}
-              href={selectedImage.url}
-              download
+              onClick={() => downloadFileWithExtension(selectedImage.url, 'imagen_modal')}
               className="mt-2 bg-gradient-to-r from-blue-500 to-blue-700 border-none"
             >
               Descargar
