@@ -39,6 +39,14 @@ module.exports = {
                         },
                         approoval:{
                             approval: '/api/posts/visibility',
+                        },
+                        approved:{
+                            approvedPosts: '/api/postsApproved',
+                            approvedPostsId: '/api/posts/postsApproved/{id}',
+                            approvedNews: '/api/newsApproved',
+                            approvedNewsId: '/api/posts/newsApproved/{id}',
+                            approvedEvents: '/api/eventsApproved',
+                            approvedEventsId: '/api/posts/eventsApproved/{id}',
                         }
                     },
 
