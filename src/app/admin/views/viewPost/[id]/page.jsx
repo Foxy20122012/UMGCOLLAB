@@ -45,20 +45,20 @@ const ApprovedPostDetails = () => {
   }
 
   return (
-    <div className="p-8 bg-gradient-to-br from-white to-gray-100 rounded-xl shadow-2xl">
-      <Title level={2} className="text-center text-indigo-600 mb-6">
+    <div className="p-8 bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-2xl">
+      <Title level={2} className="text-center text-blue-700 font-extrabold mb-8">
         {postDetails.titulo}
       </Title>
-      <Divider />
-      <Row justify="space-between" align="middle">
-        <Col span={11}>
-          <Space direction="vertical" size="middle" className="w-full">
-            <Paragraph className="text-lg font-semibold text-gray-700">
+      <Divider className="border-t-2 border-blue-200" />
+      <Row justify="center">
+        <Col span={22}>
+          <Space direction="vertical" size="large" className="w-full bg-blue-50 p-6 rounded-xl shadow-inner">
+            <Paragraph className="text-xl font-semibold text-gray-800">
               <strong>Contenido:</strong> {postDetails.contenido}
             </Paragraph>
-            <Paragraph className="text-lg font-semibold text-gray-700">
+            <Paragraph className="text-xl font-semibold text-gray-800">
               <strong>Estado:</strong>{' '}
-              <Tag color={postDetails.estado === 'aprobado' ? 'green' : 'orange'} className="rounded-full px-3 py-1 text-base">
+              <Tag color={postDetails.estado === 'aprobado' ? 'green' : 'orange'} className="rounded-full px-4 py-2 text-lg">
                 {postDetails.estado === 'aprobado' ? (
                   <>
                     <CheckCircleOutlined /> Aprobado
@@ -70,27 +70,27 @@ const ApprovedPostDetails = () => {
                 )}
               </Tag>
             </Paragraph>
-            <Paragraph className="text-lg font-semibold text-gray-700">
+            <Paragraph className="text-xl font-semibold text-gray-800">
               <strong>Fecha de Evento:</strong>{' '}
               {new Date(postDetails.fecha_evento).toLocaleString('es-ES', {
                 dateStyle: 'full',
                 timeStyle: 'short',
               })}
             </Paragraph>
-            <Paragraph className="text-lg font-semibold text-gray-700">
+            <Paragraph className="text-xl font-semibold text-gray-800">
               <strong>Ubicación del Evento:</strong> {postDetails.ubicacion_evento}
             </Paragraph>
           </Space>
         </Col>
       </Row>
-      <Divider className="my-8 border-t-2 border-gray-300" />
-      <Title level={3} className="text-center text-indigo-600">Imágenes</Title>
-      <Row gutter={[16, 16]} className="mt-6">
+      <Divider className="my-8 border-t-2 border-blue-300" />
+      <Title level={3} className="text-center text-blue-600 font-bold mb-4">Imágenes</Title>
+      <Row gutter={[24, 24]} className="mt-6">
         {postDetails.imagenes.map((img, index) => (
-          <Col key={index} xs={24} sm={12} md={8}>
+          <Col key={index} xs={24} sm={12} md={8} className="flex justify-center">
             <Card
               hoverable
-              className="shadow-lg transition-transform transform hover:scale-105 rounded-xl overflow-hidden border border-gray-200"
+              className="shadow-lg transition-transform transform hover:scale-105 rounded-2xl overflow-hidden border border-gray-200"
               cover={
                 <img
                   alt={`Imagen ${index + 1}`}
@@ -106,7 +106,7 @@ const ApprovedPostDetails = () => {
                 icon={<DownloadOutlined />}
                 href={img.url}
                 download
-                className="mt-2 w-full"
+                className="mt-2 w-full bg-gradient-to-r from-blue-500 to-blue-700 border-none"
               >
                 Descargar
               </Button>
@@ -114,16 +114,16 @@ const ApprovedPostDetails = () => {
           </Col>
         ))}
       </Row>
-      <Divider className="my-8 border-t-2 border-gray-300" />
-      <Title level={3} className="text-center text-indigo-600">Documentos</Title>
-      <Row gutter={[16, 16]} className="mt-6">
+      <Divider className="my-8 border-t-2 border-blue-300" />
+      <Title level={3} className="text-center text-blue-600 font-bold mb-4">Documentos</Title>
+      <Row gutter={[24, 24]} className="mt-6">
         {postDetails.archivos_adjuntos.map((file, index) => (
           <Col key={index} xs={24} sm={12} md={8}>
             <Card
               hoverable
-              className="shadow-lg transition-transform transform hover:scale-105 rounded-xl overflow-hidden border border-gray-200"
+              className="shadow-lg transition-transform transform hover:scale-105 rounded-2xl overflow-hidden border border-gray-200"
               title={
-                <span className="font-semibold text-lg text-indigo-600">
+                <span className="font-semibold text-lg text-blue-700">
                   Documento {index + 1}
                 </span>
               }
@@ -133,7 +133,7 @@ const ApprovedPostDetails = () => {
                 </a>
               }
             >
-              <p className="text-sm text-gray-500">Public ID: {file.public_id}</p>
+              <p className="text-sm text-gray-600">Public ID: {file.public_id}</p>
             </Card>
           </Col>
         ))}
@@ -145,18 +145,18 @@ const ApprovedPostDetails = () => {
         footer={null}
         onCancel={handleModalClose}
         centered
-        width={800}
+        width={900}
         bodyStyle={{ padding: '20px', textAlign: 'center' }}
       >
         {selectedImage && (
           <div>
-            <img src={selectedImage.url} alt="Vista detallada" className="w-full h-auto rounded-md mb-4" />
+            <img src={selectedImage.url} alt="Vista detallada" className="w-full h-auto rounded-md mb-4 shadow-lg" />
             <Button
               type="primary"
               icon={<DownloadOutlined />}
               href={selectedImage.url}
               download
-              className="mt-2"
+              className="mt-2 bg-gradient-to-r from-blue-500 to-blue-700 border-none"
             >
               Descargar
             </Button>
