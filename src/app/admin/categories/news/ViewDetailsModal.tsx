@@ -1,7 +1,8 @@
 import React from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import { NewsCategory } from '@/models/interface/categories/Newscategory';
+import { NewsCategory } from '../../../../models/interface/categories/Newscategory';
+//import { NewsCategory } from '@/models/interface/categories/Newscategory';
 
 interface Props {
     selectedNewsCategory: NewsCategory | null; // Puede ser null cuando no haya datos

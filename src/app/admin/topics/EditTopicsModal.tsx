@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import TemaService from '../../../services/umgService/collabAdmin/topics/topicsService';
 import CursoService from '../../../services/umgService/collabAdmin/cursoService';
 import { CiCircleCheck } from "react-icons/ci";
-import { Cursos } from '@/models/interface/Cursos';
+import { Cursos } from '../../../models/interface/Cursos';
 
 interface Props {
   onClose: () => void;

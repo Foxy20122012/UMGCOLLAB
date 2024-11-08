@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import { PostCategory } from '@/models/interface/categories/PostCategory';
+import { PostCategory } from '../../../../models/interface/categories/PostCategory';
 import PostCategoryService from '../../../../services/umgService/collabAdmin/categories/postCategoryService';
 import { notification } from 'antd';
 
