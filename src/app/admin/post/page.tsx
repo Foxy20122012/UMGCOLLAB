@@ -203,8 +203,6 @@ const CreatePostModal = () => {
     }
   };
 
-
-
   return (
     <>
     <div className='flex justify-end'>

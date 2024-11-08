@@ -42,8 +42,7 @@
     "react-toastify": "^10.0.4",
     "rosetta": "^1.1.0",
     "sharp": "^0.32.1",
-    "underscore": "^1.13.7",
-    "v-functions": "git+https://2bdcc0300e0ed5ac01f9dcd51368f7ac74fdb85a@git.via-asesores.com/libraries/v-functions.git"
+    "underscore": "^1.13.7"
   },
   "devDependencies": {
     "@types/node": "^20",
