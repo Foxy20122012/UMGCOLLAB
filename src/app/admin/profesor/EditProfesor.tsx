@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ModalBase from '../../../components/templates/ModalBase/index';
 import { Usuario } from '../../../models/interface/user/User';
 import RegistroProfesorService from '../../../services/umgService/collabAdmin/registerProfessors/registerProfessorsService';
+//import RegistroProfesorService from '../../../services/umgService/collabAdmin/registerProfessors/registerProfessorsService';
 import { useTranslations } from 'next-intl';
 import { notification } from 'antd';
 
