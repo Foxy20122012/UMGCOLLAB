@@ -4,6 +4,7 @@ import ModalBase from '../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
 import CursosService from '../../../services/umgService';
 import PostCategoryService from '../../../services/umgService/collabAdmin/categories/postCategoryService';
+//import PostCategoryService from '../../../services/umgService/collabAdmin/categories/postCategoryService';
 import PostsService from '../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
