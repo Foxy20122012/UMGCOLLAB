@@ -46,7 +46,7 @@ const menuItems = [
         label: 'Mis Post',
       },
       {
-        key: '/admin/post/visibles',
+        key: '/admin/views/viewPost',
         label: 'Post Visibles',
       },
       {
@@ -58,7 +58,7 @@ const menuItems = [
         label: 'Publicar Post',
       },
       {
-        key: '/admin/post/news',
+        key: '/admin/views/viewNews',
         label: 'Noticias',
       },
       {
@@ -70,7 +70,7 @@ const menuItems = [
         label: 'Noticias Pendientes',
       },
       {
-        key: '/admin/publicar/eventos',
+        key: '/admin/views/viewEvents',
         label: 'Eventos',
       },
       {
