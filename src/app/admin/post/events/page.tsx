@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
 import CursosService from '../../../../services/umgService';
-import NewsCategoryService from '../../../../services/umgService/collabAdmin/categories/newsCategoryService';
+import EventsCategoryService from '../../../../services/umgService/collabAdmin/categories/eventsCategoryService';
 import PostsService from '../../../../services/umgService/collabAdmin/posts/postsService';
 import { notification } from 'antd';
 import { EyeOutlined, DeleteOutlined, LeftOutlined, RightOutlined, PlusOutlined } from '@ant-design/icons';
@@ -11,7 +11,7 @@ import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
 import { Categoria } from '../../../../models/categorias/Events';
 import {  Cursos, Tema } from '../../../../models/interface/Cursos'
 
-const eventsCategoryService = new NewsCategoryService();
+const eventsCategoryService = new EventsCategoryService();
 
 interface Props {
   onClose: () => void;
@@ -58,7 +58,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await eventsCategoryService.getNewsCategory();
+        const response = await eventsCategoryService.getEventsCategory();
         const categoriasActivas = response.data.filter(
           (categoria: Categoria) => categoria.estado.toLowerCase() === 'activo'
         ); // Filtrar solo las categorías activas

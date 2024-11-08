@@ -1,4 +1,4 @@
-import RestfulHandler from '../../../../module/handler/restfulHandler';
+import RestfulHandler from '../../../../../module/handler/restfulHandler';
 import enviroment from '../../../../../settings/enviroments'
 
 class approvedEventsService {
