@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import { FaUserCircle } from 'react-icons/fa';
 
 const EditProfilePage = () => {
-    const [image, setImage] = useState(null);
     const [userData, setUserData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,74 +34,28 @@ const EditProfilePage = () => {
         }
     };
 
-    const handleImageChange = (event) => {
-        setImage(event.target.files[0]);
-    };
-
-    const handleSubmit = async () => {
-        const formData = new FormData();
-        formData.append('image', image);
-    
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/profileImage', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                body: formData
-            });
-    
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-    
-            // Actualiza la información del usuario después de subir la imagen
-            fetchProfileData();
-        } catch (error) {
-            setError(error.message);
-        }
-    };
-    
-
     if (loading) {
-        return <p>Loading...</p>;
+        return <div className="flex items-center justify-center min-h-screen">
+            <p className="text-lg font-medium text-gray-600">Cargando...</p>
+        </div>;
     }
 
     if (error) {
-        return <p>Error: {error}</p>;
+        return <div className="flex items-center justify-center min-h-screen">
+            <p className="text-red-600 font-medium">Error: {error}</p>
+        </div>;
     }
 
     return (
-        <div className="container mx-auto px-4">
-            <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
-            <div className="mb-8 p-4 border rounded-md">
-                <h2 className="text-xl font-semibold">Profile Image</h2>
-                <img
-                    src={`http://localhost:3000/${userData.imagen_perfil}`}
-                    alt="Profile Picture"
-                    width={100}
-                    height={100}
-                    className="rounded-full"
-                />
-                <input type="file" accept="image/*" onChange={handleImageChange} />
-                <button onClick={handleSubmit}>Upload Image</button>
-            </div>
-            <h2 className="text-xl font-semibold">User Profiles</h2>
+        <div className="container mx-auto p-6 bg-white shadow-md rounded-md">
+            <h1 className="text-3xl font-bold mb-6 text-center">Perfil del Usuario</h1>
             {userData.map(user => (
-                <div key={user.id} className="mb-8 p-4 border rounded-md">
-                    <h3 className="text-lg font-semibold">{user.nombre}</h3>
-                    <p className="text-gray-600 mb-2">Email: {user.correo}</p>
-                    {user.telefono && <p className="text-gray-600 mb-2">Phone: {user.telefono}</p>}
-                    {user.apellido && <p className="text-gray-600 mb-2">Last Name: {user.apellido}</p>}
-                    <p className="text-gray-600 mb-2">Role: {user.rol}</p>
-                    <img
-                        src={`http://localhost:3000/${user.imagen_perfil}`}
-                        alt="Profile Picture"
-                        width={100}
-                        height={100}
-                        className="rounded-full"
-                    />
+                <div key={user.id} className="flex flex-col items-center mb-8 p-6 border rounded-md shadow-sm bg-gray-50">
+                    <FaUserCircle className="text-gray-400" size={100} />
+                    <h2 className="text-2xl font-semibold mt-4">{user.nombre} {user.apellido && user.apellido}</h2>
+                    <p className="text-gray-600 mb-2">Correo: {user.correo}</p>
+                    {user.telefono && <p className="text-gray-600 mb-2">Teléfono: {user.telefono}</p>}
+                    <p className="text-gray-600 mb-2">Rol: {user.rol}</p>
                 </div>
             ))}
         </div>
