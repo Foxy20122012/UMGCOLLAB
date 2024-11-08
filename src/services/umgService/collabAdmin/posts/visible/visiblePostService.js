@@ -11,7 +11,7 @@ class visiblePostsService {
         };
     }
 getPosts = ()=>{
-    const endpoint = this.endpoint.pending.events;
+    const endpoint = this.endpoint.pending.posts;
     return this.service.request({
         method: 'GET',
         endpoint,

@@ -24,7 +24,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [titulo, setTitulo] = useState('');
   const [contenido, setContenido] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [fechaEvento, setFechaEvento] = useState('');
+ 
   const [ubicacionEvento, setUbicacionEvento] = useState('');
   const [prioridad, setPrioridad] = useState(1);
   const [nombreCurso, setNombreCurso] = useState('');
@@ -47,6 +47,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const [temaSeleccionado, setTemaSeleccionado] = useState('');
   const [temas, setTemas] = useState<Tema[]>([]);
   const [temasCurso, setTemasCurso] = useState<string>('');
+  
 
 
   const postsService = new PostsService();
@@ -114,19 +115,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     }
   };
 
-  const handleFechaEventoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = new Date(e.target.value);
-    const hour = selectedDate.getHours();
-  
-    // Validar que la hora esté entre 6 AM y 11 PM
-    if (hour < 6 || hour >= 23) {
-      setErrorHora(true);
-      setFechaEvento(''); // Limpiar la selección si no es válida
-    } else {
-      setErrorHora(false);
-      setFechaEvento(e.target.value); // Solo actualizar si es válido
-    }
-  };
+
   
 
   const handleDocumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +147,10 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const nextDoc = () => setDocIndex((prev) => (prev + 6 >= previewDocs.length ? prev : prev + 6));
   const prevDoc = () => setDocIndex((prev) => (prev - 6 < 0 ? 0 : prev - 6));
 
+  const currentDateTime = new Date();
+  const formattedDate = `${currentDateTime.getFullYear()}-${(currentDateTime.getMonth() + 1).toString().padStart(2, '0')}-${currentDateTime.getDate().toString().padStart(2, '0')} ${currentDateTime.getHours().toString().padStart(2, '0')}:${currentDateTime.getMinutes().toString().padStart(2, '0')}:${currentDateTime.getSeconds().toString().padStart(2, '0')}`;
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -165,9 +158,9 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
     try {
       const formData = new FormData();
       formData.append('titulo', titulo);
-      formData.append('tema', temaSeleccionado || ''); // Cambia aquí de 'contenido' a 'tema'
+      formData.append('tema', temaSeleccionado || '');
       formData.append('descripcion', descripcion);
-      formData.append('fecha_evento', fechaEvento);
+      formData.append('fecha_evento', formattedDate); // Usa currentDateTime
       formData.append('ubicacion_evento', ubicacionEvento);
       formData.append('prioridad', prioridad.toString());
       formData.append('nombre_curso', nombreCurso);
@@ -176,7 +169,6 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       formData.append('url_externa', urlExterna);
       formData.append('tipo_contenido', tipoContenido);
       formData.append('estado', estado);
-      
 
       if (imagenes) {
         for (let i = 0; i < imagenes.length; i++) {
@@ -190,30 +182,30 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
         }
       }
 
-      // Espera la respuesta del servicio.
       const response = await postsService.createPosts(formData);
-setIsModalOpen(false);
-      // Verifica si la respuesta fue exitosa.
       if (response.status === 201) {
         notification.success({
           message: 'Post creado exitosamente',
           description: 'El post ha sido creado y subido con éxito',
         });
-
-        fetchPosts(); // Actualiza la lista de posts.
-         // Cierra el modal.
+        setIsModalOpen(false);
+        fetchPosts();
+        
       } else {
-        throw new Error('Error al crear el post'); // Forzamos error si no es 201.
+        throw new Error('Error al crear el post');
       }
     } catch (error) {
-     //notification.error({
+  //    console.error('Error:', error);
+    //  notification.error({
      //   message: 'Error al crear el post',
-       // description: error || 'Hubo un error al crear el post. Intenta nuevamente.',
- //     });
+    //    description: 'Hubo un error al crear el post. Intenta nuevamente.',
+    //  });
+  
     } finally {
       setIsLoading(false);
     }
-};
+  };
+
 
 
   return (
@@ -310,32 +302,12 @@ setIsModalOpen(false);
             />
           </div>
 
-          <div className="mb-4 col-span-1">
-            <label htmlFor="fecha_evento" className="block text-sm font-medium text-gray-700">
-              Fecha del evento
-            </label>
-            <input
-              id="fecha_evento"
-              type="datetime-local"
-              value={fechaEvento}
-              onChange={handleFechaEventoChange}
-              min={new Date().toISOString().slice(0, 16)} // Fecha mínima: ahora mismo
-              required
-              className={`mt-1 block w-full  border rounded-lg shadow-sm focus:ring focus:ring-opacity-50 focus:ring-green-500 transition-transform transform hover:scale-105 ${
-                errorHora ? 'border-red-500' : 'border-gray-300'
-              }`}
-            />
-            {errorHora && (
-              <p className="text-red-500 text-sm mt-1">
-                Por favor selecciona una hora entre 6:00 AM y 11:00 PM.
-              </p>
-            )}
-          </div>
+    
 
 
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="ubicacion_evento" className="block text-sm font-medium text-gray-700">Ubicación del evento</label>
+            <label htmlFor="ubicacion_evento" className="block text-sm font-medium text-gray-700">Sub tema</label>
             <input
               id="ubicacion_evento"
               type="text"
@@ -360,7 +332,7 @@ setIsModalOpen(false);
 </div>
 
           <div className="mb-4 col-span-1">
-            <label htmlFor="ubicacion_detallada" className="block text-sm font-medium text-gray-700">Ubicación detallada</label>
+            <label htmlFor="ubicacion_detallada" className="block text-sm font-medium text-gray-700">Descripcion sub tema</label>
             <input
               id="ubicacion_detallada"
               type="text"
@@ -370,6 +342,7 @@ setIsModalOpen(false);
               placeholder="Ubicación detallada"
             />
           </div>
+
 
           <div className="mb-4 col-span-1">
             <label htmlFor="tipo_contenido" className="block text-sm font-medium text-gray-700">
