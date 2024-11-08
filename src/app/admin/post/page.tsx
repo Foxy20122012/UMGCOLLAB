@@ -13,12 +13,9 @@ import {  Cursos, Tema } from '../../../models/interface/Cursos'
 
 const postsCategoryService = new PostCategoryService();
 
-interface Props {
-  onClose: () => void;
-  fetchPosts: () => void;
-}
 
-const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+
+const CreatePostModal = () => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -189,7 +186,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
           description: 'El post ha sido creado y subido con éxito',
         });
         setIsModalOpen(false);
-        fetchPosts();
+   //     fetchPosts();
         
       } else {
         throw new Error('Error al crear el post');

@@ -11,14 +11,13 @@ import { FaHandsHelping, FaLightbulb } from 'react-icons/fa';
 import { Categoria } from '../../../../models/categorias/Events';
 import {  Cursos, Tema } from '../../../../models/interface/Cursos'
 
+
 const eventsCategoryService = new EventsCategoryService();
 
-interface Props {
-  onClose: () => void;
-  fetchPosts: () => void;
-}
 
-const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+
+const CreatePostModal= () => {
+
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -161,7 +160,7 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     try {
       const formData = new FormData();
       formData.append('titulo', titulo);
@@ -176,44 +175,45 @@ const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
       formData.append('url_externa', urlExterna);
       formData.append('tipo_contenido', tipoContenido);
       formData.append('estado', estado);
-      
-
+  
       if (imagenes) {
         for (let i = 0; i < imagenes.length; i++) {
           formData.append('imagenes', imagenes[i]);
         }
       }
-
+  
       if (archivos) {
         for (let i = 0; i < archivos.length; i++) {
           formData.append('archivos', archivos[i]);
         }
       }
-
+  
       // Espera la respuesta del servicio.
       const response = await postsService.createPosts(formData);
-setIsModalOpen(false);
+      setIsModalOpen(false);
+  
       // Verifica si la respuesta fue exitosa.
       if (response.status === 201) {
         notification.success({
           message: 'Post creado exitosamente',
           description: 'El post ha sido creado y subido con éxito',
         });
-
-        fetchPosts(); // Actualiza la lista de posts.
-         // Cierra el modal.
+  
+      //  fetchPosts(); // Llama a la función para actualizar la lista de posts.
       } else {
         throw new Error('Error al crear el post'); // Forzamos error si no es 201.
       }
     } catch (error) {
-     //notification.error({
-     //   message: 'Error al crear el post',
-       // description: error || 'Hubo un error al crear el post. Intenta nuevamente.',
- //     });
+      console.error('Error al crear el post:', error);
+      notification.error({
+        message: 'Error al crear el post',
+        description: 'Hubo un error al crear el post. Intenta nuevamente.',
+      });
     } finally {
       setIsLoading(false);
     }
-};
+  };
+  
 
 
   return (

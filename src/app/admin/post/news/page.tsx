@@ -13,12 +13,9 @@ import {  Cursos, Tema } from '../../../../models/interface/Cursos'
 
 const eventsCategoryService = new NewsCategoryService();
 
-interface Props {
-  onClose: () => void;
-  fetchPosts: () => void;
-}
 
-const CreatePostModal: React.FC<Props> = ({ onClose, fetchPosts }) => {
+
+const CreatePostModal = () => {
   const t = useTranslations('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState('');
@@ -200,7 +197,7 @@ setIsModalOpen(false);
           description: 'El post ha sido creado y subido con éxito',
         });
 
-        fetchPosts(); // Actualiza la lista de posts.
+     //   fetchPosts(); // Actualiza la lista de posts.
          // Cierra el modal.
       } else {
         throw new Error('Error al crear el post'); // Forzamos error si no es 201.
