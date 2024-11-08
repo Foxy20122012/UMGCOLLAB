@@ -22,6 +22,6 @@
       "next-intl": ["./src/tempfix/customNextIntl.tsx"] // comment this to activate localization
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth].js", "src/app/admin/cursos/page.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth].js", "src/app/admin/cursos/page.tsx", "src/utils/menuAdminItems.js", "src/app/admin/topics/ViewDetailsModal.tsx", "src/app/admin/categories/post/page.jsx", "src/app/admin/categories/news/page.jsx", "src/app/admin/categories/events/page.jsx", "src/app/admin/pending/postspendient/page.jsx", "src/app/admin/pending/postspendient/approval.jsx", "src/app/admin/pending/newspendient/page.jsx", "src/app/admin/views/viewPost/page.jsx"],
   "exclude": ["node_modules"]
 }

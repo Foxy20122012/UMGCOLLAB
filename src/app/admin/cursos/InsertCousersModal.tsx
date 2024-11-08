@@ -29,10 +29,10 @@ const InsertCoursersModal: React.FC<Props> = ({ onClose, fetchCursos }) => {
       await cursosService.cursosService.createCurso(newCurso);
       fetchCursos(); // Actualiza la lista de cursos
       onClose();     // Cierra el modal
-      toast.success('Curso agregado con éxito'); // Muestra el toast
+   //   toast.success('Curso agregado con éxito'); // Muestra el toast
     } catch (error) {
       console.error('Error al crear el curso:', error);
-      toast.error('Error al crear el curso');
+    //  toast.error('Error al crear el curso');
     }
   };
 

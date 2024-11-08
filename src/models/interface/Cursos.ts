@@ -12,7 +12,6 @@ export interface Cursos {
   nombre: string;
   descripcion: string;
   año: number | null;
-  creditos: number | null;
   temas: Tema[];
 }
 

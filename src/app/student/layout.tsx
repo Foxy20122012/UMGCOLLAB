@@ -1,6 +1,9 @@
-import React, { ReactNode } from 'react';
-import type { Metadata } from "next";
 
+import React, { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import { ToastContainer } from 'react-toastify';
+import Sidebar from '../../layouts/Sidebar';
+import menuItems from '../../utils//menuStudentItem';
 
 export const metadata: Metadata = {
   title: "ESTUDIANTES",
@@ -11,14 +14,14 @@ type Props = {
   children: ReactNode;
 };
 
-const AdminLayout = ({ children }: Props) => {
+const ProfesorLayout = ({ children }: Props) => {
   return (
     <>
-      {/* Aquí puedes agregar la barra de navegación de admin, sidebar, etc. */}
-      <main>{children}</main>
-      {/* Aquí puedes agregar el footer de admin si es necesario */}
+      <Sidebar menuItems={menuItems}>
+             {children}
+      </Sidebar>
     </>
   );
 };
 
-export default AdminLayout;
+export default ProfesorLayout;

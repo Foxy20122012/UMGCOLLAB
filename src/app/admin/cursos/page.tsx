@@ -1,111 +1,114 @@
 'use client'
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
+import { Table } from 'antd';
 import CursosService from '../../../services/umgService';
 import { useTranslations } from 'next-intl';
 
-
-import IconedButton from '../../../components/atoms/IconedButton/index'
-import { FaEye } from "react-icons/fa";
-import { Cursos } from '../../../models/interface/Cursos';
-import presets from '../../../utils/globalPresets';
-import cursosModel from '../../../models/cursos/CursosModel';
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { SiMicrosoftexcel } from "react-icons/si";
-import { FaRegFilePdf } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
+import { FaRegFilePdf, FaPlus } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
+import { MdDeleteOutline } from "react-icons/md";
 import ViewDetailsModal from './ViewDetailsModal';
-import InsertCoursersModal from "./InsertCousersModal"
-import DeleteConfirmationModal from "../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal"
-import DataTable from "../../../components/general/DataTable/DataTable"
+import InsertCoursersModal from "./InsertCousersModal";
+import DeleteConfirmationModal from "../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal";
 import { toast } from 'react-toastify';
+import { Cursos } from '../../../models/interface/Cursos';
 
-
-type Header = {
-  text: string;
-  value: string;
-};
-
-const VDialog = dynamic(() => { return import("../../../components/general/VDialog/VDialog"); },
-  { ssr: false }
-);
-
-
+const VDialog = dynamic(() => import("../../../components/general/VDialog/VDialog"), { ssr: false });
 
 const MyPage = () => {
   // I18N 
   const t = useTranslations('general');
   const [cursosItems, setCursosItems] = useState<Cursos[]>([]);
-  const [headers, setHeaders] = useState<Header[]>([]);
   const cursosService = new CursosService();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Estado para el modal de nuevo registro
   const [selectedCurso, setSelectedCurso] = useState<Cursos | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [cursoNombre, setCursoNombre] = useState('');
   const [cursoDescripcion, setCursoDescripcion] = useState('');
   const [currentCurso, setCurrentCurso] = useState<Cursos | null>(null);
-
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCursoToDelete, setSelectedCursoToDelete] = useState<Cursos | null>(null);
 
-  const columns =[
-    
-      { key: 'id', name: 'id'},
-      { key: 'codigo', name:'codigo'},
-      { key: 'nombre', name: 'nombre' },
-      { key: 'descripcion', name: 'descripcion' }
-  ]
-
-
-  const ActionsComponent = useCallback(() => (
-    <div className="">
-
-<IconedButton
-  icon={FaEye}
-  onClick={() => console.log('Icon button clicked')}
-  size="normal"
-/>
-<IconedButton
-  icon={SiMicrosoftexcel}
-  onClick={() => console.log('Icon button clicked')}
-  size="normal"
-  iconColor='green'
-/>
-<IconedButton
-  icon={FaRegFilePdf}
-  onClick={() => console.log('Icon button clicked')}
-  size="normal"
-  iconColor='red'
-/>
-<IconedButton
-  icon={FaPenToSquare}
-  onClick={() => console.log('Icon button clicked')}
-  size="normal"
-/>
-<IconedButton
-  icon={MdDeleteOutline}
- 
-  size="normal"
-  iconColor='red'
-/>
-          
-         
-          
-  
-    </div>
-  ), [t]); // Asumiendo que `t` es una dependencia proveniente de `useTranslation` o similar
+  const truncateDescription = (description: string, wordLimit: number = 6): string => {
+    const words = description.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return description;
+  };
   
 
-  // Mostrar modal de eliminación al presionar el botón de eliminar
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Código',
+      dataIndex: 'codigo',
+      key: 'codigo',
+    },
+    {
+      title: 'Nombre',
+      dataIndex: 'nombre',
+      key: 'nombre',
+    },
+    {
+      title: 'Descripción',
+      dataIndex: 'descripcion',
+      key: 'descripcion',
+      render: (text: string) => truncateDescription(text),
+    },
+    {
+      title: 'Acciones',
+      key: 'actions',
+      render: (text: any, record: Cursos) => (
+        <div className='flex justify-center'>
+          <button
+            className=""
+            onClick={() => {
+              setSelectedCurso(record);
+              setIsModalOpen(true);
+            }}
+          >
+            <EyeIcon className="h-5 w-5 mr-2 text-blue-800 hover:bg-blue-200 hover:text-blue-900" />
+          </button>
+          <button
+            className=""
+            onClick={() => handleDownloadExcelID(record.id)}
+          >
+            <SiMicrosoftexcel className='text-emerald-700 hover:text-emerald-800 hover:bg-emerald-200' />
+          </button>
+          <button onClick={() => handleGeneratePdfById(record.id)}>
+            <FaRegFilePdf className="h-5 w-5 mr-2 text-blue-700 hover:text-blue-800 hover:bg-blue-200" />
+          </button>
+          <button
+            className=""
+            onClick={() => handleEdit(record)}
+          >
+            <FaPenToSquare className="h-5 w-5 mr-2 text-yellow-500 hover:text-yellow-600" />
+          </button>
+          <button
+            className=""
+            onClick={() => handleDeleteClick(record)}
+          >
+            <MdDeleteOutline className="h-5 w-5 text-red-600 hover:text-red-700" />
+          </button>
+        </div>
+      ),
+    },
+  ];
+
   const handleDeleteClick = (curso: Cursos) => {
     setSelectedCursoToDelete(curso);
     setShowDeleteModal(true);
   };
 
-  // Confirmar la eliminación y eliminar el curso
   const handleConfirmDelete = async () => {
     if (selectedCursoToDelete) {
       await handleDeleteCurso(selectedCursoToDelete);
@@ -114,8 +117,6 @@ const MyPage = () => {
     }
   };
 
-
-  //Evento para modificar los estados de los campos de los cursos en el formulario
   const handleEdit = (curso: Cursos) => {
     setCurrentCurso(curso);
     setCursoNombre(curso.nombre);
@@ -123,19 +124,17 @@ const MyPage = () => {
     setIsFormVisible(true);
   };
 
-  //Evento para actualizar los cursos
   const handleUpdateCurso = async (id: number, curso: Partial<Cursos>) => {
     try {
       await cursosService.cursosService.updateCurso(id, curso);
       fetchCursos();
       setIsFormVisible(false);
-      toast.success('Curso actualizado'); // Muestra el toast
+    //  toast.success('Curso actualizado'); // Muestra el toast
     } catch (error) {
       console.error('Error al actualizar el curso:', error);
     }
   };
 
-  //Evento para Enviar los datos actualizados del formulario de los cursos
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentCurso && currentCurso.id) {
@@ -146,7 +145,7 @@ const MyPage = () => {
       await handleUpdateCurso(currentCurso.id, updatedCurso);
       setIsFormVisible(false);  // Cierra el modal
       fetchCursos();            // Recarga la data
-      toast.success('Curso actualizado'); // Muestra el toast
+    //  toast.success('Curso actualizado'); // Muestra el toast
     } else {
       console.error('Error: No se ha seleccionado ningún curso para actualizar');
     }
@@ -154,13 +153,10 @@ const MyPage = () => {
 
   useEffect(() => {
     fetchCursos();
-    setHeaders(cursosModel() as any);
   }, []);
 
-  
   const values = useMemo(() => cursosItems, [cursosItems]); //Mapea los cursos en el formato de la interface de cursos
 
-  //Evento para cargar la respuesta del endpoint de los cursos
   const fetchCursos = async () => {
     try {
       const result = await cursosService.cursosService.getCursos();
@@ -174,7 +170,6 @@ const MyPage = () => {
     }
   };
 
-  //Evento para generar un registro de excel de un curso en especifico
   const handleDownloadExcelID = async (id: number) => {
     try {
       const blob = await cursosService.cursosService.getCursoExcelId(id);
@@ -185,13 +180,12 @@ const MyPage = () => {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
-      toast.success('Excel del curso Generado'); // Muestra el toast
+    //  toast.success('Excel del curso Generado'); // Muestra el toast
     } catch (error) {
       console.error('Error al descargar el archivo Excel:', error);
     }
   };
 
-  //Evento para descargar el registro general de un excel
   const handleDownloadExcel = async () => {
     try {
       const blob = await cursosService.cursosService.getCursoExcel();
@@ -203,26 +197,24 @@ const MyPage = () => {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      toast.success('Excel Generado Exitosamente'); // Muestra el toast
+   //   toast.success('Excel Generado Exitosamente'); // Muestra el toast
     } catch (error) {
       console.error('Error al descargar el archivo Excel:', error);
-      toast.error('Error Al Generar Excel');
+     // toast.error('Error Al Generar Excel');
     }
   };
 
-  //Evento para eliminar un curso  por id
   const handleDeleteCurso = async (curso: Cursos) => {
     try {
       await cursosService.cursosService.deleteCurso(curso.id);
       fetchCursos();
-      toast.success('Curso Eliminado'); // Muestra el toast
+  //    toast.success('Curso Eliminado'); // Muestra el toast
     } catch (error) {
       console.error('Error al eliminar el curso:', error);
-      toast.error('Error Al Eliminar Curso')
+   //   toast.error('Error Al Eliminar Curso');
     }
   };
 
-  //Evento para PDF general de todos los cursos
   const handleGeneratePdf = async () => {
     try {
       const blob = await cursosService.cursosService.getCursoPdf();
@@ -233,14 +225,13 @@ const MyPage = () => {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
-      toast.success("Pdf Generado");
+   //   toast.success("Pdf Generado");
     } catch (error) {
       console.error('Error al generar el PDF:', error);
-      toast.error("Error al generar el PDF");
+   //   toast.error("Error al generar el PDF");
     }
   };
 
-  //Evento para generar el PDF por id del curso
   const handleGeneratePdfById = async (id: number) => {
     try {
       const response = await cursosService.cursosService.getCursoPdfById(id);
@@ -253,14 +244,13 @@ const MyPage = () => {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
-      toast.success('PDF del curso generado');
+  //    toast.success('PDF del curso generado');
     } catch (error) {
       console.error('Error al generar el PDF:', error);
-      toast.error('Error al generar el PDF');
+   //   toast.error('Error al generar el PDF');
     }
   };
 
-  //Evento para abrir el modal que contiene el formulario para crear un nuevo registro de cursos
   const handleNewClick = () => {
     setIsOpen(true);
   };
@@ -268,11 +258,18 @@ const MyPage = () => {
   return (
     <div>
       <div className='my-2'>
-        <div className="">
-          <div className='flex justify-start'>
+        <div className="flex justify-between">
+          <div className='flex items-center'>
             {t("Courses")}
           </div>
           <div className='flex justify-end'>
+            <button
+              onClick={handleNewClick}
+              className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2"
+            >
+              <FaPlus className="text-xl mr-2" />
+              Nuevo
+            </button>
             <button
               onClick={handleDownloadExcel}
               className="flex items-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg mr-2"
@@ -291,40 +288,14 @@ const MyPage = () => {
         </div>
       </div>
       <div className='my-8'>
-        <DataTable
-          //@ts-ignore
-          headers={headers}
-          items={values}
-          //@ts-ignore
-          presets={presets}
-          onNewItem={handleNewClick}
-          onEditItem={handleEdit}
-          onDeleteItem={handleDeleteClick}
-          showEditButton={true}
-          showDeleteButton={true}
-          PrependActionButtons={(item: any) => (
-            <div className='flex justify-center'>
-              <button
-                className=""
-                onClick={() => {
-                  setSelectedCurso(item);
-                  setIsModalOpen(true);
-                }}
-              >
-                <EyeIcon className="h-5 w-5 mr-2 text-blue-800 hover:bg-blue-200 hover:text-blue-900" />
-              </button>
-              <button
-                className=""
-                onClick={() => handleDownloadExcelID(item.id)}
-              >
-                <SiMicrosoftexcel className='text-emerald-700 hover:text-emerald-800 hover:bg-emerald-200' />
-              </button>
-              <button onClick={() => handleGeneratePdfById(item.id)}>
-                <FaRegFilePdf className="h-5 w-5 mr-2 text-blue-700 hover:text-blue-800 hover:bg-blue-200 " />
-              </button>
-            </div>
-
-          )}
+        <Table
+          columns={columns}
+          dataSource={values}
+          rowKey="id"
+          pagination={{
+            showSizeChanger: true, // Permite cambiar el número de filas por página
+            pageSizeOptions: ['5', '10', '20', '50'], // Opciones de tamaño de página
+        }}
         />
       </div>
 
@@ -337,9 +308,7 @@ const MyPage = () => {
             onConfirm={handleConfirmDelete}
             message="¿Estás seguro de que quieres eliminar este Curso?"
           />
-
         </div>
-
       )}
 
       {/*Modal para manejar la vista de los cursos y su información.*/}
@@ -349,6 +318,7 @@ const MyPage = () => {
           onClose={() => setIsModalOpen(false)}
         />
       )}
+
       {/*Modal para manejar la inserción de un nuevo curso.*/}
       {isOpen && (
         <InsertCoursersModal
@@ -356,6 +326,7 @@ const MyPage = () => {
           onClose={() => setIsOpen(false)}
         />
       )}
+
       {/*Evento para manejar el modal del formulario de actualización de los cursos.*/}
       {isFormVisible && isFormVisible === true && (
         //@ts-ignore
@@ -408,7 +379,6 @@ const MyPage = () => {
           </div>
         </VDialog>
       )}
-
     </div>
   );
 };

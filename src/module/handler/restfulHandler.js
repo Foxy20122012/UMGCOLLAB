@@ -1,4 +1,3 @@
-// RestfulHandler class
 import axios from 'axios';
 
 class RestfulHandler {
@@ -8,16 +7,18 @@ class RestfulHandler {
     }
 
     request = (props) => {
-        // Aquí aseguramos que construimos correctamente la URL final
         const url = this.urlBase + props.endpoint;
         const config = {
-            ...props,  // propagamos todos los props existentes
-            url: url,  // sobrescribimos la URL para incluir la base
-            timeout: this.timeout,  // utilizamos el timeout del constructor
+            ...props,
+            url: url,
+            timeout: this.timeout,
         };
 
-        // Removemos 'endpoint' de los props ya que axios no lo necesita y puede generar errores si se envía.
-        return axios(config);
+        // Removemos 'endpoint' de los props
+        return axios(config).catch(error => {
+            console.error('Error en la solicitud:', error);
+            throw error;
+        });
     };
 }
 
