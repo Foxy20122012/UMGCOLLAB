@@ -50,6 +50,11 @@ module.exports = {
                             approvedEventsId: '/api/posts/eventsApproved/{id}',
                         }
                     },
+                    session:{
+                        login:{
+                            loginAdmin: '/api/loginAdmin',
+                        }
+                    },
 
                 }
             }

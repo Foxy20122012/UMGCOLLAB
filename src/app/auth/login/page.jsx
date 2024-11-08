@@ -6,23 +6,29 @@ import { EyeIcon, EyeSlashIcon, KeyIcon, UserIcon } from '@heroicons/react/20/so
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '../../../services/umgService'; // Asegúrate de que la ruta de importación sea correcta
+import loginAdminService from '../../../services/umgService/collabAdmin/login/admin/loginAdminService'; // Importa el nuevo servicio
 
 const RegisterForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onChange' });
-  const authService = new AuthService();
+  const authService = new loginAdminService(); // Instancia del nuevo servicio
 
   const onSubmit = async (data) => {
     try {
-      const response = await authService.authService.loginUser(data.email, data.password);
-      localStorage.setItem('token', response.token);
-      toast.success('¡Bienvenido, usuario!', {
-        style: { backgroundColor: 'green', color: 'white' },
-      });
-      window.location.href = '/user/profile';
+      const response = await authService.postLoginAdmin(data);
+
+      // Asegúrate de que la respuesta tenga el token correctamente
+      if (response && response.data && response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        toast.success('¡Bienvenido, administrador!', {
+          style: { backgroundColor: 'green', color: 'white' },
+        });
+        window.location.href = '/admin/profile';
+      } else {
+        throw new Error('Token no recibido');
+      }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error en la solicitud de inicio de sesión:', error);
       toast.error('Credenciales incorrectas');
     }
   };
@@ -53,9 +59,9 @@ const RegisterForm = () => {
                   <div className='relative flex h-9 justify-between'>
                     <input
                       type="email"
-                      id="email"
-                      name="email"
-                      {...register('email', { required: true })}
+                      id="correo"
+                      name="correo"
+                      {...register('correo', { required: true })}
                       className="w-full p-2 border-y border-l focus:border-gray-400 outline-none rounded-l-lg focus:border-r-none"
                       placeholder="example@email.com"
                     />
@@ -63,7 +69,7 @@ const RegisterForm = () => {
                       <UserIcon className='h-5 w-5' />
                     </div>
                   </div>
-                  {errors.email && <p className="text-red-500 text-xs mt-1">El campo Usuario es requerido.</p>}
+                  {errors.correo && <p className="text-red-500 text-xs mt-1">El campo Usuario es requerido.</p>}
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-600 select-none">
@@ -73,9 +79,9 @@ const RegisterForm = () => {
                   <div className='relative flex h-9 justify-between'>
                     <input
                       type={passwordShown ? 'text' : 'password'}
-                      id="password"
-                      name="password"
-                      {...register('password', { required: true })}
+                      id="contraseña"
+                      name="contraseña"
+                      {...register('contraseña', { required: true })}
                       className="w-full p-2 border-y border-l focus:border-gray-400 outline-none rounded-l-lg focus:border-r-none"
                     />
                     <div
@@ -85,7 +91,7 @@ const RegisterForm = () => {
                       {!passwordShown ? <EyeSlashIcon className='h-5 w-5' /> : <EyeIcon className='h-5 w-5' />}
                     </div>
                   </div>
-                  {errors.password && <p className="text-red-500 text-xs mt-1">El campo Clave es requerido.</p>}
+                  {errors.contraseña && <p className="text-red-500 text-xs mt-1">El campo Clave es requerido.</p>}
                 </div>
                 <div className="mb-4">
                   <button
