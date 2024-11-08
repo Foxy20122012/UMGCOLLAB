@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
 import PostCategoryService from '../../../../services/umgService/collabAdmin/categories/postCategoryService';
+//import PostCategoryService from '../../../../services/umgService/collabAdmin/categories/postCategoryService';
 import { notification } from 'antd';
 
 interface Props {
