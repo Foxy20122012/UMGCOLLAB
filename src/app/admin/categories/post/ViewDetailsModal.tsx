@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import { PostCategory } from '@/models/interface/categories/PostCategory';
+import { PostCategory } from '../../../../models/interface/categories/PostCategory';
 
 interface Props {
     selectedPostCategory: PostCategory | null; // Puede ser null cuando no haya datos

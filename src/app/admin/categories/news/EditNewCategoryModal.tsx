@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ModalBase from '../../../../components/templates/ModalBase/index';
 import { useTranslations } from 'next-intl';
-import { NewsCategory } from '@/models/interface/categories/Newscategory';
+import { NewsCategory } from '../../../../models/interface/categories/Newscategory';
 import NewsCategoryService from '../../../../services/umgService/collabAdmin/categories/newsCategoryService';
 import { notification } from 'antd';
 
