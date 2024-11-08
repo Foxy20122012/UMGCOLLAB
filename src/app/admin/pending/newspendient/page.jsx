@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import { Table, notification } from 'antd';
 import { FaPlus } from "react-icons/fa";
@@ -8,14 +7,16 @@ import { MdEdit, MdDeleteOutline } from "react-icons/md";
 import visibleNewsService from '../../../../services/umgService/collabAdmin/posts/visible/visibleNewsService';
 import ViewDetailsModal from './ViewDetailsModal';
 import ApprovalModal from './approval';
-import DeleteConfirmationModal from "../../../../components/general/DeleteConfirmationModal/DeleteConfirmationModal";
+import RejectModal from './reject'; // Importa el modal de rechazo
 
 const PendingPostsPage = () => {
     const [pendingPosts, setPendingPosts] = useState([]);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [isApprovalModalOpen, setIsApprovalModalOpen] = useState(false);
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState(null);
     const [postIdToApprove, setPostIdToApprove] = useState(null);
+    const [postIdToReject, setPostIdToReject] = useState(null);
 
     const service = new visibleNewsService();
 
@@ -28,7 +29,7 @@ const PendingPostsPage = () => {
                 console.error('Formato de respuesta inesperado:', result);
             }
         } catch (error) {
-            console.error('Error al obtener posts pendientes:', error);
+            console.error('Error al obtener noticias pendientes:', error);
         }
     };
 
@@ -46,11 +47,24 @@ const PendingPostsPage = () => {
         setIsApprovalModalOpen(true);
     };
 
+    const handleRejectClick = (postId) => {
+        setPostIdToReject(postId);
+        setIsRejectModalOpen(true);
+    };
+
     const handleApproveSuccess = () => {
-        fetchPendingPosts(); // Refresca la lista de posts después de aprobar uno
+        fetchPendingPosts();
         notification.success({
             message: 'Éxito',
-            description: 'La Noticia ha sido aprobado correctamente.',
+            description: 'La noticia ha sido aprobada correctamente.',
+        });
+    };
+
+    const handleRejectSuccess = () => {
+        fetchPendingPosts();
+        notification.success({
+            message: 'Éxito',
+            description: 'La noticia ha sido rechazada correctamente.',
         });
     };
 
@@ -71,7 +85,7 @@ const PendingPostsPage = () => {
                     <button onClick={() => handleApproveClick(record.id)}>
                         <MdEdit className="h-5 w-5 mr-2 text-green-600 hover:bg-green-200 hover:text-green-700" />
                     </button>
-                    <button onClick={() => handleDeleteClick(record)}>
+                    <button onClick={() => handleRejectClick(record.id)}>
                         <MdDeleteOutline className="h-5 w-5 text-red-600 hover:text-red-700" />
                     </button>
                 </div>
@@ -94,6 +108,15 @@ const PendingPostsPage = () => {
                     onClose={() => setIsApprovalModalOpen(false)}
                     postId={postIdToApprove}
                     onApprove={handleApproveSuccess}
+                />
+            )}
+
+            {isRejectModalOpen && (
+                <RejectModal
+                    visible={isRejectModalOpen}
+                    onClose={() => setIsRejectModalOpen(false)}
+                    postId={postIdToReject}
+                    onReject={handleRejectSuccess}
                 />
             )}
         </div>

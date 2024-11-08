@@ -39,6 +39,7 @@ module.exports = {
                         },
                         approoval:{
                             approval: '/api/posts/visibility',
+                            reject: '/api/posts/reject/{id}'
                         },
                         approved:{
                             approvedPosts: '/api/postsApproved',

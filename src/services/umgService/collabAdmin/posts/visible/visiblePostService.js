@@ -29,7 +29,15 @@ visiblePosts = (data)=>{
     })
 }
 
-
+rejectPosts = (data)=>{
+    const endpoint = this.endpoint.approoval.reject
+    return this.service.request({
+        method: 'PUT',
+        endpoint,
+        data: data,
+       
+    })
+}
 
 }
 
