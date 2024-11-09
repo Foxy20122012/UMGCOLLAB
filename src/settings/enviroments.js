@@ -1,7 +1,8 @@
 
 
 
-const environment = "http://localhost:3000";
+//const environment = "http://localhost:3000";
+const environment = "http://198.7.123.157:4000/";
 //const environment = process.env.NEXT_PUBLIC_API_URL;
 
 module.exports = {
