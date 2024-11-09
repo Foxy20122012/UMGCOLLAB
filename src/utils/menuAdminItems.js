@@ -124,36 +124,6 @@ const menuItems = [
       },
     ],
   },
-
-  {
-    key: '/admin/visitas',
-    icon: <BarChartOutlined />, // Icono para estadísticas o visitas de la página
-    label: 'Visitas Página',
-  },
- /* {
-    key: '/admin/permisos',
-    icon: <IdcardOutlined />, // Icono de grupo para representar estudiantes
-    label: 'Roles Y Permisos',
-    children: [
-      {
-        key: '/admin/user',
-        label: 'Usuarios',
-      },
-      {
-        key: '/admin/rol',
-        label: 'Roles',
-      },
-      {
-        key: '/admin/permisos',
-        label: 'Permisos',
-      },
-    ],
-  },*/
-    {
-    key: '/admin/settings',
-    icon: <SettingOutlined />,
-    label: 'Configuración',
-  },
   {
     key: '/admin/about',
     icon: <QuestionCircleOutlined />, 

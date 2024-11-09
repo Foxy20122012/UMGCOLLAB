@@ -31,9 +31,6 @@ const userMenu = (
       <a href="/admin/profile">Perfil</a>
     </Menu.Item>
     <Menu.Item key="2">
-      <a href="/admin/settings">Configuraciones</a>
-    </Menu.Item>
-    <Menu.Item key="3">
       <a href="/logout">Cerrar sesión</a>
     </Menu.Item>
   </Menu>

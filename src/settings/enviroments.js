@@ -55,6 +55,9 @@ module.exports = {
                             loginAdmin: '/api/loginAdmin',
                         }
                     },
+                    dashboard:{
+                        dashboard: '/api/dashboard/metrics'
+                    }
 
                 }
             }
