@@ -8,19 +8,19 @@ import { useTranslations } from 'next-intl';
 const DashboardPage = () => {
   const t = useTranslations('dashboard');
   const [data, setData] = useState({
-    cursos: 0,
-    temas: 0,
-    catedraticos: 0,
-    estudiantes: 0,
-    postVisibles: 0,
-    postAprobados: 0,
-    postNoAprobados: 0,
-    noticias: 0,
-    noticiasPendientes: 0,
-    eventosVisibles: 0,
-    eventosPendientes: 0,
-    categoriasActivas: { eventos: 0, noticias: 0, posts: 0 },
-    categoriasInactivas: { eventos: 0, noticias: 0, posts: 0 },
+    cursos: 8,
+    temas: 12,
+    catedraticos: 4,
+    estudiantes: 3,
+    postVisibles: 7,
+    postAprobados: 7,
+    postNoAprobados: 4,
+    noticias: 1,
+    noticiasPendientes: 2,
+    eventosVisibles: 1,
+    eventosPendientes: 1,
+    categoriasActivas: { eventos: 6, noticias: 6, posts: 6 },
+    categoriasInactivas: { eventos: 6, noticias: 6, posts: 6 },
   });
 
   useEffect(() => {
