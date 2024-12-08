@@ -12,14 +12,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   const router = useRouter();
 
-  useEffect(() => {
-    // Verifica si existe un token en localStorage
-    const token = localStorage.getItem('token');
-    if (!token) {
-      // Redirige al usuario a /auth/login si no hay token
-      router.push('/auth/login');
-    }
-  }, [router]);
+
 
   return (
     <html lang="en">
