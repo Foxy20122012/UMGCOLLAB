@@ -2,7 +2,7 @@
 class AuthService {
     loginAdmin = async (email: string, password: string): Promise<any> => {
       try {
-        const response = await fetch('https://umgcollab.azurewebsites.net/api/login/admin', {
+        const response = await fetch('https://apiumgcollab.onrender.com/api/login/admin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ class AuthService {
   
     loginUser = async (email: string, password: string): Promise<any> => {
       try {
-        const response = await fetch('https://umgcollab.azurewebsites.net/api/login', {
+        const response = await fetch('https://apiumgcollab.onrender.com/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
